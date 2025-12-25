@@ -40,20 +40,21 @@ We will support 4 distinct variations based on `folke/tokyonight.nvim`:
 *   **Step 3.1**: Audit `kbd_full.xml` for `isModifier="true"`.
 *   **Step 3.2**: Implement the "Glamorous" popup styles and animations. (Fixed black popup and refined geometry)
 
-### Phase 4: Final Polish [IN PROGRESS]
+### Phase 4: Final Polish [COMPLETE]
 *   **Step 4.1**: Build and verify.
 *   **Step 4.2**: Neutralize any remaining icons to match the theme's text color.
+*   **Step 4.3**: Implement high-fidelity "Orgasmic" fluid popups.
 
 ## Contextual History
 *   **Past**: A "mess" of 14+ themes, inconsistent spacing, and mixed assets.
-*   **Present**: Complete Tokyo Night overhaul with 4 variations. Pixel-perfect geometry implemented (0dp gaps + 1dp insets). Monospace Bold typography established.
-*   **Future**: A clean, unified codebase supporting 4 professional Tokyo Night variations.
+*   **Present**: Complete Tokyo Night overhaul with 4 variations. Fluid, high-performance popups with modern animations.
+*   **Future**: Stability and potential support for more specialized IDE layouts.
 
 ## TODO: Future Modernization Plans
 - [x] **Pixel-Perfect Geometry**: Set `key_bottom_gap` and `key_horizontal_gap` to `0dp` and use strict `1dp` insets to guarantee a uniform `2dp` gutter across all keys.
 - [x] **Soft-Rect Aesthetic**: Update corner radii to `6dp` for a more modern, premium mobile feel.
 - [x] **Tonal Elevation**: Refine the color contrast so Alphas and Modifiers use "Surface Tones" for a more unified look.
 - [x] **Typographic Hierarchy**: Force `Typeface.BOLD` for main labels and significantly reduce the opacity/size of "Hint" characters to reduce visual clutter.
+- [x] **Interaction Depth**: Enhance the "pop-up" animations with scale-up transitions.
 - [ ] **Wireframe Iconography**: Replace any remaining filled icons with thin-stroke (1dp) wireframe versions.
-- [ ] **Interaction Depth**: Enhance the "pop-up" animations with scale-up transitions.
 - [ ] **TBD**
