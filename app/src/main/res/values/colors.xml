@@ -7,9 +7,9 @@
     <!-- Tokyo Night: Storm (Refined Tonal) -->
     <color name="tn_storm_bg">#1E2030</color>
     <color name="tn_storm_key">#24283B</color>
-    <color name="tn_storm_mod">#BB9AF7</color>
+    <color name="tn_storm_mod">#1F2335</color>
     <color name="tn_storm_fg">#C0CAF5</color>
-    <color name="tn_storm_accent">#7AA2F7</color>
+    <color name="tn_storm_accent">#BB9AF7</color>
     <color name="tn_storm_pressed">#3D59A1</color>
     <color name="tn_green">#9ECE6A</color>
 
