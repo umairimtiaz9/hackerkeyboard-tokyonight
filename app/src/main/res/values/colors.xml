@@ -5,7 +5,7 @@
     <color name="candidate_other">#FFFCAE00</color>
     
     <!-- Tokyo Night: Storm (Refined Tonal) -->
-    <color name="tn_storm_bg">#1A1B26</color>
+    <color name="tn_storm_bg">#1E2030</color>
     <color name="tn_storm_key">#24283B</color>
     <color name="tn_storm_mod">#1F2335</color>
     <color name="tn_storm_fg">#C0CAF5</color>
@@ -29,7 +29,7 @@
     <color name="tn_day_pressed">#B4BEFE</color>
 
     <!-- Tokyo Night: Moon (Refined Tonal) -->
-    <color name="tn_moon_bg">#1E2030</color>
+    <color name="tn_moon_bg">#1A1B26</color>
     <color name="tn_moon_key">#222436</color>
     <color name="tn_moon_mod">#2F334D</color>
     <color name="tn_moon_fg">#C0CAF5</color>
