@@ -12,13 +12,25 @@
         </inset>
     </item>
 
-    <!-- STICKY/LOCKED STATE (e.g. Caps Lock) -->
+    <!-- STICKY/LOCKED STATE (e.g. Caps Lock, Ctrl, Alt) -->
     <item android:state_checked="true">
         <inset android:insetLeft="1dp" android:insetTop="1dp" android:insetRight="1dp" android:insetBottom="1dp">
-            <shape android:shape="rectangle">
-                <corners android:radius="6dp" />
-                <solid android:color="?attr/kbdColorHighlight" />
-            </shape>
+            <layer-list>
+                <!-- Layer 0: The "Active" base color (Orange) -->
+                <item>
+                    <shape android:shape="rectangle">
+                        <corners android:radius="6dp" />
+                        <solid android:color="?attr/kbdColorActive" />
+                    </shape>
+                </item>
+                <!-- Layer 1: The Highlight background, inset from bottom to reveal the Orange line -->
+                <item android:bottom="3dp">
+                    <shape android:shape="rectangle">
+                        <corners android:radius="6dp" />
+                        <solid android:color="?attr/kbdColorHighlight" />
+                    </shape>
+                </item>
+            </layer-list>
         </inset>
     </item>
 

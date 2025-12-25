@@ -31,6 +31,7 @@
         <item name="kbdColorHighlight">@color/tn_storm_bg_highlight</item>
         <item name="kbdColorText">@color/tn_storm_fg</item>
         <item name="kbdColorAccent">@color/tn_storm_magenta</item>
+        <item name="kbdColorActive">@color/tn_storm_orange</item>
         <item name="kbdColorPopup">@color/tn_storm_green</item>
         
         <item name="android:background">?attr/kbdColorBase</item>
@@ -49,6 +50,7 @@
         <item name="kbdColorHighlight">@color/tn_night_bg_highlight</item>
         <item name="kbdColorText">@color/tn_night_fg</item>
         <item name="kbdColorAccent">@color/tn_night_magenta</item>
+        <item name="kbdColorActive">@color/tn_night_orange</item>
         <item name="kbdColorPopup">@color/tn_night_green</item>
     </style>
 
@@ -59,6 +61,7 @@
         <item name="kbdColorHighlight">@color/tn_moon_bg_highlight</item>
         <item name="kbdColorText">@color/tn_moon_fg</item>
         <item name="kbdColorAccent">@color/tn_moon_magenta</item>
+        <item name="kbdColorActive">@color/tn_moon_orange</item>
         <item name="kbdColorPopup">@color/tn_moon_green</item>
     </style>
 
@@ -69,6 +72,7 @@
         <item name="kbdColorHighlight">@color/tn_day_bg_highlight</item>
         <item name="kbdColorText">@color/tn_day_fg</item>
         <item name="kbdColorAccent">@color/tn_day_magenta</item>
+        <item name="kbdColorActive">@color/tn_day_orange</item>
         <item name="kbdColorPopup">@color/tn_day_green</item>
     </style>
 

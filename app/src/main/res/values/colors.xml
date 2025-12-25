@@ -12,6 +12,7 @@
     <color name="tn_storm_fg">#C0CAF5</color>
     <color name="tn_storm_magenta">#BB9AF7</color>
     <color name="tn_storm_green">#9ECE6A</color>
+    <color name="tn_storm_orange">#FF9E64</color>
 
     <!-- NIGHT VARIANT -->
     <color name="tn_night_bg">#1A1B26</color>
@@ -21,6 +22,7 @@
     <color name="tn_night_fg">#C0CAF5</color>
     <color name="tn_night_magenta">#BB9AF7</color>
     <color name="tn_night_green">#9ECE6A</color>
+    <color name="tn_night_orange">#FF9E64</color>
 
     <!-- MOON VARIANT -->
     <color name="tn_moon_bg">#222436</color>
@@ -30,6 +32,7 @@
     <color name="tn_moon_fg">#C8D3F5</color>
     <color name="tn_moon_magenta">#C099FF</color>
     <color name="tn_moon_green">#C3E88D</color>
+    <color name="tn_moon_orange">#FF9E64</color>
 
     <!-- DAY VARIANT (Light Mode) -->
     <color name="tn_day_bg">#E1E2E7</color>
@@ -39,6 +42,7 @@
     <color name="tn_day_fg">#3760BF</color>
     <color name="tn_day_magenta">#9854F1</color>
     <color name="tn_day_green">#587539</color>
+    <color name="tn_day_orange">#B15C00</color>
 
     <!-- LEGACY ALIASES (For build compatibility) -->
     <color name="tn_storm_key">@color/tn_storm_bg_dark</color>

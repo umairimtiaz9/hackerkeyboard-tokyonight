@@ -107,6 +107,9 @@
         <!-- The accent color for special symbols (Arrows) -->
         <attr name="kbdColorAccent" format="color" />
         
+        <!-- The color for active/sticky modifier indicators (Ctrl, Alt) -->
+        <attr name="kbdColorActive" format="color" />
+        
         <!-- The border/stroke color for popups -->
         <attr name="kbdColorPopup" format="color" />
 
