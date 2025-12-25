@@ -22,7 +22,7 @@
     android:layout_width="wrap_content"
     android:layout_height="80dp"
     android:textSize="40sp"
-    android:textColor="@color/tn_storm_fg"
+    android:textColor="?attr/kbdColorText"
     android:minWidth="32dp"
     android:gravity="center"
     android:background="@drawable/preview_bg_storm"

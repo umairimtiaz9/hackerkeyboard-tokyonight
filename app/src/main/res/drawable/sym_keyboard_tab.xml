@@ -3,7 +3,7 @@
     android:height="24dp"
     android:viewportWidth="24"
     android:viewportHeight="24"
-    android:tint="@color/tn_storm_fg">
+    android:tint="?attr/kbdColorText">
     <path
         android:fillColor="@android:color/white"
         android:pathData="M15,5l-1.41,1.41L18.17,11H2V13h16.17l-4.59,4.59L15,19l7,-7l-7,-7z"/>

@@ -3,7 +3,7 @@
     android:height="24dp"
     android:viewportWidth="24"
     android:viewportHeight="24"
-    android:tint="@color/tn_storm_fg">
+    android:tint="?attr/kbdColorText">
     <!-- Arrow -->
     <path
         android:fillColor="@android:color/white"

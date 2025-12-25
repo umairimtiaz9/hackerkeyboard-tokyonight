@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Tokyo Night Edition] - 2025-12-26
+
+### Added
+- **Data-Oriented Architecture**: Decoupled UI components from hardcoded color values. Introduced a semantic attribute system (`attrs.xml`) that maps roles (Base, Alpha, Mod, Highlight, Accent, Popup) to theme-specific colors.
+- **Unified Component System**: Implemented `btn_key_tokyonight.xml` (Universal Key Drawable), `preview_tokyonight_dynamic.xml` (Universal Preview), and `popup_tokyonight_dynamic.xml` (Universal Shape).
+- **Dynamic Theme Wrapping**: Modified `KeyboardSwitcher.java` to use `ContextThemeWrapper`, enabling the keyboard to swap its entire color palette at runtime without layout duplication.
+- **Surgical Vector Tinting**: Transitioned all keyboard symbols (`sym_keyboard_*.xml`) to use `?attr/kbdColorText` for perfect theme adherence.
+
+### Changed
+- **Monolithic Geometry**: Refined Storm and Moon palettes to use consistent "Surface Tones," creating a unified visual slab effect.
+- **Unified Selectors**: Replaced 14+ legacy `input_*.xml` layouts with 4 unified, attribute-driven layout files.
+
 ## [Tokyo Night Edition] - 2025-12-25
 
 ### Added

@@ -15,7 +15,7 @@
         android:background="@color/latinkeyboard_transparent"
 
         latin:keyBackground="@drawable/btn_key_storm"
-        latin:keyTextColor="@color/tn_storm_fg"
+        latin:keyTextColor="?attr/kbdColorText"
         latin:keyHysteresisDistance="0dip"
         latin:verticalCorrection="@dimen/mini_keyboard_vertical_correction"
         latin:keyPreviewLayout="@layout/null_layout"
