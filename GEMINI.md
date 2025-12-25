@@ -27,33 +27,33 @@ We will support 4 distinct variations based on `folke/tokyonight.nvim`:
 
 ## Implementation Plan
 
-### Phase 1: Foundation (Colors & Styles)
-*   **Step 1.1**: Define the 4 palettes in `colors.xml`.
+### Phase 1: Foundation (Colors & Styles) [COMPLETE]
+*   **Step 1.1**: Define the 4 palettes in `colors.xml`. (Refined for Tonal Elevation)
 *   **Step 1.2**: Create the "Master Selector" logic in `drawables/` to handle Pressed, Modifier, and Sticky states dynamically.
 
-### Phase 2: The Cleanup (The Great Purge)
-*   **Step 2.1**: Delete all legacy `input_*.xml` files (Gingerbread, ICS, Stone, etc.).
-*   **Step 2.2**: Create 4 unified layout files: `input_tokyonight_storm.xml`, `_night.xml`, `_day.xml`, `_moon.xml`.
-*   **Step 2.3**: Delete all obsolete bitmap assets (`.9.png`) and unused XML selectors.
+### Phase 2: The Cleanup (The Great Purge) [COMPLETE]
+*   **Step 2.1**: Delete all legacy `input_*.xml` files.
+*   **Step 2.2**: Create 4 unified layout files.
+*   **Step 2.3**: Delete all obsolete bitmap assets and unused XML selectors.
 
-### Phase 3: Layout Hardening
-*   **Step 3.1**: Audit `kbd_full.xml` to ensure `isModifier="true"` is set on `Esc`, `Tab`, `Ctrl`, `Alt`, `Arrows` to trigger the darker functional color.
-*   **Step 3.2**: Implement the "Glamorous" popup styles and animations.
+### Phase 3: Layout Hardening [COMPLETE]
+*   **Step 3.1**: Audit `kbd_full.xml` for `isModifier="true"`.
+*   **Step 3.2**: Implement the "Glamorous" popup styles and animations. (Fixed black popup and refined geometry)
 
-### Phase 4: Final Polish
+### Phase 4: Final Polish [IN PROGRESS]
 *   **Step 4.1**: Build and verify.
-*   **Step 4.2**: Neutralize any remaining blue/green icons to match the theme's text color.
+*   **Step 4.2**: Neutralize any remaining icons to match the theme's text color.
 
 ## Contextual History
 *   **Past**: A "mess" of 14+ themes, inconsistent spacing, and mixed assets.
-*   **Present**: Complete Tokyo Night overhaul with 4 variations and Monospace font.
-*   **Future**: A clean, unified codebase supporting 4 professional Tokyo Night variations with pixel-perfect layouts.
+*   **Present**: Complete Tokyo Night overhaul with 4 variations. Pixel-perfect geometry implemented (0dp gaps + 1dp insets). Monospace Bold typography established.
+*   **Future**: A clean, unified codebase supporting 4 professional Tokyo Night variations.
 
 ## TODO: Future Modernization Plans
-- [ ] **Pixel-Perfect Geometry**: Set `key_bottom_gap` and `key_horizontal_gap` to `0dp` and use strict `1dp` insets to guarantee a uniform `2dp` gutter across all keys.
-- [ ] **Soft-Rect Aesthetic**: Update corner radii to `6dp` for a more modern, premium mobile feel.
-- [ ] **Tonal Elevation**: Refine the color contrast so Alphas and Modifiers use "Surface Tones" (subtle variations of the same hue) for a more unified look.
-- [ ] **Typographic Hierarchy**: Force `Typeface.BOLD` for main labels and significantly reduce the opacity/size of "Hint" characters to reduce visual clutter.
+- [x] **Pixel-Perfect Geometry**: Set `key_bottom_gap` and `key_horizontal_gap` to `0dp` and use strict `1dp` insets to guarantee a uniform `2dp` gutter across all keys.
+- [x] **Soft-Rect Aesthetic**: Update corner radii to `6dp` for a more modern, premium mobile feel.
+- [x] **Tonal Elevation**: Refine the color contrast so Alphas and Modifiers use "Surface Tones" for a more unified look.
+- [x] **Typographic Hierarchy**: Force `Typeface.BOLD` for main labels and significantly reduce the opacity/size of "Hint" characters to reduce visual clutter.
 - [ ] **Wireframe Iconography**: Replace any remaining filled icons with thin-stroke (1dp) wireframe versions.
-- [ ] **Interaction Depth**: Enhance the "pop-up" animations with scale-up transitions to match modern OS behaviors (Gboard/iOS).
+- [ ] **Interaction Depth**: Enhance the "pop-up" animations with scale-up transitions.
 - [ ] **TBD**
