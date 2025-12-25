@@ -19,7 +19,7 @@ package org.pocketworkstation.pckeyboard;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import android.util.Log;
 import android.view.InflateException;
 
@@ -59,17 +59,23 @@ public class KeyboardSwitcher implements
     // Symbols keyboard layout with the settings key
     public static final int KEYBOARDMODE_SYMBOLS_WITH_SETTINGS_KEY = R.id.mode_symbols_with_settings_key;
 
-    public static final String DEFAULT_LAYOUT_ID = "0";
+    public static final String DEFAULT_LAYOUT_ID = "10";
     public static final String PREF_KEYBOARD_LAYOUT = "pref_keyboard_layout";
     private static final int[] THEMES = new int[] {
-        R.layout.input_ics,
-        R.layout.input_gingerbread,
-        R.layout.input_stone_bold,
-        R.layout.input_trans_neon,
-        R.layout.input_material_dark,
-        R.layout.input_material_light,
-        R.layout.input_ics_darker,
-        R.layout.input_material_black,
+        R.layout.input_tokyonight_storm, // 0 -> Mapped to Storm as fallback
+        R.layout.input_tokyonight_storm, // 1 -> Legacy Stone Bold
+        R.layout.input_tokyonight_storm, // 2 -> Legacy Trans Neon
+        R.layout.input_tokyonight_storm, // 3 -> Legacy Material Dark
+        R.layout.input_tokyonight_storm, // 4 -> Legacy Material Light
+        R.layout.input_tokyonight_storm, // 5 -> Legacy ICS Darker
+        R.layout.input_tokyonight_storm, // 6 -> Legacy Material Black
+        R.layout.input_tokyonight_storm, // 7 -> Legacy Gingerbread
+        R.layout.input_tokyonight_storm, // 8
+        R.layout.input_tokyonight_storm, // 9
+        R.layout.input_tokyonight_storm, // 10
+        R.layout.input_tokyonight_night, // 11
+        R.layout.input_tokyonight_day,   // 12
+        R.layout.input_tokyonight_moon,  // 13
     };
 
     // Tables which contains resource ids for each character theme color

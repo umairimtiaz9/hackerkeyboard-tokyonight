@@ -69,12 +69,6 @@
     <string name="tip_add_to_dictionary" msgid="1487293888469227817">"Lange auf das Wort ganz links außen drücken, um es zum Wörterbuch hinzuzufügen"</string>
     <string name="touch_to_continue" msgid="7869803257948414531">"Diesen Hinweis berühren, um fortzufahren »"</string>
     <string name="touch_to_finish" msgid="7990196086480585789">"Hier berühren, um diesen Hinweis zu schließen und mit dem Tippen zu beginnen!"</string>
-    <string name="tip_to_open_keyboard" msgid="6821200275486950452"><b>"Die Tastatur wird immer dann geöffnet, wenn Sie ein Textfeld berühren."</b></string>
-    <string name="tip_to_view_accents" msgid="5433158573693308501"><b>"Halten Sie eine Taste gedrückt, um Akzente anzuzeigen"\n"(ø, ö, ô, ó usw.)."</b></string>
-    <string name="tip_to_open_symbols" msgid="7345139325622444880"><b>"Wechseln Sie zu Ziffern und Symbolen, indem Sie diese Taste berühren."</b></string>
-    <string name="tip_to_close_symbols" msgid="5227724217206927185"><b>"Durch erneutes Drücken dieser Taste gelangen Sie zurück zu den Buchstaben."</b></string>
-    <string name="tip_to_launch_settings" msgid="8402961128983196128"><b>"Halten Sie diese Taste gedrückt, um die Tastatureinstellungen, wie beispielsweise die automatische Vervollständigung, zu ändern."</b></string>
-    <string name="tip_to_start_typing" msgid="7213843601369174313"><b>"Probieren Sie es aus!"</b></string>
     <string name="label_go_key" msgid="1635148082137219148">"Los"</string>
     <string name="label_next_key" msgid="362972844525672568">"Weiter"</string>
     <string name="label_done_key" msgid="2441578748772529288">"Fertig"</string>
@@ -116,7 +110,6 @@
   </string-array>
     <string name="auto_submit" msgid="9151008027068358518">"Nach Sprachaufnahme automatisch senden"</string>
     <string name="auto_submit_summary" msgid="4961875269610384226">"Drücken Sie auf die Eingabetaste, wenn Sie einen Suchvorgang durchführen oder zum nächsten Feld wechseln."</string>
-    <string name="open_the_keyboard" msgid="2215920976029260466"><font size="17"><b>"Tastatur öffnen"\n</b></font><font size="3">\n</font>"Berühren Sie ein beliebiges Textfeld."</string>
     <string name="close_the_keyboard" msgid="6251022259044940103"><font size="17"><b>"Tastatur schließen"\n</b></font><font size="3">\n</font>"Drücken Sie die Zurücktaste."</string>
     <string name="touch_and_hold" msgid="6154166367273010534"><font size="17"><b>"Für Optionen eine Taste berühren und gedrückt halten"\n</b></font><font size="3">\n</font>"Greifen Sie auf Satzzeichen und Akzente zu."</string>
     <string name="keyboard_settings" msgid="4585753477617374032"><font size="17"><b>"Tastatureinstellungen"\n</b></font><font size="3">\n</font>"Berühren und halten Sie die Taste "<b>"?123"</b>" gedrückt."</string>

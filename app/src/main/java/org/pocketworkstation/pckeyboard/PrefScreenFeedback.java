@@ -16,36 +16,31 @@
 
 package org.pocketworkstation.pckeyboard;
 
-import android.app.backup.BackupManager;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.PreferenceActivity;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceFragmentCompat;
 
-public class PrefScreenFeedback extends PreferenceActivity
-        implements SharedPreferences.OnSharedPreferenceChangeListener {
-
-    @Override
-    protected void onCreate(Bundle icicle) {
-        super.onCreate(icicle);
-        addPreferencesFromResource(R.xml.prefs_feedback);
-        SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
-        prefs.registerOnSharedPreferenceChangeListener(this);
-    }
+public class PrefScreenFeedback extends AppCompatActivity {
 
     @Override
-    protected void onDestroy() {
-        getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(
-                this);
-        super.onDestroy();
+    protected void onCreate(Bundle savedInstanceState) {
+        // Ensure the activity has a theme that supports PreferenceFragmentCompat
+        setTheme(R.style.Theme_HackerKeyboard);
+        super.onCreate(savedInstanceState);
+        
+        setContentView(R.layout.activity_settings);
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.settings_container, new FeedbackFragment())
+                    .commit();
+        }
     }
 
-    public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-        (new BackupManager(this)).dataChanged();
-    }
-    
-    @Override
-    protected void onResume() {
-        super.onResume();
+    public static class FeedbackFragment extends PreferenceFragmentCompat {
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            setPreferencesFromResource(R.xml.prefs_feedback, rootKey);
+        }
     }
 }

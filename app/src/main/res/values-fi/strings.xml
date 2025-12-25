@@ -69,12 +69,6 @@
     <string name="tip_add_to_dictionary" msgid="1487293888469227817">"Lisää vasemmanpuoleinen sana sanakirjaan pitämällä sitä painettuna"</string>
     <string name="touch_to_continue" msgid="7869803257948414531">"Jatka koskettamalla tätä vihjettä »"</string>
     <string name="touch_to_finish" msgid="7990196086480585789">"Sulje tämä vihje ja aloita kirjoittaa koskettamalla tätä!"</string>
-    <string name="tip_to_open_keyboard" msgid="6821200275486950452"><b>"Näppäimistö avautuu, kun kosketat tekstikenttää"</b></string>
-    <string name="tip_to_view_accents" msgid="5433158573693308501"><b>"Näytä aksenttimerkit pitämällä näppäintä painettuna"\n"(ø, ö, ô, ó ja niin edelleen"</b></string>
-    <string name="tip_to_open_symbols" msgid="7345139325622444880"><b>"Vaihda numeroihin ja symboleihin koskettamalla tätä näppäintä"</b></string>
-    <string name="tip_to_close_symbols" msgid="5227724217206927185"><b>"Siirry takaisin kirjaimiin koskettamalla tätä näppäintä uudelleen"</b></string>
-    <string name="tip_to_launch_settings" msgid="8402961128983196128"><b>"Muuta näppäimistön asetuksia, kuten automaattista täydentämistä, pitämällä tätä näppäintä painettuna"</b></string>
-    <string name="tip_to_start_typing" msgid="7213843601369174313"><b>"Kokeile!"</b></string>
     <string name="label_go_key" msgid="1635148082137219148">"Siirry"</string>
     <string name="label_next_key" msgid="362972844525672568">"Seuraava"</string>
     <string name="label_done_key" msgid="2441578748772529288">"Valmis"</string>
@@ -116,7 +110,6 @@
   </string-array>
     <string name="auto_submit" msgid="9151008027068358518">"Lähetä automaattisesti puheen jälkeen"</string>
     <string name="auto_submit_summary" msgid="4961875269610384226">"Paina automaattisesti enter-näppäintä tehdessäsi hakuja tai siirtyessäsi seuraavaan kenttään."</string>
-    <string name="open_the_keyboard" msgid="2215920976029260466"><font size="17"><b>"Avaa näppäimistö"\n</b></font><font size="3">\n</font>"Kosketa tekstikenttää."</string>
     <string name="close_the_keyboard" msgid="6251022259044940103"><font size="17"><b>"Sulje näppäimistö"\n</b></font><font size="3">\n</font>"Paina Takaisin-näppäintä."</string>
     <string name="touch_and_hold" msgid="6154166367273010534"><font size="17"><b>"Näet asetukset pitämällä näppäintä painettuna"\n</b></font><font size="3">\n</font>"Käytä välimerkkejä ja aksenttimerkkejä."</string>
     <string name="keyboard_settings" msgid="4585753477617374032"><font size="17"><b>"Näppäimistön asetukset"\n</b></font><font size="3">\n</font>"Pidä painettuna"<b>"?123"</b>"-näppäintä."</string>

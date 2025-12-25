@@ -69,12 +69,6 @@
     <string name="tip_add_to_dictionary" msgid="1487293888469227817">"Натисн. і утримуйте ліве крайнє слово, щоб додати його до словн."</string>
     <string name="touch_to_continue" msgid="7869803257948414531">"Натис. цю підказку для продовж.»"</string>
     <string name="touch_to_finish" msgid="7990196086480585789">"Натисн. тут, щоб закрити цю підказку і почати ввод."</string>
-    <string name="tip_to_open_keyboard" msgid="6821200275486950452"><b>"Клавіатура відривається при торканні текстового поля"</b></string>
-    <string name="tip_to_view_accents" msgid="5433158573693308501"><b>"Натис. і утрим. клавішу для перегл. наголосів"\n"(ø, ö, ô, ó тощо)"</b></string>
-    <string name="tip_to_open_symbols" msgid="7345139325622444880"><b>"Перемк. до цифр і символів, натиснувши цю кнопку "</b></string>
-    <string name="tip_to_close_symbols" msgid="5227724217206927185"><b>"Поверніться до літер, знову натиснувши цю клавішу"</b></string>
-    <string name="tip_to_launch_settings" msgid="8402961128983196128"><b>"Натис. і утрим. клавішу, щоб змін. налашт-ння клавіат., такі як автозапов."</b></string>
-    <string name="tip_to_start_typing" msgid="7213843601369174313"><b>"Спробуйте!"</b></string>
     <string name="label_go_key" msgid="1635148082137219148">"Іти"</string>
     <string name="label_next_key" msgid="362972844525672568">"Далі"</string>
     <string name="label_done_key" msgid="2441578748772529288">"Готово"</string>
@@ -116,7 +110,6 @@
   </string-array>
     <string name="auto_submit" msgid="9151008027068358518">"Авто подав. після гол. пош."</string>
     <string name="auto_submit_summary" msgid="4961875269610384226">"Автомат. натиск. enter під час пошуку або переходу до наступного поля."</string>
-    <string name="open_the_keyboard" msgid="2215920976029260466"><font size="17"><b>"Відкр. клавіатуру"\n</b></font><font size="3">\n</font>"Натисн. якесь текст. поле."</string>
     <string name="close_the_keyboard" msgid="6251022259044940103"><font size="17"><b>"Закрити клавіатуру"\n</b></font><font size="3">\n</font>"Натисн. клавішу Назад."</string>
     <string name="touch_and_hold" msgid="6154166367273010534"><font size="17"><b>"Натис.і утрим. клавішк для отрим. парам."\n</b></font><font size="3">\n</font>"Доступ до пункт. та наголос."</string>
     <string name="keyboard_settings" msgid="4585753477617374032"><font size="17"><b>"Налашт-ння клавіатури"\n</b></font><font size="3">\n</font>"Натисн. і утрим. клавішу "<b>"?123"</b></string>

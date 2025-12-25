@@ -21,7 +21,7 @@
 <Keyboard
     xmlns:android="http://schemas.android.com/apk/res-auto"
     android:keyWidth="10%p"
-    android:horizontalGap="0px"
+    android:horizontalGap="@dimen/key_horizontal_gap"
     android:verticalGap="@dimen/key_bottom_gap"
 >
     <Row android:extension="true">
@@ -179,6 +179,7 @@
             android:keyEdgeFlags="left" />
         <Key
             android:codes="@integer/key_f1"
+            android:keyIcon="@drawable/sym_keyboard_language"
             android:isModifier="true" />
         <Key
             android:codes="@integer/key_space"
@@ -211,6 +212,7 @@
             android:keyEdgeFlags="left" />
         <Key
             android:codes="@integer/key_f1"
+            android:keyIcon="@drawable/sym_keyboard_language"
             android:isModifier="true" />
         <Key
             android:codes="@integer/key_space"
@@ -243,6 +245,7 @@
             android:keyEdgeFlags="left" />
         <Key
             android:codes="@integer/key_f1"
+            android:keyIcon="@drawable/sym_keyboard_language"
             android:isModifier="true" />
         <Key
             android:codes="@integer/key_space"
@@ -275,6 +278,7 @@
             android:keyEdgeFlags="left" />
         <Key
             android:codes="@integer/key_f1"
+            android:keyIcon="@drawable/sym_keyboard_language"
             android:isModifier="true" />
         <Key
             android:codes="@integer/key_space"
@@ -308,6 +312,7 @@
             android:keyEdgeFlags="left" />
         <Key
             android:codes="@integer/key_f1"
+            android:keyIcon="@drawable/sym_keyboard_language"
             android:isModifier="true" />
         <Key
             android:codes="@integer/key_space"
@@ -350,6 +355,7 @@
             android:isModifier="true" />
         <Key
             android:codes="@integer/key_f1"
+            android:keyIcon="@drawable/sym_keyboard_language"
             android:isModifier="true" />
         <Key
             android:codes="@integer/key_space"
@@ -387,6 +393,7 @@
             android:isModifier="true" />
         <Key
             android:codes="@integer/key_f1"
+            android:keyIcon="@drawable/sym_keyboard_language"
             android:isModifier="true" />
         <Key
             android:codes="@integer/key_space"
@@ -424,6 +431,7 @@
             android:isModifier="true" />
         <Key
             android:codes="@integer/key_f1"
+            android:keyIcon="@drawable/sym_keyboard_language"
             android:isModifier="true" />
         <Key
             android:codes="@integer/key_space"
@@ -461,6 +469,7 @@
             android:isModifier="true" />
         <Key
             android:codes="@integer/key_f1"
+            android:keyIcon="@drawable/sym_keyboard_language"
             android:isModifier="true" />
         <Key
             android:codes="@integer/key_space"
@@ -499,6 +508,7 @@
             android:isModifier="true" />
         <Key
             android:codes="@integer/key_f1"
+            android:keyIcon="@drawable/sym_keyboard_language"
             android:isModifier="true" />
         <Key
             android:codes="@integer/key_space"

@@ -69,12 +69,6 @@
     <string name="tip_add_to_dictionary" msgid="1487293888469227817">"一番左の単語を長押しすると辞書に追加されます"</string>
     <string name="touch_to_continue" msgid="7869803257948414531">"続けるにはここをタッチ"</string>
     <string name="touch_to_finish" msgid="7990196086480585789">"タッチしてこのヒントを終了し、入力を開始してください。"</string>
-    <string name="tip_to_open_keyboard" msgid="6821200275486950452"><b>"テキストフィールドを選択するとキーボードが表示されます"</b></string>
-    <string name="tip_to_view_accents" msgid="5433158573693308501"><b>"キーを長押しするとアクセント付き文字"\n"（ø、ö、ô、óなど）が表示されます"</b></string>
-    <string name="tip_to_open_symbols" msgid="7345139325622444880"><b>"このキーを押すと、数字/記号入力に切り替わります"</b></string>
-    <string name="tip_to_close_symbols" msgid="5227724217206927185"><b>"このキーを押すと、文字入力に再度切り替わります"</b></string>
-    <string name="tip_to_launch_settings" msgid="8402961128983196128"><b>"オートコンプリートなどのキーボードの設定を変更するには、このキーを長押しします"</b></string>
-    <string name="tip_to_start_typing" msgid="7213843601369174313"><b>"試してみてください。"</b></string>
     <string name="label_go_key" msgid="1635148082137219148">"実行"</string>
     <string name="label_next_key" msgid="362972844525672568">"次へ"</string>
     <string name="label_done_key" msgid="2441578748772529288">"完了"</string>
@@ -116,7 +110,6 @@
   </string-array>
     <string name="auto_submit" msgid="9151008027068358518">"入力後に自動送信する"</string>
     <string name="auto_submit_summary" msgid="4961875269610384226">"検索または次のフィールドに進む際、Enterキーが自動的に押されます。"</string>
-    <string name="open_the_keyboard" msgid="2215920976029260466"><font size="17"><b>"キーボードを開く"\n</b></font><font size="3">\n</font>"テキストフィールドをタップします。"</string>
     <string name="close_the_keyboard" msgid="6251022259044940103"><font size="17"><b>"キーボードを閉じる"\n</b></font><font size="3">\n</font>"[戻る]キーを押します。"</string>
     <string name="touch_and_hold" msgid="6154166367273010534"><font size="17"><b>"キーを長押しして選択する"\n</b></font><font size="3">\n</font>"句読点キーとアクセント文字を表示します。"</string>
     <string name="keyboard_settings" msgid="4585753477617374032"><font size="17"><b>"キーボードの設定"\n</b></font><font size="3">\n</font>"["<b>"?123"</b>"]キーを長押しします。"</string>

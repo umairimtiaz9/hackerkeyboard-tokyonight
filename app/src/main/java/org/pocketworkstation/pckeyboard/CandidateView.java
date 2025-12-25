@@ -244,7 +244,7 @@ public class CandidateView extends View {
             paint.setColor(mColorNormal);
             if (mHaveMinimalSuggestion 
                     && ((i == 1 && !typedWordValid) || (i == 0 && typedWordValid))) {
-                paint.setTypeface(Typeface.DEFAULT_BOLD);
+                paint.setTypeface(Typeface.create(Typeface.MONOSPACE, Typeface.BOLD));
                 paint.setColor(mColorRecommended);
                 existsAutoCompletion = true;
             } else if (i != 0 || (wordLength == 1 && count > 1)) {
@@ -283,7 +283,7 @@ public class CandidateView extends View {
                 }
                 canvas.translate(-x - wordWidth, 0);
             }
-            paint.setTypeface(Typeface.DEFAULT);
+            paint.setTypeface(Typeface.MONOSPACE);
             x += wordWidth;
         }
         if (!isInEditMode())

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Pressed State -->
+    <item android:state_pressed="true" 
+          android:drawable="@drawable/key_bg_storm_pressed" />
+    
+    <!-- Sticky/Locked State (e.g. Caps Lock ON) -->
+    <!-- Re-using pressed or a specific active style could work, but sticking to mod/pressed for now -->
+    <item android:state_checked="true" 
+          android:drawable="@drawable/key_bg_storm_pressed" />
+          
+    <!-- Modifier Keys (Ctrl, Alt, etc.) -->
+    <!-- Note: We need to ensure 'state_modifier' is actually passed or mapped. 
+         Standard Android StateListDrawable doesn't have 'state_modifier'. 
+         Hacker's Keyboard likely maps 'state_single' to functional/modifier keys based on previous files.
+         Checking btn_keyboard_key_stone.xml confirms: android:state_single="true" is used for functional keys.
+    -->
+    <item android:state_single="true"
+          android:drawable="@drawable/key_bg_storm_mod" />
+          
+    <!-- Default Normal Key -->
+    <item android:drawable="@drawable/key_bg_storm_normal" />
+</selector>

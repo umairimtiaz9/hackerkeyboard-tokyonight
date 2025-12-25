@@ -122,19 +122,19 @@ public final class GlobalKeyboardSettings {
         final Resources res = resources;
 
         addStringPref("pref_keyboard_mode_portrait", new StringPref() {
-            public void set(String val) { keyboardModePortrait = Integer.valueOf(val); }
+            public void set(String val) { try { keyboardModePortrait = Integer.valueOf(val); } catch (NumberFormatException e) { keyboardModePortrait = 0; } }
             public String getDefault() { return res.getString(R.string.default_keyboard_mode_portrait); }
             public int getFlags() { return FLAG_PREF_RESET_KEYBOARDS | FLAG_PREF_RESET_MODE_OVERRIDE; }
         });
 
         addStringPref("pref_keyboard_mode_landscape", new StringPref() {
-            public void set(String val) { keyboardModeLandscape = Integer.valueOf(val); }
+            public void set(String val) { try { keyboardModeLandscape = Integer.valueOf(val); } catch (NumberFormatException e) { keyboardModeLandscape = 2; } }
             public String getDefault() { return res.getString(R.string.default_keyboard_mode_landscape); }
             public int getFlags() { return FLAG_PREF_RESET_KEYBOARDS | FLAG_PREF_RESET_MODE_OVERRIDE; }
         });
 
         addStringPref("pref_slide_keys_int", new StringPref() {
-            public void set(String val) { sendSlideKeys = Integer.valueOf(val); }
+            public void set(String val) { try { sendSlideKeys = Integer.valueOf(val); } catch (NumberFormatException e) { sendSlideKeys = 0; } }
             public String getDefault() { return "0"; }
             public int getFlags() { return FLAG_PREF_NONE; }
         });
@@ -146,7 +146,7 @@ public final class GlobalKeyboardSettings {
         });
 
         addStringPref("pref_popup_content", new StringPref() {
-            public void set(String val) { popupKeyboardFlags = Integer.valueOf(val); }
+            public void set(String val) { try { popupKeyboardFlags = Integer.valueOf(val); } catch (NumberFormatException e) { popupKeyboardFlags = 1; } }
             public String getDefault() { return res.getString(R.string.default_popup_content); }
             public int getFlags() { return FLAG_PREF_RESET_KEYBOARDS; }
         });
@@ -158,55 +158,55 @@ public final class GlobalKeyboardSettings {
         });
 
         addStringPref("pref_label_scale_v2", new StringPref() {
-            public void set(String val) { labelScalePref = Float.valueOf(val); }
+            public void set(String val) { try { labelScalePref = Float.valueOf(val); } catch (NumberFormatException e) { labelScalePref = 1.0f; } }
             public String getDefault() { return "1.0"; }
             public int getFlags() { return FLAG_PREF_RECREATE_INPUT_VIEW; }
         });
 
         addStringPref("pref_candidate_scale", new StringPref() {
-            public void set(String val) { candidateScalePref = Float.valueOf(val); }
+            public void set(String val) { try { candidateScalePref = Float.valueOf(val); } catch (NumberFormatException e) { candidateScalePref = 1.0f; } }
             public String getDefault() { return "1.0"; }
             public int getFlags() { return FLAG_PREF_RESET_KEYBOARDS; }
         });
 
         addStringPref("pref_top_row_scale", new StringPref() {
-            public void set(String val) { topRowScale = Float.valueOf(val); }
+            public void set(String val) { try { topRowScale = Float.valueOf(val); } catch (NumberFormatException e) { topRowScale = 1.0f; } }
             public String getDefault() { return "1.0"; }
             public int getFlags() { return FLAG_PREF_RESET_KEYBOARDS; }
         });
 
         addStringPref("pref_ctrl_a_override", new StringPref() {
-            public void set(String val) { ctrlAOverride = Integer.valueOf(val); }
+            public void set(String val) { try { ctrlAOverride = Integer.valueOf(val); } catch (NumberFormatException e) { ctrlAOverride = 0; } }
             public String getDefault() { return res.getString(R.string.default_ctrl_a_override); }
             public int getFlags() { return FLAG_PREF_RESET_KEYBOARDS; }
         });
 
         addStringPref("pref_chording_ctrl_key", new StringPref() {
-            public void set(String val) { chordingCtrlKey = Integer.valueOf(val); }
+            public void set(String val) { try { chordingCtrlKey = Integer.valueOf(val); } catch (NumberFormatException e) { chordingCtrlKey = 0; } }
             public String getDefault() { return res.getString(R.string.default_chording_ctrl_key); }
             public int getFlags() { return FLAG_PREF_RESET_KEYBOARDS; }
         });
 
         addStringPref("pref_chording_alt_key", new StringPref() {
-            public void set(String val) { chordingAltKey = Integer.valueOf(val); }
+            public void set(String val) { try { chordingAltKey = Integer.valueOf(val); } catch (NumberFormatException e) { chordingAltKey = 0; } }
             public String getDefault() { return res.getString(R.string.default_chording_alt_key); }
             public int getFlags() { return FLAG_PREF_RESET_KEYBOARDS; }
         });
 
         addStringPref("pref_chording_meta_key", new StringPref() {
-            public void set(String val) { chordingMetaKey = Integer.valueOf(val); }
+            public void set(String val) { try { chordingMetaKey = Integer.valueOf(val); } catch (NumberFormatException e) { chordingMetaKey = 0; } }
             public String getDefault() { return res.getString(R.string.default_chording_meta_key); }
             public int getFlags() { return FLAG_PREF_RESET_KEYBOARDS; }
         });
 
         addStringPref("pref_click_volume", new StringPref() {
-            public void set(String val) { keyClickVolume = Float.valueOf(val); }
+            public void set(String val) { try { keyClickVolume = Float.valueOf(val); } catch (NumberFormatException e) { keyClickVolume = 0.2f; } }
             public String getDefault() { return res.getString(R.string.default_click_volume); }
             public int getFlags() { return FLAG_PREF_NONE; }
         });
 
         addStringPref("pref_click_method", new StringPref() {
-            public void set(String val) { keyClickMethod = Integer.valueOf(val); }
+            public void set(String val) { try { keyClickMethod = Integer.valueOf(val); } catch (NumberFormatException e) { keyClickMethod = 0; } }
             public String getDefault() { return res.getString(R.string.default_click_method); }
             public int getFlags() { return FLAG_PREF_NONE; }
         });

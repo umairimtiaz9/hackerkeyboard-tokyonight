@@ -23,7 +23,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="@dimen/candidate_strip_height"
-        android:background="@drawable/keyboard_suggest_strip"
+        android:background="@color/tn_storm_bg"
         >
 
     <org.pocketworkstation.pckeyboard.CandidateView

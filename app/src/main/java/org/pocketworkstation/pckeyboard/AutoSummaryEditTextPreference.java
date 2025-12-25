@@ -1,7 +1,7 @@
 package org.pocketworkstation.pckeyboard;
 
 import android.content.Context;
-import android.preference.EditTextPreference;
+import androidx.preference.EditTextPreference;
 import android.util.AttributeSet;
 
 public class AutoSummaryEditTextPreference extends EditTextPreference {
@@ -17,6 +17,10 @@ public class AutoSummaryEditTextPreference extends EditTextPreference {
     public AutoSummaryEditTextPreference(Context context, AttributeSet attrs,
             int defStyle) {
         super(context, attrs, defStyle);
+    }
+
+    public AutoSummaryEditTextPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override

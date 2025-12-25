@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.pocketworkstation.pckeyboard.LatinKeyboardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:latin="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/LatinkeyboardBaseView"
+    android:layout_alignParentBottom="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/keyboard_bottom_padding"
+    android:background="@color/tn_storm_bg"
+
+    latin:keyBackground="@drawable/btn_key_storm"
+    latin:keyTextColor="@color/tn_storm_fg"
+    latin:keyHintColor="@color/tn_storm_fg"
+    latin:popupLayout="@layout/popup_tokyonight_storm"
+    latin:keyPreviewLayout="@layout/preview_tokyonight_storm"
+    />

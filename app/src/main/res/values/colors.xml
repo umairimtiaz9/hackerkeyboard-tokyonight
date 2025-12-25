@@ -1,50 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-/* 
-**
-** Copyright 2008, The Android Open Source Project
-**
-** Licensed under the Apache License, Version 2.0 (the "License"); 
-** you may not use this file except in compliance with the License. 
-** You may obtain a copy of the License at 
-**
-**     http://www.apache.org/licenses/LICENSE-2.0 
-**
-** Unless required by applicable law or agreed to in writing, software 
-** distributed under the License is distributed on an "AS IS" BASIS, 
-** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-** See the License for the specific language governing permissions and 
-** limitations under the License.
-*/
-//    <color name="candidate_recommended">#FF33B5E5</color>
-//    <color name="candidate_other">#FF33B5E5</color>
-//    android:color/holo_blue_light=#FF33B5E5
--->
 <resources>
     <color name="candidate_normal">#FFFFFFFF</color>
     <color name="candidate_recommended">#FFFCAE00</color>
     <color name="candidate_other">#FFFCAE00</color>
-    <color name="latinkeyboard_transparent">#00000000</color>
-    <color name="latinkeyboard_bar_language_shadow_white">#80000000</color>
-    <color name="latinkeyboard_bar_language_shadow_black">#80FFFFFF</color>
-    <color name="latinkeyboard_dim_color_white">#FFDDDDDD</color>
-    <color name="latinkeyboard_dim_color_black">#FF222222</color>
-    <color name="latinkeyboard_extension_background">#A0000000</color>
-    <color name="latinkeyboard_feedback_language_text">#FFFFFFFF</color>
-    <color name="latinkeyboard_key_color_white">#FFFFFFFF</color>
-    <color name="latinkeyboard_key_color_black">#FF000000</color>
+    
+    <!-- Tokyo Night: Storm (Default) -->
+    <color name="tn_storm_bg">#24283B</color>
+    <color name="tn_storm_key">#1F2335</color>
+    <color name="tn_storm_mod">#1A1B26</color>
+    <color name="tn_storm_fg">#C0CAF5</color>
+    <color name="tn_storm_accent">#7AA2F7</color>
+    <color name="tn_storm_pressed">#3D59A1</color>
 
-<!--Material Keyboard Colors-->
-    <color name="key_background_material_black">#000000</color>
-    <color name="key_background_pressed_material_black">#19FFFFFF</color>
-    <color name="key_text_color_material_black">#CCFFFFFF</color>
-    <color name="key_hint_letter_color_material_black">#80FFFFFF</color>
-    <color name="key_background_material_dark">#263238</color>
-    <color name="key_background_pressed_material_dark">#19FFFFFF</color>
-    <color name="key_text_color_material_dark">#CCFFFFFF</color>
-    <color name="key_hint_letter_color_material_dark">#80FFFFFF</color>
-    <color name="key_background_material_light">#ECEFF1</color>
-    <color name="key_background_pressed_material_light">#2637474F</color>
-    <color name="key_text_color_material_light">#000000</color>
-    <color name="key_hint_letter_color_material_light">#B337474F</color>
+    <!-- Tokyo Night: Night -->
+    <color name="tn_night_bg">#1A1B26</color>
+    <color name="tn_night_key">#292E42</color>
+    <color name="tn_night_mod">#16161E</color>
+    <color name="tn_night_fg">#C0CAF5</color>
+    <color name="tn_night_accent">#BB9AF7</color>
+    <color name="tn_night_pressed">#3D59A1</color>
+
+    <!-- Tokyo Night: Day -->
+    <color name="tn_day_bg">#E1E2E7</color>
+    <color name="tn_day_key">#FFFFFF</color>
+    <color name="tn_day_mod">#D0D5E3</color>
+    <color name="tn_day_fg">#3760BF</color>
+    <color name="tn_day_accent">#3760BF</color>
+    <color name="tn_day_pressed">#B4BEFE</color>
+
+    <!-- Tokyo Night: Moon -->
+    <color name="tn_moon_bg">#222436</color>
+    <color name="tn_moon_key">#444B6A</color>
+    <color name="tn_moon_mod">#2F334D</color>
+    <color name="tn_moon_fg">#C0CAF5</color>
+    <color name="tn_moon_accent">#82AAFF</color>
+    <color name="tn_moon_pressed">#3D59A1</color>
+    
+    <!-- Legacy Mappings (to be removed or re-mapped later) -->
+    <color name="latinkeyboard_transparent">#00000000</color>
+    <color name="latinkeyboard_feedback_language_text">#FFFFFFFF</color>
 </resources>

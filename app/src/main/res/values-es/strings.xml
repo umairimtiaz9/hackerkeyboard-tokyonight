@@ -69,12 +69,6 @@
     <string name="tip_add_to_dictionary" msgid="1487293888469227817">"Mantén pulsada la palabra situada más a la izquierda para añadirla al diccionario."</string>
     <string name="touch_to_continue" msgid="7869803257948414531">"Toca esta sugerencia para continuar »"</string>
     <string name="touch_to_finish" msgid="7990196086480585789">"Toca aquí para cerrar la sugerencia y comenzar a escribir."</string>
-    <string name="tip_to_open_keyboard" msgid="6821200275486950452"><b>"El teclado se abre cada vez que tocas un campo de texto"</b>"."</string>
-    <string name="tip_to_view_accents" msgid="5433158573693308501"><b>"Mantén pulsada una tecla para ver los caracteres acentuados"\n"(ø, ö, ô, ó, etc.)."</b></string>
-    <string name="tip_to_open_symbols" msgid="7345139325622444880"><b>"Cambiar a números y a símbolos tocando esta tecla"</b></string>
-    <string name="tip_to_close_symbols" msgid="5227724217206927185"><b>"Volver a las letras tocando esta tecla de nuevo"</b></string>
-    <string name="tip_to_launch_settings" msgid="8402961128983196128"><b>"Mantén pulsada esta tecla para cambiar la configuración de teclado a, por ejemplo, autocompletar"</b>"."</string>
-    <string name="tip_to_start_typing" msgid="7213843601369174313"><b>"¡Pruébalo!"</b></string>
     <string name="label_go_key" msgid="1635148082137219148">"Ir"</string>
     <string name="label_next_key" msgid="362972844525672568">"Sig."</string>
     <string name="label_done_key" msgid="2441578748772529288">"Listo"</string>
@@ -116,7 +110,6 @@
   </string-array>
     <string name="auto_submit" msgid="9151008027068358518">"Enviar automáticamente después de la introducción de voz"</string>
     <string name="auto_submit_summary" msgid="4961875269610384226">"Pulsar Intro automáticamente al buscar o al pasar al siguiente campo"</string>
-    <string name="open_the_keyboard" msgid="2215920976029260466"><font size="17"><b>"Abrir el teclado"\n</b></font><font size="3">\n</font>"Toca cualquier campo de texto."</string>
     <string name="close_the_keyboard" msgid="6251022259044940103"><font size="17"><b>"Cerrar el teclado"\n</b></font><font size="3">\n</font>"Pulsa la tecla \"Atrás\"."</string>
     <string name="touch_and_hold" msgid="6154166367273010534"><font size="17"><b>"Mantén pulsada una tecla para acceder a las opciones."\n</b></font><font size="3">\n</font>"Accede a los signos de puntuación y a los acentos."</string>
     <string name="keyboard_settings" msgid="4585753477617374032"><font size="17"><b>"Ajustes del teclado"\n</b></font><font size="3">\n</font>"Mantén pulsada la tecla "<b>"?123"</b>"."</string>

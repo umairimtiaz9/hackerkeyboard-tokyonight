@@ -20,10 +20,10 @@
 
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="80sp"
+    android:layout_height="80dp"
     android:textSize="40sp"
-    android:textColor="@color/latinkeyboard_key_color_white"
-    android:minWidth="32dip"
+    android:textColor="@color/tn_storm_fg"
+    android:minWidth="32dp"
     android:gravity="center"
-    android:background="@drawable/keyboard_key_feedback_background"
+    android:background="@drawable/preview_bg_storm"
     />

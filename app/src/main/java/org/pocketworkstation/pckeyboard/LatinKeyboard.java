@@ -27,6 +27,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -499,36 +500,23 @@ public class LatinKeyboard extends Keyboard {
         final Canvas canvas = new Canvas(buffer);
         canvas.drawColor(mRes.getColor(R.color.latinkeyboard_transparent), PorterDuff.Mode.CLEAR);
 
-        // If application locales are explicitly selected.
-        if (mLocale != null) {
+        // Samsung Style: Always draw language text if possible
+        if (mLocale != null || mLanguageSwitcher != null) {
             final Paint paint = new Paint();
             paint.setAlpha(opacity);
             paint.setAntiAlias(true);
             paint.setTextAlign(Align.CENTER);
+            paint.setTypeface(Typeface.MONOSPACE);
 
-            final boolean allowVariableTextSize = true;
             Locale locale = mLanguageSwitcher.getInputLocale();
-            //Log.i("PCKeyboard", "input locale: " + locale);
             final String language = layoutSpaceBar(paint, locale,
                     mButtonArrowLeftIcon, mButtonArrowRightIcon, width, height,
                     getTextSizeFromTheme(android.R.style.TextAppearance_Small, 14),
-                    allowVariableTextSize);
+                    true);
 
-            // Draw language text with shadow
-            final int shadowColor = mRes.getColor(R.color.latinkeyboard_bar_language_shadow_white);
-            final float baseline = height * SPACEBAR_LANGUAGE_BASELINE;
-            final float descent = paint.descent();
-            paint.setColor(shadowColor);
-            canvas.drawText(language, width / 2, baseline - descent - 1, paint);
-            paint.setColor(mRes.getColor(R.color.latinkeyboard_dim_color_white));
-
-            canvas.drawText(language, width / 2, baseline - descent, paint);
-
-            // Put arrows that are already layed out on either side of the text
-            if (mLanguageSwitcher.getLocaleCount() > 1) {
-                mButtonArrowLeftIcon.draw(canvas);
-                mButtonArrowRightIcon.draw(canvas);
-            }
+            final float baseline = height * 0.5f; // Center vertically
+            paint.setColor(mRes.getColor(R.color.tn_storm_fg));
+            canvas.drawText(language, width / 2, baseline, paint);
         }
 
         // Draw the spacebar icon at the bottom
@@ -878,6 +866,7 @@ public class LatinKeyboard extends Keyboard {
             mTextPaint.setTextAlign(Align.CENTER);
             mTextPaint.setAlpha(OPACITY_FULLY_OPAQUE);
             mTextPaint.setAntiAlias(true);
+            mTextPaint.setTypeface(Typeface.MONOSPACE);
             mMiddleX = (mWidth - mBackground.getIntrinsicWidth()) / 2;
             mLeftDrawable =
                     mRes.getDrawable(R.drawable.sym_keyboard_feedback_language_arrows_left);

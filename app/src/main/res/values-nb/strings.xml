@@ -69,12 +69,6 @@
     <string name="tip_add_to_dictionary" msgid="1487293888469227817">"Trykk lenge på ordet lengst til venstre for å legge det til i ordlisten"</string>
     <string name="touch_to_continue" msgid="7869803257948414531">"Trykk på dette hintet for å forsette »"</string>
     <string name="touch_to_finish" msgid="7990196086480585789">"Trykk her for å lukke dette hintet og begynne å skrive!"</string>
-    <string name="tip_to_open_keyboard" msgid="6821200275486950452"><b>"Tastaturet åpnes når du tar på et tekstfelt"</b></string>
-    <string name="tip_to_view_accents" msgid="5433158573693308501"><b>"Trykk på og hold nede en tast for å se aksenter"\n"(ø, ö, ô, ó, osv.)"</b></string>
-    <string name="tip_to_open_symbols" msgid="7345139325622444880"><b>"Bytt til tall og symboler ved å trykke på denne tasten"</b></string>
-    <string name="tip_to_close_symbols" msgid="5227724217206927185"><b>"Gå tilbake til bokstaver igjen ved å trykke på denne tasten"</b></string>
-    <string name="tip_to_launch_settings" msgid="8402961128983196128"><b>"Trykk på og hold nede denne tasten for å endre tastaturinnstillinger, som autofullføring"</b></string>
-    <string name="tip_to_start_typing" msgid="7213843601369174313"><b>"Prøv det!"</b></string>
     <string name="label_go_key" msgid="1635148082137219148">"Gå"</string>
     <string name="label_next_key" msgid="362972844525672568">"Neste"</string>
     <string name="label_done_key" msgid="2441578748772529288">"Utfør"</string>
@@ -116,7 +110,6 @@
   </string-array>
     <string name="auto_submit" msgid="9151008027068358518">"Send inn automatisk etter tale"</string>
     <string name="auto_submit_summary" msgid="4961875269610384226">"Trykk Enter automatisk ved søk eller flytting til neste felt."</string>
-    <string name="open_the_keyboard" msgid="2215920976029260466"><font size="17"><b>"Åpne tastaturet"\n</b></font><font size="3">\n</font>"Trykk på et tekstfelt."</string>
     <string name="close_the_keyboard" msgid="6251022259044940103"><font size="17"><b>"Lukke tastaturet"\n</b></font><font size="3">\n</font>"Trykk på tilbaketasten."</string>
     <string name="touch_and_hold" msgid="6154166367273010534"><font size="17"><b>"Trykk og hold nede en tast for flere valg"\n</b></font><font size="3">\n</font>"Få tilgang til skilletegn og aksenter."</string>
     <string name="keyboard_settings" msgid="4585753477617374032"><font size="17"><b>"Innstillinger for tastatur"\n</b></font><font size="3">\n</font>"Trykk på &amp; hold "<b>"?123"</b>"-tasten."</string>

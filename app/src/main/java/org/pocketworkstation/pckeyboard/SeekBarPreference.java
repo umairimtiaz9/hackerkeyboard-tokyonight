@@ -4,25 +4,23 @@ import java.util.Locale;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.preference.DialogPreference;
+import androidx.preference.Preference;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import androidx.appcompat.app.AlertDialog;
 
 /**
  * SeekBarPreference provides a dialog for editing float-valued preferences with a slider.
  */
-public class SeekBarPreference extends DialogPreference {
+public class SeekBarPreference extends Preference {
 
-    private TextView mMinText;
-    private TextView mMaxText;
-    private TextView mValText;
-    private SeekBar mSeek;
     private float mMin;
     private float mMax;
-    private float mVal;
-    private float mPrevVal;
+    protected float mVal;
+    protected float mPrevVal;
     private float mStep;
     private boolean mAsPercent;
     private boolean mLogScale;
@@ -33,9 +31,17 @@ public class SeekBarPreference extends DialogPreference {
         init(context, attrs);
     }
 
+    public SeekBarPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(context, attrs);
+    }
+
+    public SeekBarPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init(context, attrs);
+    }
+
     protected void init(Context context, AttributeSet attrs) {
-        setDialogLayoutResource(R.layout.seek_bar_dialog);
-        
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SeekBarPreference);
         mMin = a.getFloat(R.styleable.SeekBarPreference_minValue, 0.0f);
         mMax = a.getFloat(R.styleable.SeekBarPreference_maxValue, 100.0f);
@@ -43,38 +49,43 @@ public class SeekBarPreference extends DialogPreference {
         mAsPercent = a.getBoolean(R.styleable.SeekBarPreference_asPercent, false);
         mLogScale = a.getBoolean(R.styleable.SeekBarPreference_logScale, false);
         mDisplayFormat = a.getString(R.styleable.SeekBarPreference_displayFormat);
+        a.recycle();
     }
 
     @Override
-    protected Float onGetDefaultValue(TypedArray a, int index) {
+    protected Object onGetDefaultValue(TypedArray a, int index) {
         return a.getFloat(index, 0.0f);
     }
 
     @Override
-    protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {     
-        if (restorePersistedValue) {
-            setVal(getPersistedFloat(0.0f));
+    protected void onSetInitialValue(Object defaultValue) {
+        if (getPersistedFloat(-1.234f) != -1.234f) {
+            mVal = getPersistedFloat(0.0f);
+        } else if (defaultValue != null) {
+            if (defaultValue instanceof Float) {
+                mVal = (Float) defaultValue;
+            } else {
+                try {
+                    mVal = Float.parseFloat(defaultValue.toString());
+                } catch (NumberFormatException e) {
+                    mVal = 0.0f;
+                }
+            }
         } else {
-            setVal((Float) defaultValue);
+            mVal = 0.0f;
         }
-        savePrevVal();
+        mPrevVal = mVal;
     }
 
     private String formatFloatDisplay(Float val) {
-        // Use current locale for format, this is for display only.
         if (mAsPercent) {
             return String.format("%d%%", (int) (val * 100));
         }
-        
         if (mDisplayFormat != null) {
             return String.format(mDisplayFormat, val);
         } else {
             return Float.toString(val);
         }
-    }
-    
-    private void showVal() {
-        mValText.setText(formatFloatDisplay(mVal));
     }
     
     protected void setVal(Float val) {
@@ -104,12 +115,12 @@ public class SeekBarPreference extends DialogPreference {
             }
             val = min + delta;
         }
-        // Hack: Round number to 2 significant digits so that it looks nicer.
         val = Float.valueOf(String.format(Locale.US, "%.2g", val));
         return val;
     }
 
     private int getPercent(float val, float min, float max) {
+        if (max == min) return 0;
         return (int) (100 * (val - min) / (max - min));
     }
     
@@ -122,18 +133,24 @@ public class SeekBarPreference extends DialogPreference {
     }
 
     @Override
-    protected void onBindDialogView(View view) {
-        mSeek = (SeekBar) view.findViewById(R.id.seekBarPref);
-        mMinText = (TextView) view.findViewById(R.id.seekMin);
-        mMaxText = (TextView) view.findViewById(R.id.seekMax);
-        mValText = (TextView) view.findViewById(R.id.seekVal);
-        
-        showVal();
-        mMinText.setText(formatFloatDisplay(mMin));
-        mMaxText.setText(formatFloatDisplay(mMax));
-        mSeek.setProgress(getProgressVal());
+    protected void onClick() {
+        showDialog();
+    }
 
-        mSeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+    private void showDialog() {
+        Context context = getContext();
+        View view = LayoutInflater.from(context).inflate(R.layout.seek_bar_dialog, null);
+        final SeekBar seek = view.findViewById(R.id.seekBarPref);
+        final TextView minText = view.findViewById(R.id.seekMin);
+        final TextView maxText = view.findViewById(R.id.seekMax);
+        final TextView valText = view.findViewById(R.id.seekVal);
+
+        valText.setText(formatFloatDisplay(mVal));
+        minText.setText(formatFloatDisplay(mMin));
+        maxText.setText(formatFloatDisplay(mMax));
+        seek.setProgress(getProgressVal());
+
+        seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             public void onStopTrackingTouch(SeekBar seekBar) {}
             public void onStartTrackingTouch(SeekBar seekBar) {}
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -142,35 +159,39 @@ public class SeekBarPreference extends DialogPreference {
                     if (newVal != mVal) {
                         onChange(newVal);
                     }
-                    setVal(newVal);
-                    mSeek.setProgress(getProgressVal());
+                    mVal = newVal;
+                    seek.setProgress(getProgressVal());
                 }
-                showVal();
+                valText.setText(formatFloatDisplay(mVal));
             }
         });
-        
-        super.onBindDialogView(view);
+
+        new AlertDialog.Builder(context)
+            .setTitle(getTitle())
+            .setView(view)
+            .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                if (callChangeListener(mVal)) {
+                    persistValue(mVal);
+                    mPrevVal = mVal;
+                    notifyChanged();
+                }
+            })
+            .setNegativeButton(android.R.string.cancel, (dialog, which) -> {
+                mVal = mPrevVal;
+            })
+            .show();
     }
 
     public void onChange(float val) {
         // override in subclasses
     }
 
+    protected void persistValue(float val) {
+        persistFloat(val);
+    }
+
     @Override
     public CharSequence getSummary() {
         return formatFloatDisplay(mVal);
-    }
-    
-    @Override
-    protected void onDialogClosed(boolean positiveResult) {
-        if (!positiveResult) {
-            restoreVal();
-            return;
-        }
-        if (shouldPersist()) {
-            persistFloat(mVal);
-            savePrevVal();
-        }
-        notifyChanged();
     }
 }

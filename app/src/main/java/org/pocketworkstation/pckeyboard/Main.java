@@ -16,7 +16,7 @@
 
 package org.pocketworkstation.pckeyboard;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -32,7 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.TextView.BufferType;
 
-public class Main extends Activity {
+public class Main extends AppCompatActivity {
 
     private final static String MARKET_URI = "market://search?q=pub:\"Klaus Weidner\"";
 
@@ -63,7 +63,7 @@ public class Main extends Activity {
             }
         });
         
-        final Activity that = this;
+        final AppCompatActivity that = this;
 
         final Button setup4 = (Button) findViewById(R.id.main_setup_btn_input_lang);
         setup4.setOnClickListener(new View.OnClickListener() {

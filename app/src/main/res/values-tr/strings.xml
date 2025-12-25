@@ -69,12 +69,6 @@
     <string name="tip_add_to_dictionary" msgid="1487293888469227817">"Sözlüğe eklemek için en soldaki kelimeye basın ve basılı tutun"</string>
     <string name="touch_to_continue" msgid="7869803257948414531">"Devam etmek için bu ipucuna dokunun »"</string>
     <string name="touch_to_finish" msgid="7990196086480585789">"Bu ipucunu kapatmak için buraya dokunun ve yazmaya başlayın!"</string>
-    <string name="tip_to_open_keyboard" msgid="6821200275486950452"><b>"Bir metin alanına dokunduğunuzda klavye açılır"</b></string>
-    <string name="tip_to_view_accents" msgid="5433158573693308501"><b>"Vurguları görüntülemek için bir tuşa basın ve basılı tutun"\n"(ø, ö, ô, ó v.b.)"</b></string>
-    <string name="tip_to_open_symbols" msgid="7345139325622444880"><b>"Bu tuşa dokunarak sayılar ve simgeler arasında geçiş yap"</b></string>
-    <string name="tip_to_close_symbols" msgid="5227724217206927185"><b>"Bu tuşa tekrar dokunarak harflere geri dönün"</b></string>
-    <string name="tip_to_launch_settings" msgid="8402961128983196128"><b>"Otomatik tamamlama gibi klavye ayarlarını değiştirmek için bu tuşa basın ve basılı tutun"</b></string>
-    <string name="tip_to_start_typing" msgid="7213843601369174313"><b>"Deneyin!"</b></string>
     <string name="label_go_key" msgid="1635148082137219148">"Git"</string>
     <string name="label_next_key" msgid="362972844525672568">"İleri"</string>
     <string name="label_done_key" msgid="2441578748772529288">"Bitti"</string>
@@ -116,7 +110,6 @@
   </string-array>
     <string name="auto_submit" msgid="9151008027068358518">"Sesten sonra otomatik gönder"</string>
     <string name="auto_submit_summary" msgid="4961875269610384226">"Arama yaparken veya bir sonraki alana giderken enter tuşuna otomatik olarak basın."</string>
-    <string name="open_the_keyboard" msgid="2215920976029260466"><font size="17"><b>"Klavyeyi açın"\n</b></font><font size="3">\n</font>"Herhangi bir metin alanına dokunun."</string>
     <string name="close_the_keyboard" msgid="6251022259044940103"><font size="17"><b>"Klavyeyi kapatın"\n</b></font><font size="3">\n</font>"Geri tuşuna basın."</string>
     <string name="touch_and_hold" msgid="6154166367273010534"><font size="17"><b>"Seçenekler için bir tuşa dokunun ve basılı tutun"\n</b></font><font size="3">\n</font>"Noktalama ve vurgulama işaretlerine erişin."</string>
     <string name="keyboard_settings" msgid="4585753477617374032"><font size="17"><b>"Klavye ayarları"\n</b></font><font size="3">\n</font><b>"?123"</b>" tuşuna dokunun ve basılı tutun."</string>

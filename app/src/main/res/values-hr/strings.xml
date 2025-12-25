@@ -69,12 +69,6 @@
     <string name="tip_add_to_dictionary" msgid="1487293888469227817">"Pritisnite i držite krajnju lijevu riječ da biste je dodali u rječnik."</string>
     <string name="touch_to_continue" msgid="7869803257948414531">"Dodirnite ovaj savjet za nastavak »"</string>
     <string name="touch_to_finish" msgid="7990196086480585789">"Dodirnite ovdje da biste zatvorili savjet i počeli upisivati!"</string>
-    <string name="tip_to_open_keyboard" msgid="6821200275486950452"><b>"Tipkovnica se otvara svaki put kada dodirnete tekstualno polje"</b></string>
-    <string name="tip_to_view_accents" msgid="5433158573693308501"><b>"Dodirnite i držite tipku da biste vidjeli naglaske"\n"(ø, ö, ô, ó i tako dalje)"</b></string>
-    <string name="tip_to_open_symbols" msgid="7345139325622444880"><b>"Prijeđite na brojeve i simbole dodirom na ovu tipku"</b></string>
-    <string name="tip_to_close_symbols" msgid="5227724217206927185"><b>"Dodirnite ponovo ovu tipku za povratak na slova"</b></string>
-    <string name="tip_to_launch_settings" msgid="8402961128983196128"><b>"Dodirnite i držite ovu tipku da biste promijenili postavke tipkovnice, poput automatskog dovršavanja"</b></string>
-    <string name="tip_to_start_typing" msgid="7213843601369174313"><b>"Isprobajte!"</b></string>
     <string name="label_go_key" msgid="1635148082137219148">"Idi"</string>
     <string name="label_next_key" msgid="362972844525672568">"Dalje"</string>
     <string name="label_done_key" msgid="2441578748772529288">"Gotovo"</string>
@@ -116,7 +110,6 @@
   </string-array>
     <string name="auto_submit" msgid="9151008027068358518">"Automatski pošalji nakon glasovnog unosa"</string>
     <string name="auto_submit_summary" msgid="4961875269610384226">"Automatski se pritišće \"Enter\" kad pretražujete ili idete na sljedeće polje."</string>
-    <string name="open_the_keyboard" msgid="2215920976029260466"><font size="17"><b>"Otvaranje tipkovnice"\n</b></font><font size="3">\n</font>"Dodirnite bilo koje tekstualno polje"</string>
     <string name="close_the_keyboard" msgid="6251022259044940103"><font size="17"><b>"Zatvaranje tipkovnice"\n</b></font><font size="3">\n</font>"Pritisnite tipku \"Natrag\"."</string>
     <string name="touch_and_hold" msgid="6154166367273010534"><font size="17"><b>"Dodirnite i držite tipku da biste vidjeli opcije"\n</b></font><font size="3">\n</font>"Pristup interpunkciji i naglascima."</string>
     <string name="keyboard_settings" msgid="4585753477617374032"><font size="17"><b>"Postavke tipkovnice"\n</b></font><font size="3">\n</font>"Dodirnite i držite tipku "<b>"?123"</b>"."</string>

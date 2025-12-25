@@ -182,7 +182,7 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
     private int mKeyCursorColor;
     private boolean mInvertSymbols;
     private boolean mRecolorSymbols;
-    private Typeface mKeyTextStyle = Typeface.DEFAULT;
+    private Typeface mKeyTextStyle = Typeface.MONOSPACE;
     private float mLabelTextSize;
     private int mSymbolColorScheme = 0;
     private int mShadowColor;
@@ -487,68 +487,49 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         for (int i = 0; i < n; i++) {
             int attr = a.getIndex(i);
 
-            switch (attr) {
-            case R.styleable.LatinKeyboardBaseView_keyBackground:
+            if (attr == R.styleable.LatinKeyboardBaseView_keyBackground) {
                 mKeyBackground = a.getDrawable(attr);
-                break;
-            case R.styleable.LatinKeyboardBaseView_keyHysteresisDistance:
+            } else if (attr == R.styleable.LatinKeyboardBaseView_keyHysteresisDistance) {
                 mKeyHysteresisDistance = a.getDimensionPixelOffset(attr, 0);
-                break;
-            case R.styleable.LatinKeyboardBaseView_verticalCorrection:
+            } else if (attr == R.styleable.LatinKeyboardBaseView_verticalCorrection) {
                 mVerticalCorrection = a.getDimensionPixelOffset(attr, 0);
-                break;
-            case R.styleable.LatinKeyboardBaseView_keyTextSize:
+            } else if (attr == R.styleable.LatinKeyboardBaseView_keyTextSize) {
                 mKeyTextSize = a.getDimensionPixelSize(attr, 18);
-                break;
-            case R.styleable.LatinKeyboardBaseView_keyTextColor:
+            } else if (attr == R.styleable.LatinKeyboardBaseView_keyTextColor) {
                 mKeyTextColor = a.getColor(attr, 0xFF000000);
-                break;
-            case R.styleable.LatinKeyboardBaseView_keyHintColor:
+            } else if (attr == R.styleable.LatinKeyboardBaseView_keyHintColor) {
                 mKeyHintColor = a.getColor(attr, 0xFFBBBBBB);
-                break;
-            case R.styleable.LatinKeyboardBaseView_keyCursorColor:
+            } else if (attr == R.styleable.LatinKeyboardBaseView_keyCursorColor) {
                 mKeyCursorColor = a.getColor(attr, 0xFF000000);
-                break;
-            case R.styleable.LatinKeyboardBaseView_invertSymbols:
+            } else if (attr == R.styleable.LatinKeyboardBaseView_invertSymbols) {
                 mInvertSymbols = a.getBoolean(attr, false);
-                break;
-            case R.styleable.LatinKeyboardBaseView_recolorSymbols:
+            } else if (attr == R.styleable.LatinKeyboardBaseView_recolorSymbols) {
                 mRecolorSymbols = a.getBoolean(attr, false);
-                break;
-            case R.styleable.LatinKeyboardBaseView_labelTextSize:
+            } else if (attr == R.styleable.LatinKeyboardBaseView_labelTextSize) {
                 mLabelTextSize = a.getDimensionPixelSize(attr, 14);
-                break;
-            case R.styleable.LatinKeyboardBaseView_shadowColor:
+            } else if (attr == R.styleable.LatinKeyboardBaseView_shadowColor) {
                 mShadowColor = a.getColor(attr, 0);
-                break;
-            case R.styleable.LatinKeyboardBaseView_shadowRadius:
+            } else if (attr == R.styleable.LatinKeyboardBaseView_shadowRadius) {
                 mShadowRadius = a.getFloat(attr, 0f);
-                break;
-            // TODO: Use Theme (android.R.styleable.Theme_backgroundDimAmount)
-            case R.styleable.LatinKeyboardBaseView_backgroundDimAmount:
+            } else if (attr == R.styleable.LatinKeyboardBaseView_backgroundDimAmount) {
                 mBackgroundDimAmount = a.getFloat(attr, 0.5f);
-                break;
-            case R.styleable.LatinKeyboardBaseView_backgroundAlpha:
+            } else if (attr == R.styleable.LatinKeyboardBaseView_backgroundAlpha) {
                 mBackgroundAlpha = a.getInteger(attr, 255);
-                break;
-            //case android.R.styleable.
-            case R.styleable.LatinKeyboardBaseView_keyTextStyle:
+            } else if (attr == R.styleable.LatinKeyboardBaseView_keyTextStyle) {
                 int textStyle = a.getInt(attr, 0);
                 switch (textStyle) {
                     case 0:
-                        mKeyTextStyle = Typeface.DEFAULT;
+                        mKeyTextStyle = Typeface.MONOSPACE;
                         break;
                     case 1:
-                        mKeyTextStyle = Typeface.DEFAULT_BOLD;
+                        mKeyTextStyle = Typeface.create(Typeface.MONOSPACE, Typeface.BOLD);
                         break;
                     default:
-                        mKeyTextStyle = Typeface.defaultFromStyle(textStyle);
+                        mKeyTextStyle = Typeface.create(Typeface.MONOSPACE, textStyle);
                         break;
                 }
-                break;
-            case R.styleable.LatinKeyboardBaseView_symbolColorScheme:
+            } else if (attr == R.styleable.LatinKeyboardBaseView_symbolColorScheme) {
                 mSymbolColorScheme = a.getInt(attr, 0);
-                break;
             }
         }
 
@@ -570,7 +551,7 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         mPaintHint.setAntiAlias(true);
         mPaintHint.setTextAlign(Align.RIGHT);
         mPaintHint.setAlpha(255);
-        mPaintHint.setTypeface(Typeface.DEFAULT_BOLD);
+        mPaintHint.setTypeface(Typeface.create(Typeface.MONOSPACE, Typeface.BOLD));
 
         mPadding = new Rect(0, 0, 0, 0);
         mKeyBackground.getPadding(mPadding);
@@ -1021,7 +1002,7 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
                 if (label.length() > 1 && key.codes.length < 2) {
                     //Log.i(TAG, "mLabelTextSize=" + mLabelTextSize + " LatinIME.sKeyboardSettings.labelScale=" + LatinIME.sKeyboardSettings.labelScale);
                     labelSize = (int)(mLabelTextSize * mLabelScale);
-                    paint.setTypeface(Typeface.DEFAULT);
+                    paint.setTypeface(Typeface.MONOSPACE);
                 } else {
                     labelSize = (int)(mKeyTextSize * mLabelScale);
                     paint.setTypeface(mKeyTextStyle);
@@ -1224,7 +1205,7 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
             mPreviewText.setText(key.getCaseLabel());
             if (key.label.length() > 1 && key.codes.length < 2) {
                 mPreviewText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mKeyTextSize);
-                mPreviewText.setTypeface(Typeface.DEFAULT_BOLD);
+                mPreviewText.setTypeface(Typeface.create(Typeface.MONOSPACE, Typeface.BOLD));
             } else {
                 mPreviewText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPreviewTextSizeLarge);
                 mPreviewText.setTypeface(mKeyTextStyle);
