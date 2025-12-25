@@ -21,9 +21,9 @@
     <color name="tn_night_pressed">#3D59A1</color>
 
     <!-- Tokyo Night: Day (Refined Tonal) -->
-    <color name="tn_day_bg">#D0D5E3</color>
+    <color name="tn_day_bg">#E1E2E7</color>
     <color name="tn_day_key">#FFFFFF</color>
-    <color name="tn_day_mod">#E1E2E7</color>
+    <color name="tn_day_mod">#D0D5E3</color>
     <color name="tn_day_fg">#3760BF</color>
     <color name="tn_day_accent">#3760BF</color>
     <color name="tn_day_pressed">#B4BEFE</color>
