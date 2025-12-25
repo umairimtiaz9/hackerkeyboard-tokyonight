@@ -82,6 +82,34 @@
             <flag name="black" value="1" />
         </attr>
 
+        <!-- ============================================== -->
+        <!-- TOKYO NIGHT SEMANTIC THEME ATTRIBUTES          -->
+        <!-- ============================================== -->
+        <!-- These attributes allow the layout to ask for a "Role" -->
+        <!-- rather than a specific color. The active Theme    -->
+        <!-- provides the specific hex value.                  -->
+        
+        <!-- The global background canvas of the keyboard -->
+        <attr name="kbdColorBase" format="color" />
+        
+        <!-- The key background for standard alpha keys (A-Z) -->
+        <attr name="kbdColorAlpha" format="color" />
+        
+        <!-- The key background for modifier keys (Shift, Ctrl) -->
+        <attr name="kbdColorMod" format="color" />
+        
+        <!-- The key background when PRESSED -->
+        <attr name="kbdColorHighlight" format="color" />
+        
+        <!-- The main label text color -->
+        <attr name="kbdColorText" format="color" />
+        
+        <!-- The accent color for special symbols (Arrows) -->
+        <attr name="kbdColorAccent" format="color" />
+        
+        <!-- The border/stroke color for popups -->
+        <attr name="kbdColorPopup" format="color" />
+
     </declare-styleable>
 
 </resources>

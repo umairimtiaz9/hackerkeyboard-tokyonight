@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Unified Tokyo Night Key Selector -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- PRESSED STATE -->
+    <item android:state_pressed="true">
+        <inset android:insetLeft="1dp" android:insetTop="1dp" android:insetRight="1dp" android:insetBottom="1dp">
+            <shape android:shape="rectangle">
+                <corners android:radius="6dp" />
+                <solid android:color="?attr/kbdColorHighlight" />
+            </shape>
+        </inset>
+    </item>
+
+    <!-- STICKY/LOCKED STATE (e.g. Caps Lock) -->
+    <item android:state_checked="true">
+        <inset android:insetLeft="1dp" android:insetTop="1dp" android:insetRight="1dp" android:insetBottom="1dp">
+            <shape android:shape="rectangle">
+                <corners android:radius="6dp" />
+                <solid android:color="?attr/kbdColorHighlight" />
+            </shape>
+        </inset>
+    </item>
+
+    <!-- MODIFIER KEYS (Shift, Alt, Ctrl) -->
+    <!-- Hacker's Keyboard uses state_single to identify functional/modifier keys -->
+    <item android:state_single="true">
+        <inset android:insetLeft="1dp" android:insetTop="1dp" android:insetRight="1dp" android:insetBottom="1dp">
+            <shape android:shape="rectangle">
+                <corners android:radius="6dp" />
+                <solid android:color="?attr/kbdColorMod" />
+            </shape>
+        </inset>
+    </item>
+    
+    <!-- STANDARD ALPHA KEYS -->
+    <item>
+        <inset android:insetLeft="1dp" android:insetTop="1dp" android:insetRight="1dp" android:insetBottom="1dp">
+            <shape android:shape="rectangle">
+                <corners android:radius="6dp" />
+                <solid android:color="?attr/kbdColorAlpha" />
+            </shape>
+        </inset>
+    </item>
+</selector>

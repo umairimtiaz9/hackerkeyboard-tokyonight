@@ -45,15 +45,36 @@ We will support 4 distinct variations based on `folke/tokyonight.nvim`:
 *   **Step 4.2**: Neutralize any remaining icons to match the theme's text color.
 *   **Step 4.3**: Implement high-fidelity "Orgasmic" fluid popups and surgical coloring.
 
-### Phase 5: Data-Oriented Refactor
-*   **Step 5.1**: Define official palettes in `colors.xml` based on `tokyonight.nvim`.
-*   **Step 5.2**: Extract theme attributes into `attrs.xml` for zero-hardcoding.
-*   **Step 5.3**: Implement variant-switching logic via Android Themes/Styles.
+### Phase 5: Data-Oriented Refactor (The "Heart Transplant")
+**Risk Level**: HIGH. This phase involves decoupling the UI from hardcoded values, which may cause crashes if a single attribute reference is missing.
+
+*   **Step 5.1: Attribute Contract Definition**
+    *   Create `res/values/attrs.xml` defining the semantic "Interface" for the keyboard theme (e.g., `kbdColorBase`, `kbdColorAlpha`, `kbdColorAccent`).
+    *   **Goal**: Establish a vocabulary that describes *role* (What it is), not *color* (What it looks like).
+
+*   **Step 5.2: The Color Dump**
+    *   Populate `res/values/colors.xml` with the FULL authoritative palette from `tokyonight.nvim`.
+    *   Naming convention: `tn_[theme]_[role]` (e.g., `tn_storm_key_mod`, `tn_night_popup_border`).
+    *   **Goal**: Create the "Database" of raw hex values.
+
+*   **Step 5.3: The "Storm" Pilot**
+    *   Create a test Style in `res/values/styles.xml` specifically for Storm that maps the new Attributes -> New Colors.
+    *   Refactor **only** the Storm drawable selectors (`btn_key_storm.xml`) to use `?attr/kbdColor...` instead of `@color/tn_storm...`.
+    *   **Goal**: Prove that the attribute system works for one theme without breaking the others.
+
+*   **Step 5.4: Java Logic Integration**
+    *   Modify `LatinKeyboardBaseView.java` to fetch colors dynamically.
+    *   Replace manual `Paint.setColor()` calls with attribute resolution logic (`context.obtainStyledAttributes`).
+    *   **Goal**: Ensure symbols, arrows, and custom drawn elements respect the theme switch.
+
+*   **Step 5.5: Full Rollout**
+    *   Once the Pilot passes, apply the logic to Night, Day, and Moon.
+    *   Create the final `themes.xml` variants.
 
 ## Contextual History
 *   **Past**: A "mess" of 14+ themes, inconsistent spacing, and mixed assets.
 *   **Present**: Complete Tokyo Night overhaul with 4 variations. Fluid, high-performance popups with modern animations.
-*   **Future**: Stability and potential support for more specialized IDE layouts.
+*   **Future**: A robust, data-driven architecture allowing instant theme switching and professional maintenance.
 
 ## TODO: Future Modernization Plans
 - [x] **Pixel-Perfect Geometry**: Set `key_bottom_gap` and `key_horizontal_gap` to `0dp` and use strict `1dp` insets to guarantee a uniform `2dp` gutter across all keys.
@@ -61,6 +82,6 @@ We will support 4 distinct variations based on `folke/tokyonight.nvim`:
 - [x] **Tonal Elevation**: Refine the color contrast so Alphas and Modifiers use "Surface Tones" for a more unified look.
 - [x] **Typographic Hierarchy**: Force `Typeface.BOLD` for main labels and significantly reduce the opacity/size of "Hint" characters to reduce visual clutter.
 - [x] **Interaction Depth**: Enhance the "pop-up" animations with scale-up transitions.
-- [ ] **Data-Oriented Colors**: Move from hardcoded XML colors to a centralized attribute-based system.
-- [ ] **Official Alignment**: Sync all hex values with the latest `tokyonight.nvim` releases.
-- [ ] **Wireframe Iconography**: Replace any remaining filled icons with thin-stroke (1dp) wireframe versions.
+- [x] **Data-Oriented Colors**: Move from hardcoded XML colors to a centralized attribute-based system.
+- [x] **Official Alignment**: Sync all hex values with the latest `tokyonight.nvim` releases.
+- [ ] **More to come**

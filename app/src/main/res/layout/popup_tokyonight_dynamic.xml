@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Unified Dynamic Popup Layout -->
+<!-- This is the container for the mini-keyboard that appears on long-press -->
+<org.pocketworkstation.pckeyboard.LatinKeyboardBaseView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LatinKeyboardBaseView"
+    android:background="@drawable/popup_tokyonight_dynamic"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    />

@@ -7,11 +7,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="@dimen/keyboard_bottom_padding"
-    android:background="@color/tn_night_bg"
+    android:background="?attr/kbdColorBase"
 
-    latin:keyBackground="@drawable/btn_key_night"
-    latin:keyTextColor="@color/tn_night_fg"
-    latin:keyHintColor="@color/tn_night_fg"
-    latin:popupLayout="@layout/popup_tokyonight_night"
-    latin:keyPreviewLayout="@layout/preview_tokyonight_night"
+    latin:keyBackground="@drawable/btn_key_tokyonight"
+    latin:keyTextColor="?attr/kbdColorText"
+    latin:keyHintColor="?attr/kbdColorText"
+    latin:popupLayout="@layout/popup_tokyonight_dynamic"
+    latin:keyPreviewLayout="@layout/preview_tokyonight_dynamic"
     />

@@ -1226,7 +1226,7 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
                 MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
         int popupWidth = Math.max(mPreviewText.getMeasuredWidth(), key.width
                 + mPreviewText.getPaddingLeft() + mPreviewText.getPaddingRight());
-        final int popupHeight = mPreviewHeight;
+        final int popupHeight = Math.max(mPreviewText.getMeasuredHeight(), mPreviewHeight);
         LayoutParams lp = mPreviewText.getLayoutParams();
         if (lp != null) {
             lp.width = popupWidth;
@@ -1239,13 +1239,14 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         mHandler.cancelDismissPreview();
         if (mOffsetInWindow == null) {
             mOffsetInWindow = new int[2];
-            getLocationInWindow(mOffsetInWindow);
-            mOffsetInWindow[0] += mPopupPreviewOffsetX; // Offset may be zero
-            mOffsetInWindow[1] += mPopupPreviewOffsetY; // Offset may be zero
-            int[] windowLocation = new int[2];
-            getLocationOnScreen(windowLocation);
-            mWindowY = windowLocation[1];
         }
+        getLocationInWindow(mOffsetInWindow);
+        mOffsetInWindow[0] += mPopupPreviewOffsetX; // Offset may be zero
+        mOffsetInWindow[1] += mPopupPreviewOffsetY; // Offset may be zero
+        int[] windowLocation = new int[2];
+        getLocationOnScreen(windowLocation);
+        mWindowY = windowLocation[1];
+        
         // Set the preview background state.
         // Retrieve and cache the popup keyboard if any.
         // boolean hasPopup = (getLongPressKeyboard(key) != null);

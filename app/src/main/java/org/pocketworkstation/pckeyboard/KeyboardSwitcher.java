@@ -21,7 +21,12 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import androidx.preference.PreferenceManager;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.InflateException;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 
 import java.lang.ref.SoftReference;
 import java.util.Arrays;
@@ -76,6 +81,23 @@ public class KeyboardSwitcher implements
         R.layout.input_tokyonight_night, // 11
         R.layout.input_tokyonight_day,   // 12
         R.layout.input_tokyonight_moon,  // 13
+    };
+
+    private static final int[] STYLES = new int[] {
+        R.style.Theme_TokyoNight_Storm, // 0
+        R.style.Theme_TokyoNight_Storm, // 1
+        R.style.Theme_TokyoNight_Storm, // 2
+        R.style.Theme_TokyoNight_Storm, // 3
+        R.style.Theme_TokyoNight_Storm, // 4
+        R.style.Theme_TokyoNight_Storm, // 5
+        R.style.Theme_TokyoNight_Storm, // 6
+        R.style.Theme_TokyoNight_Storm, // 7
+        R.style.Theme_TokyoNight_Storm, // 8
+        R.style.Theme_TokyoNight_Storm, // 9
+        R.style.Theme_TokyoNight_Storm, // 10
+        R.style.Theme_TokyoNight_Night, // 11
+        R.style.Theme_TokyoNight_Day,   // 12
+        R.style.Theme_TokyoNight_Moon,  // 13
     };
 
     // Tables which contains resource ids for each character theme color
@@ -630,9 +652,9 @@ public class KeyboardSwitcher implements
             boolean tryGC = true;
             for (int i = 0; i < LatinIMEUtil.GCUtils.GC_TRY_LOOP_MAX && tryGC; ++i) {
                 try {
-                    mInputView = (LatinKeyboardView) mInputMethodService
-                            .getLayoutInflater().inflate(THEMES[newLayout],
-                                    null);
+                    ContextThemeWrapper themeContext = new ContextThemeWrapper(mInputMethodService, STYLES[newLayout]);
+                    LayoutInflater inflater = LayoutInflater.from(themeContext);
+                    mInputView = (LatinKeyboardView) inflater.inflate(THEMES[newLayout], null);
                     tryGC = false;
                 } catch (OutOfMemoryError e) {
                     tryGC = LatinIMEUtil.GCUtils.getInstance().tryGCOrWait(
