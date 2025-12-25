@@ -1170,6 +1170,15 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
     public void showPreview(int keyIndex, PointerTracker tracker) {
         int oldKeyIndex = mOldPreviewKeyIndex;
         mOldPreviewKeyIndex = keyIndex;
+
+        // Selective suppression: No popup for modifiers or functional keys
+        if (tracker != null && keyIndex != NOT_A_KEY) {
+            Keyboard.Key key = tracker.getKey(keyIndex);
+            if (key != null && (key.modifier || (key.label != null && key.label.length() > 1))) {
+                keyIndex = NOT_A_KEY;
+            }
+        }
+
         final boolean isLanguageSwitchEnabled = (mKeyboard instanceof LatinKeyboard)
                 && ((LatinKeyboard)mKeyboard).isLanguageSwitchEnabled();
         // We should re-draw popup preview when 1) we need to hide the preview, 2) we will show
