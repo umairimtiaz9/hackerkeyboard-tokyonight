@@ -46,5 +46,14 @@ We will support 4 distinct variations based on `folke/tokyonight.nvim`:
 
 ## Contextual History
 *   **Past**: A "mess" of 14+ themes, inconsistent spacing, and mixed assets.
-*   **Present**: Partial modernization with Monospace font and a generic dark theme.
+*   **Present**: Complete Tokyo Night overhaul with 4 variations and Monospace font.
 *   **Future**: A clean, unified codebase supporting 4 professional Tokyo Night variations with pixel-perfect layouts.
+
+## TODO: Future Modernization Plans
+- [ ] **Pixel-Perfect Geometry**: Set `key_bottom_gap` and `key_horizontal_gap` to `0dp` and use strict `1dp` insets to guarantee a uniform `2dp` gutter across all keys.
+- [ ] **Soft-Rect Aesthetic**: Update corner radii to `6dp` for a more modern, premium mobile feel.
+- [ ] **Tonal Elevation**: Refine the color contrast so Alphas and Modifiers use "Surface Tones" (subtle variations of the same hue) for a more unified look.
+- [ ] **Typographic Hierarchy**: Force `Typeface.BOLD` for main labels and significantly reduce the opacity/size of "Hint" characters to reduce visual clutter.
+- [ ] **Wireframe Iconography**: Replace any remaining filled icons with thin-stroke (1dp) wireframe versions.
+- [ ] **Interaction Depth**: Enhance the "pop-up" animations with scale-up transitions to match modern OS behaviors (Gboard/iOS).
+- [ ] **TBD**

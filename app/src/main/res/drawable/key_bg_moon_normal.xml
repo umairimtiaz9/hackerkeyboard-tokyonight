@@ -5,7 +5,7 @@
     android:insetRight="1dp"
     android:insetBottom="1dp">
     <shape android:shape="rectangle">
-        <corners android:radius="2dp" />
+        <corners android:radius="6dp" />
         <solid android:color="@color/tn_moon_key" />
     </shape>
 </inset>

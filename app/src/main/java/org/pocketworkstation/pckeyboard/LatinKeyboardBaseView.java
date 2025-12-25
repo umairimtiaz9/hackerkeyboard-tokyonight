@@ -182,7 +182,7 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
     private int mKeyCursorColor;
     private boolean mInvertSymbols;
     private boolean mRecolorSymbols;
-    private Typeface mKeyTextStyle = Typeface.MONOSPACE;
+    private Typeface mKeyTextStyle = Typeface.create(Typeface.MONOSPACE, Typeface.BOLD);
     private float mLabelTextSize;
     private int mSymbolColorScheme = 0;
     private int mShadowColor;
@@ -1020,6 +1020,7 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
                 if (!hint.equals("") && !(key.isShifted() && key.shiftLabel != null && hint.charAt(0) == key.shiftLabel.charAt(0))) {
                     int hintTextSize = (int)(mKeyTextSize * 0.6 * mLabelScale);
                     paintHint.setTextSize(hintTextSize);
+                    paintHint.setAlpha(100); // Fainter hints
 
                     final int hintLabelHeight = getLabelHeight(paintHint, hintTextSize);
                     int x = key.width - padding.right;
@@ -1036,6 +1037,7 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
                 if (!altHint.equals("")) {
                     int hintTextSize = (int)(mKeyTextSize * 0.6 * mLabelScale);
                     paintHint.setTextSize(hintTextSize);
+                    paintHint.setAlpha(100); // Fainter hints
 
                     final int hintLabelHeight = getLabelHeight(paintHint, hintTextSize);
                     int x = key.width - padding.right;
@@ -1237,9 +1239,9 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         }
         // Set the preview background state.
         // Retrieve and cache the popup keyboard if any.
-        boolean hasPopup = (getLongPressKeyboard(key) != null);
+        // boolean hasPopup = (getLongPressKeyboard(key) != null);
         // Set background manually, the StateListDrawable doesn't work.
-        mPreviewText.setBackgroundDrawable(getResources().getDrawable(hasPopup ? R.drawable.keyboard_key_feedback_more_background : R.drawable.keyboard_key_feedback_background));
+        // mPreviewText.setBackgroundDrawable(getResources().getDrawable(hasPopup ? R.drawable.keyboard_key_feedback_more_background : R.drawable.keyboard_key_feedback_background));
         popupPreviewX += mOffsetInWindow[0];
         popupPreviewY += mOffsetInWindow[1];
 
