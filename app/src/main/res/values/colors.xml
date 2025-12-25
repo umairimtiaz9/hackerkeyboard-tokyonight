@@ -11,6 +11,7 @@
     <color name="tn_storm_fg">#C0CAF5</color>
     <color name="tn_storm_accent">#7AA2F7</color>
     <color name="tn_storm_pressed">#3D59A1</color>
+    <color name="tn_green">#9ECE6A</color>
 
     <!-- Tokyo Night: Night (Refined Tonal) -->
     <color name="tn_night_bg">#16161E</color>
