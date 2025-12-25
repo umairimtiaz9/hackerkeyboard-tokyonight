@@ -53,8 +53,9 @@ All keyboard icons are now tinted using `?attr/kbdColorText` to ensure they adap
 ### 4. Layout & Geometry
 - **Gutter System**: Strictly `0dp` gap in XML layouts, with `1dp` insets in the drawables.
 - **Popup Physics**:
-    - `keyPreviewOffset`: `-8dp` (Floats above the key).
-    - `keyPreviewHeight`: `80dp` (Modern vertical tab look).
+    - **Safety Insets**: `6dp` transparent insets added to `popup_tokyonight_dynamic.xml` to prevent window-boundary clipping (squaring) in restricted layouts (e.g., browsers).
+    - `keyPreviewOffset`: `-14dp` (Effective `-8dp` visual float + `6dp` compensation).
+    - `keyPreviewHeight`: `92dp` (Effective `80dp` visual height + `12dp` vertical inset compensation).
     - `corners`: `12dp` radius for popups, `6dp` for keys.
 
 ### 5. Theme Mapping (Internal IDs)
