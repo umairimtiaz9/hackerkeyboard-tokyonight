@@ -6,10 +6,14 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 - **Modernization Phase II Implementation**:
+    - **Visual Breathe Design**: Increased key gutters to `4dp` (using `2dp` insets) and corner radii to `8dp`, transforming the dense 5-row layout into a clean, premium "tile" grid.
+    - **Tonal Elevation**: Deepened the contrast by darkening the tray backgrounds (`kbdColorBase`) across Storm, Night, and Moon variants.
     - **Pill Geometry**: Compressed popup dimensions to a compact `60dp` Pill shape for a professional, modern overlay aesthetic.
     - **Spring Physics**: Implemented bouncy `overshoot` interpolators for popup animations, providing tactile and responsive feedback.
     - **Portal Transition**: Added dynamic key dimming logic where the underlying key on the keyboard tray fades when its popup is active, creating a visual "portal" effect.
     - **Unified Mini-Keyboard Box**: Created a dedicated `popup_container_tokyonight.xml` for long-press variations, eliminating the "notched" border bug and creating a cohesive unified tray.
+    - **Designer Typography**: Integrated **Google Sans Code** monospace font across the entire keyboard, including key labels, suggestions strip, and spacebar language markers.
+    - **Dynamic Font Loading**: Implemented a centralized font management system in `LatinKeyboardBaseView` that loads custom assets with automatic fallback to system monospace.
     - **Data-Oriented Architecture**: Decoupled UI components from hardcoded color values. Introduced a semantic attribute system (`attrs.xml`) that maps roles (Base, Alpha, Mod, Highlight, Accent, Popup) to theme-specific colors.
     - **Unified Component System**: Implemented `btn_key_tokyonight.xml` (Universal Key Drawable), `preview_tokyonight_dynamic.xml` (Universal Preview), and `popup_tokyonight_dynamic.xml` (Universal Shape).
     - **Dynamic Theme Wrapping**: Modified `KeyboardSwitcher.java` to use `ContextThemeWrapper`, enabling the keyboard to swap its entire color palette at runtime without layout duplication.
@@ -20,10 +24,12 @@ All notable changes to this project will be documented in this file.
 - **Optical Centering**: Fine-tuned vertical character alignment within the Pill geometry by adjusting asymmetric padding to compensate for font baseline descenders.
 - **Abnormal Popup Behavior**: Corrected the `.` key popup by prioritizing character labels over hint icons in the preview window.
 - **Latency Neutralization**: Set artificial popup delays to `0ms` for instantaneous user feedback.
+- **Missing Dependency**: Resolved a compilation error by adding the `android.text.TextUtils` import to `LatinKeyboardBaseView.java`.
 
 ### Changed
 - **Monolithic Geometry**: Refined Storm and Moon palettes to use consistent "Surface Tones," creating a unified visual slab effect.
 - **Unified Selectors**: Replaced 14+ legacy `input_*.xml` layouts with 4 unified, attribute-driven layout files.
+- **Typographic Scaling**: Slightly reduced global font sizes to create internal whitespace within keys, preventing a cramped appearance in high-density layouts.
 
 ## [Tokyo Night Edition] - 2025-12-25
 

@@ -4,9 +4,9 @@
     
     <!-- PRESSED STATE -->
     <item android:state_pressed="true">
-        <inset android:insetLeft="1dp" android:insetTop="1dp" android:insetRight="1dp" android:insetBottom="1dp">
+        <inset android:insetLeft="2dp" android:insetTop="2dp" android:insetRight="2dp" android:insetBottom="2dp">
             <shape android:shape="rectangle">
-                <corners android:radius="6dp" />
+                <corners android:radius="8dp" />
                 <solid android:color="?attr/kbdColorHighlight" />
             </shape>
         </inset>
@@ -14,19 +14,19 @@
 
     <!-- STICKY/LOCKED STATE (e.g. Caps Lock, Ctrl, Alt) -->
     <item android:state_checked="true">
-        <inset android:insetLeft="1dp" android:insetTop="1dp" android:insetRight="1dp" android:insetBottom="1dp">
+        <inset android:insetLeft="2dp" android:insetTop="2dp" android:insetRight="2dp" android:insetBottom="2dp">
             <layer-list>
                 <!-- Layer 0: The "Active" base color (Orange) -->
                 <item>
                     <shape android:shape="rectangle">
-                        <corners android:radius="6dp" />
+                        <corners android:radius="8dp" />
                         <solid android:color="?attr/kbdColorActive" />
                     </shape>
                 </item>
                 <!-- Layer 1: The Highlight background, inset from bottom to reveal the Orange line -->
                 <item android:bottom="3dp">
                     <shape android:shape="rectangle">
-                        <corners android:radius="6dp" />
+                        <corners android:radius="8dp" />
                         <solid android:color="?attr/kbdColorHighlight" />
                     </shape>
                 </item>
@@ -37,9 +37,9 @@
     <!-- MODIFIER KEYS (Shift, Alt, Ctrl) -->
     <!-- Hacker's Keyboard uses state_single to identify functional/modifier keys -->
     <item android:state_single="true">
-        <inset android:insetLeft="1dp" android:insetTop="1dp" android:insetRight="1dp" android:insetBottom="1dp">
+        <inset android:insetLeft="2dp" android:insetTop="2dp" android:insetRight="2dp" android:insetBottom="2dp">
             <shape android:shape="rectangle">
-                <corners android:radius="6dp" />
+                <corners android:radius="8dp" />
                 <solid android:color="?attr/kbdColorMod" />
             </shape>
         </inset>
@@ -47,9 +47,9 @@
     
     <!-- STANDARD ALPHA KEYS -->
     <item>
-        <inset android:insetLeft="1dp" android:insetTop="1dp" android:insetRight="1dp" android:insetBottom="1dp">
+        <inset android:insetLeft="2dp" android:insetTop="2dp" android:insetRight="2dp" android:insetBottom="2dp">
             <shape android:shape="rectangle">
-                <corners android:radius="6dp" />
+                <corners android:radius="8dp" />
                 <solid android:color="?attr/kbdColorAlpha" />
             </shape>
         </inset>

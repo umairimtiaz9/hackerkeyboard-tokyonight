@@ -183,7 +183,7 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
     private int mKeyCursorColor;
     private boolean mInvertSymbols;
     private boolean mRecolorSymbols;
-    private Typeface mKeyTextStyle = Typeface.create(Typeface.MONOSPACE, Typeface.BOLD);
+    private Typeface mKeyTextStyle;
     private float mLabelTextSize;
     private int mSymbolColorScheme = 0;
     private int mShadowColor;
@@ -290,6 +290,11 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
     private final ColorMatrixColorFilter mInvertingColorFilter = new ColorMatrixColorFilter(INVERTING_MATRIX);
 
     private final UIHandler mHandler = new UIHandler();
+    public static Typeface sCustomTypeface = null;
+
+    public static Typeface getCustomTypeface() {
+        return sCustomTypeface != null ? sCustomTypeface : Typeface.MONOSPACE;
+    }
 
     class UIHandler extends Handler {
         private static final int MSG_POPUP_PREVIEW = 1;
@@ -478,6 +483,15 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
     public LatinKeyboardBaseView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
+        if (sCustomTypeface == null) {
+            try {
+                sCustomTypeface = Typeface.createFromAsset(context.getAssets(), "fonts/GoogleSansCode-Regular.ttf");
+            } catch (Exception e) {
+                Log.e(TAG, "Could not load custom font", e);
+                sCustomTypeface = Typeface.MONOSPACE;
+            }
+        }
+
         if (!isInEditMode())
             Log.i(TAG, "Creating new LatinKeyboardBaseView " + this);
         setRenderModeIfPossible(LatinIME.sKeyboardSettings.renderMode);
@@ -521,18 +535,21 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
                 int textStyle = a.getInt(attr, 0);
                 switch (textStyle) {
                     case 0:
-                        mKeyTextStyle = Typeface.MONOSPACE;
+                        mKeyTextStyle = sCustomTypeface;
                         break;
                     case 1:
-                        mKeyTextStyle = Typeface.create(Typeface.MONOSPACE, Typeface.BOLD);
+                        mKeyTextStyle = Typeface.create(sCustomTypeface, Typeface.BOLD);
                         break;
                     default:
-                        mKeyTextStyle = Typeface.create(Typeface.MONOSPACE, textStyle);
+                        mKeyTextStyle = Typeface.create(sCustomTypeface, textStyle);
                         break;
                 }
             } else if (attr == R.styleable.LatinKeyboardBaseView_symbolColorScheme) {
                 mSymbolColorScheme = a.getInt(attr, 0);
             }
+        }
+        if (mKeyTextStyle == null) {
+            mKeyTextStyle = Typeface.create(sCustomTypeface, Typeface.BOLD);
         }
 
         final Resources res = getResources();
@@ -553,7 +570,7 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         mPaintHint.setAntiAlias(true);
         mPaintHint.setTextAlign(Align.RIGHT);
         mPaintHint.setAlpha(255);
-        mPaintHint.setTypeface(Typeface.create(Typeface.MONOSPACE, Typeface.BOLD));
+        mPaintHint.setTypeface(Typeface.create(sCustomTypeface, Typeface.BOLD));
 
         mPadding = new Rect(0, 0, 0, 0);
         mKeyBackground.getPadding(mPadding);
@@ -1029,11 +1046,10 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
                 if (label.length() > 1 && key.codes.length < 2) {
                     //Log.i(TAG, "mLabelTextSize=" + mLabelTextSize + " LatinIME.sKeyboardSettings.labelScale=" + LatinIME.sKeyboardSettings.labelScale);
                     labelSize = (int)(mLabelTextSize * mLabelScale);
-                    paint.setTypeface(Typeface.MONOSPACE);
                 } else {
                     labelSize = (int)(mKeyTextSize * mLabelScale);
-                    paint.setTypeface(mKeyTextStyle);
                 }
+                paint.setTypeface(mKeyTextStyle);
                 paint.setFakeBoldText(key.isCursor);
                 paint.setTextSize(labelSize);
 
@@ -1253,11 +1269,10 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
             mPreviewText.setText(key.getCaseLabel());
             if (key.label.length() > 1 && key.codes.length < 2) {
                 mPreviewText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mKeyTextSize);
-                mPreviewText.setTypeface(Typeface.create(Typeface.MONOSPACE, Typeface.BOLD));
             } else {
                 mPreviewText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPreviewTextSizeLarge);
-                mPreviewText.setTypeface(mKeyTextStyle);
             }
+            mPreviewText.setTypeface(mKeyTextStyle);
         }
         mPreviewText.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
                 MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));

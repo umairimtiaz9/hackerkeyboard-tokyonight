@@ -506,7 +506,7 @@ public class LatinKeyboard extends Keyboard {
             paint.setAlpha(opacity);
             paint.setAntiAlias(true);
             paint.setTextAlign(Align.CENTER);
-            paint.setTypeface(Typeface.MONOSPACE);
+            paint.setTypeface(LatinKeyboardBaseView.getCustomTypeface());
 
             Locale locale = mLanguageSwitcher.getInputLocale();
             final String language = layoutSpaceBar(paint, locale,
@@ -866,7 +866,7 @@ public class LatinKeyboard extends Keyboard {
             mTextPaint.setTextAlign(Align.CENTER);
             mTextPaint.setAlpha(OPACITY_FULLY_OPAQUE);
             mTextPaint.setAntiAlias(true);
-            mTextPaint.setTypeface(Typeface.MONOSPACE);
+            mTextPaint.setTypeface(LatinKeyboardBaseView.getCustomTypeface());
             mMiddleX = (mWidth - mBackground.getIntrinsicWidth()) / 2;
             mLeftDrawable =
                     mRes.getDrawable(R.drawable.sym_keyboard_feedback_language_arrows_left);

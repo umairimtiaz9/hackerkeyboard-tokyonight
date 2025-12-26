@@ -4,13 +4,15 @@
 *   **Future**: A robust, data-driven architecture allowing instant theme switching and professional maintenance.
 
 ## TODO: Future Modernization Plans
-- [x] **Pixel-Perfect Geometry**: Set `key_bottom_gap` and `key_horizontal_gap` to `0dp` and use strict `1dp` insets to guarantee a uniform `2dp` gutter across all keys.
-- [x] **Soft-Rect Aesthetic**: Update corner radii to `6dp` for a more modern, premium mobile feel.
-- [x] **Tonal Elevation**: Refine the color contrast so Alphas and Modifiers use "Surface Tones" for a more unified look.
-- [x] **Typographic Hierarchy**: Force `Typeface.BOLD` for main labels and significantly reduce the opacity/size of "Hint" characters to reduce visual clutter.
-- [x] **Interaction Depth**: Enhance the "pop-up" animations with scale-up transitions.
+- [x] **Visual Breathe Geometry**: Set `key_bottom_gap` and `key_horizontal_gap` to `0dp` and use strict `2dp` insets to guarantee a uniform `4dp` gutter across all keys, eliminating the 'messy slab' look.
+- [x] **Soft-Rect Aesthetic**: Update corner radii to `8dp` for a more modern, premium mobile feel.
+- [x] **Tonal Elevation**: Refine the color contrast so Alphas and Modifiers use 'Surface Tones' for a more unified look, with a deepened tray background for maximum separation.
+- [x] **Typographic Hierarchy**: Force `Typeface.BOLD` for main labels and significantly reduce the opacity/size of 'Hint' characters to reduce visual clutter.
+- [x] **Interaction Depth**: Enhance the 'pop-up' animations with scale-up transitions.
 - [x] **Data-Oriented Colors**: Move from hardcoded XML colors to a centralized attribute-based system.
 - [x] **Official Alignment**: Sync all hex values with the latest `tokyonight.nvim` releases.
+- [x] **Designer Typography**: Integrate **Google Sans Code** font for superior professional legibility.
+- [ ] **Precision Connectivity**: Bridge the gap between keys and popups (AnySoft style) for a direct tactile link.
 - [ ] **More to come**
 
 ## Future Roadmap: Modernization Phase II
@@ -20,11 +22,11 @@
 - [x] **Physics & Curves**: Implement "Spring" or "Overshoot" interpolators for popup animations to eliminate the "clunky" feel.
 - [x] **Latency Neutralization**: Eliminate the artificial popup delay (set to 0ms) and implement dynamic long-press triggers for instantaneous feedback.
 - [x] **Transparency Fix**: Resolve the "Square/Triangle Background" rendering bug where the area outside the rounded corners becomes visible in certain applications.
+- [ ] **Physical Connectivity**: Redesign popup positioning to be flush with the key top (AnySoft style) to eliminate the floating gap and create a direct tactile link.
 
-### 2. Advanced Modifier States (Ctrl/Alt)
-- [ ] **Hardware Aesthetic**: Transition from the "Underline" indicator to a "Mechanical LED" dot in the corner of the key or a "Neon Wireframe" stroke for active states.
-- [ ] **Visual Hierarchy**: Differentiate between "Sticky" (single-tap) and "Locked" (double-tap) states using distinct color intensities or bloom effects.
-
+### 2. Typographic & Geometric Overhaul
+- [x] **Designer Typography**: Integrate **Google Sans Code** font across all keys and popups to achieve a high-end "Modern IDE" look with superior legibility.
+- [ ] **Precision Corners**: Transition from the current friendly 8dp radius to a technical **3dp or 4dp precision radius** to match professional hardware aesthetics.
 ### 3. Interaction Design
 - [x] **Portal Transition**: Implement a visual link between the pressed key and the appearing popup (e.g., dimming the underlying key) to create a sense of continuous motion.
 - [ ] **Contextual Scaling**: Dynamically adjust popup widths based on content (Letters vs. Symbols) to reduce visual noise.
@@ -67,14 +69,14 @@ All keyboard icons are now tinted using `?attr/kbdColorText` to ensure they adap
 - **Monospace Enforcement**: The `LatinKeyboardBaseView` constructor forces `Typeface.MONOSPACE` and `Typeface.BOLD` based on the `keyTextStyle` attribute.
 
 ### 4. Layout & Geometry
-- **Gutter System**: Strictly `0dp` gap in XML layouts, with `1dp` insets in the drawables.
+- **Gutter System**: Strictly `0dp` gap in XML layouts, with `2dp` insets in the drawables creating a `4dp` visual gutter.
 - **Popup Physics**:
     - **Safety Insets**: `6dp` transparent layers added to `popup_tokyonight_dynamic.xml` via `layer-list` to prevent window-boundary clipping.
     - `keyPreviewOffset`: `-8dp` (Balanced visual float).
     - `keyPreviewHeight`: `60dp` (Modern "Pill" geometry).
     - **Centering**: Asymmetric padding (`4dp` top, `8dp` bottom) used in `preview_tokyonight_dynamic.xml` for perfect optical centering.
     - **Unified Container**: `popup_container_tokyonight.xml` used for multi-key popups to eliminate notched borders.
-    - `corners`: `12dp` radius for popups, `6dp` for keys.
+    - `corners`: `12dp` radius for popups, `8dp` for keys.
 
 ### 5. Theme Mapping (Internal IDs)
 - `10`: Storm (Default)
