@@ -33,8 +33,7 @@ All notable changes to this project will be documented in this file.
 - **Modern Fluid Popups**: Implemented a new `popup_enter_modern.xml` animation with scale, slide, and fade effects.
 - **Tokyo Night Design System**: Full implementation of Storm, Night, Day, and Moon palettes.
 - **Neon Aesthetic**: Added Tokyo Night green accents to Storm theme popups and previews.
-- **Monospace Typography**: Forced `Typeface.MONOSPACE` and `Typeface.BOLD` for all key labels for an IDE-like feel.
-
+- **Monospace Typography**: Forced `Typeface.MONOSPACE` and `Typeface.BOLD` for all key labels.
 ### Changed
 - **Popup Physics**: Adjusted `key_preview_offset` to a negative value (-8dp) so popups extend upwards from the key top.
 - **Vertical Tab Aesthetic**: Set popup height to 80dp for a more elegant "floating tab" appearance.
