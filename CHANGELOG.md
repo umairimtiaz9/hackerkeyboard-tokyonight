@@ -5,10 +5,21 @@ All notable changes to this project will be documented in this file.
 ## [Tokyo Night Edition] - 2025-12-26
 
 ### Added
-- **Data-Oriented Architecture**: Decoupled UI components from hardcoded color values. Introduced a semantic attribute system (`attrs.xml`) that maps roles (Base, Alpha, Mod, Highlight, Accent, Popup) to theme-specific colors.
-- **Unified Component System**: Implemented `btn_key_tokyonight.xml` (Universal Key Drawable), `preview_tokyonight_dynamic.xml` (Universal Preview), and `popup_tokyonight_dynamic.xml` (Universal Shape).
-- **Dynamic Theme Wrapping**: Modified `KeyboardSwitcher.java` to use `ContextThemeWrapper`, enabling the keyboard to swap its entire color palette at runtime without layout duplication.
-- **Surgical Vector Tinting**: Transitioned all keyboard symbols (`sym_keyboard_*.xml`) to use `?attr/kbdColorText` for perfect theme adherence.
+- **Modernization Phase II Implementation**:
+    - **Pill Geometry**: Compressed popup dimensions to a compact `60dp` Pill shape for a professional, modern overlay aesthetic.
+    - **Spring Physics**: Implemented bouncy `overshoot` interpolators for popup animations, providing tactile and responsive feedback.
+    - **Portal Transition**: Added dynamic key dimming logic where the underlying key on the keyboard tray fades when its popup is active, creating a visual "portal" effect.
+    - **Unified Mini-Keyboard Box**: Created a dedicated `popup_container_tokyonight.xml` for long-press variations, eliminating the "notched" border bug and creating a cohesive unified tray.
+    - **Data-Oriented Architecture**: Decoupled UI components from hardcoded color values. Introduced a semantic attribute system (`attrs.xml`) that maps roles (Base, Alpha, Mod, Highlight, Accent, Popup) to theme-specific colors.
+    - **Unified Component System**: Implemented `btn_key_tokyonight.xml` (Universal Key Drawable), `preview_tokyonight_dynamic.xml` (Universal Preview), and `popup_tokyonight_dynamic.xml` (Universal Shape).
+    - **Dynamic Theme Wrapping**: Modified `KeyboardSwitcher.java` to use `ContextThemeWrapper`, enabling the keyboard to swap its entire color palette at runtime without layout duplication.
+    - **Surgical Vector Tinting**: Transitioned all keyboard symbols (`sym_keyboard_*.xml`) to use `?attr/kbdColorText` for perfect theme adherence.
+
+### Fixed
+- **The Boxy Corner Bug**: Successfully eliminated the persistent dark rectangular artifact behind rounded popups by transitioning to a `layer-list` with explicit transparent base layers and purging theme-inherited backgrounds.
+- **Optical Centering**: Fine-tuned vertical character alignment within the Pill geometry by adjusting asymmetric padding to compensate for font baseline descenders.
+- **Abnormal Popup Behavior**: Corrected the `.` key popup by prioritizing character labels over hint icons in the preview window.
+- **Latency Neutralization**: Set artificial popup delays to `0ms` for instantaneous user feedback.
 
 ### Changed
 - **Monolithic Geometry**: Refined Storm and Moon palettes to use consistent "Surface Tones," creating a unified visual slab effect.

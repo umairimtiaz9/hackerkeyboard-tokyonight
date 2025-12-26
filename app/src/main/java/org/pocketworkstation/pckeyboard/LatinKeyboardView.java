@@ -160,9 +160,14 @@ public class LatinKeyboardView extends LatinKeyboardBaseView {
             if (!isInEditMode())
                 Log.i(TAG, "new mPreviewPopup " + mPreviewPopup + " from " + this);
             mPreviewText = (TextView) inflate.inflate(previewLayout, null);
+            mPreviewText.setBackgroundDrawable(null); // Clear theme-inherited background
+            mPreviewText.setBackgroundResource(R.drawable.popup_tokyonight_dynamic);
+            if (android.os.Build.VERSION.SDK_INT >= 11) {
+                mPreviewText.setLayerType(android.view.View.LAYER_TYPE_SOFTWARE, null);
+            }
             mPreviewTextSizeLarge = (int) res.getDimension(R.dimen.key_preview_text_size_large);
             mPreviewPopup.setContentView(mPreviewText);
-            mPreviewPopup.setBackgroundDrawable(null);
+            mPreviewPopup.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
             mPreviewPopup.setTouchable(false);
             mPreviewPopup.setAnimationStyle(R.style.KeyPreviewAnimation);
             mPreviewPopup.setClippingEnabled(clippingEnabled);
@@ -175,7 +180,7 @@ public class LatinKeyboardView extends LatinKeyboardBaseView {
             mMiniKeyboardPopup = new PopupWindow(context);
             if (!isInEditMode())
                 Log.i(TAG, "new mMiniKeyboardPopup " + mMiniKeyboardPopup + " from " + this);
-            mMiniKeyboardPopup.setBackgroundDrawable(null);
+            mMiniKeyboardPopup.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
             mMiniKeyboardPopup.setAnimationStyle(R.style.MiniKeyboardAnimation);
             mMiniKeyboardPopup.setClippingEnabled(clippingEnabled);
             mMiniKeyboardVisible = false;
@@ -439,7 +444,7 @@ public class LatinKeyboardView extends LatinKeyboardBaseView {
         if (mExtensionPopup == null) {
             int[] windowLocation = new int[2];
             mExtensionPopup = new PopupWindow(getContext());
-            mExtensionPopup.setBackgroundDrawable(null);
+            mExtensionPopup.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
             LayoutInflater li = (LayoutInflater) getContext().getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
             mExtension = (LatinKeyboardView) li.inflate(mExtensionLayoutResId == 0 ?

@@ -13,6 +13,22 @@
 - [x] **Official Alignment**: Sync all hex values with the latest `tokyonight.nvim` releases.
 - [ ] **More to come**
 
+## Future Roadmap: Modernization Phase II
+
+### 1. Popup Refinement & Polish
+- [x] **Geometry Compression**: Shrink popup dimensions to a "Pill" shape (approx. 60dp visual height) for a more professional, compact look.
+- [x] **Physics & Curves**: Implement "Spring" or "Overshoot" interpolators for popup animations to eliminate the "clunky" feel.
+- [x] **Latency Neutralization**: Eliminate the artificial popup delay (set to 0ms) and implement dynamic long-press triggers for instantaneous feedback.
+- [x] **Transparency Fix**: Resolve the "Square/Triangle Background" rendering bug where the area outside the rounded corners becomes visible in certain applications.
+
+### 2. Advanced Modifier States (Ctrl/Alt)
+- [ ] **Hardware Aesthetic**: Transition from the "Underline" indicator to a "Mechanical LED" dot in the corner of the key or a "Neon Wireframe" stroke for active states.
+- [ ] **Visual Hierarchy**: Differentiate between "Sticky" (single-tap) and "Locked" (double-tap) states using distinct color intensities or bloom effects.
+
+### 3. Interaction Design
+- [x] **Portal Transition**: Implement a visual link between the pressed key and the appearing popup (e.g., dimming the underlying key) to create a sense of continuous motion.
+- [ ] **Contextual Scaling**: Dynamically adjust popup widths based on content (Letters vs. Symbols) to reduce visual noise.
+
 ## Project Knowledge Base
 
 ### 1. Theme Architecture (Data-Oriented)
@@ -53,9 +69,11 @@ All keyboard icons are now tinted using `?attr/kbdColorText` to ensure they adap
 ### 4. Layout & Geometry
 - **Gutter System**: Strictly `0dp` gap in XML layouts, with `1dp` insets in the drawables.
 - **Popup Physics**:
-    - **Safety Insets**: `6dp` transparent insets added to `popup_tokyonight_dynamic.xml` to prevent window-boundary clipping (squaring) in restricted layouts (e.g., browsers).
-    - `keyPreviewOffset`: `-14dp` (Effective `-8dp` visual float + `6dp` compensation).
-    - `keyPreviewHeight`: `92dp` (Effective `80dp` visual height + `12dp` vertical inset compensation).
+    - **Safety Insets**: `6dp` transparent layers added to `popup_tokyonight_dynamic.xml` via `layer-list` to prevent window-boundary clipping.
+    - `keyPreviewOffset`: `-8dp` (Balanced visual float).
+    - `keyPreviewHeight`: `60dp` (Modern "Pill" geometry).
+    - **Centering**: Asymmetric padding (`4dp` top, `8dp` bottom) used in `preview_tokyonight_dynamic.xml` for perfect optical centering.
+    - **Unified Container**: `popup_container_tokyonight.xml` used for multi-key popups to eliminate notched borders.
     - `corners`: `12dp` radius for popups, `6dp` for keys.
 
 ### 5. Theme Mapping (Internal IDs)

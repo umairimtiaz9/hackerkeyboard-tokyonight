@@ -224,6 +224,7 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
     protected View mMiniKeyboardContainer;
     protected View mMiniKeyboardParent;
     protected boolean mMiniKeyboardVisible;
+    protected boolean mIsMiniKeyboard = false;
     protected final WeakHashMap<Key, Keyboard> mMiniKeyboardCacheMain = new WeakHashMap<Key, Keyboard>();
     protected final WeakHashMap<Key, Keyboard> mMiniKeyboardCacheShift = new WeakHashMap<Key, Keyboard>();
     protected final WeakHashMap<Key, Keyboard> mMiniKeyboardCacheCaps = new WeakHashMap<Key, Keyboard>();
@@ -536,7 +537,7 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         final Resources res = getResources();
 
         mShowPreview = false;
-        mDelayBeforePreview = res.getInteger(R.integer.config_delay_before_preview);
+        mDelayBeforePreview = 0;
         mDelayBeforeSpacePreview = res.getInteger(R.integer.config_delay_before_space_preview);
         mDelayAfterPreview = res.getInteger(R.integer.config_delay_after_preview);
 
@@ -965,7 +966,12 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
                 continue;
             }
             keysDrawn++;
+            
+            // Portal Transition: Dim the key if it is currently being previewed
+            boolean isPreviewed = (i == mOldPreviewKeyIndex && mPreviewPopup != null && mPreviewPopup.isShowing());
+
             paint.setColor(key.isCursor ? mKeyCursorColor : mKeyTextColor);
+            paint.setAlpha(isPreviewed ? 60 : 255);
 
             int[] drawableState = key.getCurrentDrawableState();
             keyBackground.setState(drawableState);
@@ -989,10 +995,22 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
                 canvas.save();
                 canvas.scale(1.0f, yscale);
             }
-            if (mBackgroundAlpha != 255) {
+            
+            int originalAlpha = mBackgroundAlpha;
+            if (isPreviewed) {
+                keyBackground.setAlpha(100);
+            } else if (mBackgroundAlpha != 255) {
                 keyBackground.setAlpha(mBackgroundAlpha);
+            } else {
+                keyBackground.setAlpha(255);
             }
-            keyBackground.draw(canvas);
+            
+            // Only draw background if it's NOT a mini-keyboard, or if the key is pressed (for feedback)
+            if (!mIsMiniKeyboard || key.pressed) {
+                keyBackground.draw(canvas);
+            }
+            keyBackground.setAlpha(originalAlpha); // Reset alpha
+
             if (yscale != 1.0f)  canvas.restore();
 
             boolean shouldDrawIcon = true;
@@ -1191,6 +1209,9 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
                 && (mShowPreview
                         || (hidePreviewOrShowSpaceKeyPreview && isLanguageSwitchEnabled))) {
             if (keyIndex == NOT_A_KEY) {
+                if (oldKeyIndex != NOT_A_KEY && oldKeyIndex < mKeys.length) {
+                    invalidateKey(mKeys[oldKeyIndex]);
+                }
                 mHandler.cancelPopupPreview();
                 mHandler.dismissPreview(mDelayAfterPreview);
             } else if (tracker != null) {
@@ -1204,10 +1225,17 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         Key key = tracker.getKey(keyIndex);
         if (key == null)
             return;
+        
+        // Invalidate old and new keys for Portal Transition (dimming)
+        if (mOldPreviewKeyIndex != NOT_A_KEY && mOldPreviewKeyIndex < mKeys.length) {
+            invalidateKey(mKeys[mOldPreviewKeyIndex]);
+        }
+        invalidateKey(key);
+
         //Log.i(TAG, "showKey() for " + this);
         // Should not draw hint icon in key preview
         Drawable icon = key.icon;
-        if (icon != null && !shouldDrawLabelAndIcon(key)) {
+        if (icon != null && TextUtils.isEmpty(key.label) && !shouldDrawLabelAndIcon(key)) {
             mPreviewText.setCompoundDrawables(null, null, null,
                     key.iconPreview != null ? key.iconPreview : icon);
             mPreviewText.setText(null);
@@ -1341,6 +1369,7 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
 
         mMiniKeyboard =
                 (LatinKeyboardBaseView)container.findViewById(R.id.LatinKeyboardBaseView);
+        mMiniKeyboard.mIsMiniKeyboard = true;
         mMiniKeyboard.setOnKeyboardActionListener(new OnKeyboardActionListener() {
             public void onKey(int primaryCode, int[] keyCodes, int x, int y) {
                 mKeyboardActionListener.onKey(primaryCode, keyCodes, x, y);
