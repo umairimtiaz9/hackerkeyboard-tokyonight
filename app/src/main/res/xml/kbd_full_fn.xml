@@ -144,14 +144,13 @@
             android:keyEdgeFlags="right" />
     </Row>
     <Row>
-        <Key
-            android:keyLabel="Ctrl"
-            android:keyWidth="10.7142855%p"
-            android:codes="@integer/key_ctrl_left"
-            android:isSticky="true"
-            android:keyEdgeFlags="left" 
-            android:isModifier="true" />
-        <Key
+                <Key
+                    android:keyIcon="@drawable/sym_keyboard_ctrl"
+                    android:keyWidth="10.7142855%p"
+                    android:codes="@integer/key_ctrl_left"
+                    android:isSticky="true"
+                    android:keyEdgeFlags="left"
+                    android:isModifier="true" />        <Key
             android:codes="@integer/key_fkey_f9"
             android:keyWidth="8.035714%p"
             android:isModifier="true"
@@ -279,7 +278,7 @@
             android:isModifier="true" />
         <Key
             android:codes="@integer/key_alt_left"
-            android:keyLabel="Alt"
+            android:keyIcon="@drawable/sym_keyboard_alt"
             android:isSticky="true"
             android:isModifier="true" />
         <Key

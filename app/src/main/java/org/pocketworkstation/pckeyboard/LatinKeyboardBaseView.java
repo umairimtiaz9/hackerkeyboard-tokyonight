@@ -181,6 +181,7 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
     private int mKeyTextColor;
     private int mKeyHintColor;
     private int mKeyCursorColor;
+    private int mKeyActiveColor;
     private boolean mInvertSymbols;
     private boolean mRecolorSymbols;
     private Typeface mKeyTextStyle;
@@ -517,6 +518,8 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
                 mKeyHintColor = a.getColor(attr, 0xFFBBBBBB);
             } else if (attr == R.styleable.LatinKeyboardBaseView_keyCursorColor) {
                 mKeyCursorColor = a.getColor(attr, 0xFF000000);
+            } else if (attr == R.styleable.LatinKeyboardBaseView_kbdColorActive) {
+                mKeyActiveColor = a.getColor(attr, 0xFFFF9E64); // Default Tokyo Night Orange
             } else if (attr == R.styleable.LatinKeyboardBaseView_invertSymbols) {
                 mInvertSymbols = a.getBoolean(attr, false);
             } else if (attr == R.styleable.LatinKeyboardBaseView_recolorSymbols) {
@@ -1141,7 +1144,22 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
                 canvas.translate(drawableX, drawableY);
                 icon.setBounds(0, 0, drawableWidth, drawableHeight);
 
-                if (iconColorFilter != null) {
+                boolean isModifierActive = key.modifier && (key.on || key.locked || key.pressed);
+                if (isModifierActive) {
+                    // Tokyo Night Orange Glow Effect
+                    Paint glowPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+                    glowPaint.setShadowLayer(12, 0, 0, mKeyActiveColor);
+                    
+                    icon.setColorFilter(new PorterDuffColorFilter(mKeyActiveColor, PorterDuff.Mode.SRC_ATOP));
+                    
+                    // Use a temporary bitmap for the glow effect
+                    Bitmap b = Bitmap.createBitmap(Math.max(1, drawableWidth), Math.max(1, drawableHeight), Bitmap.Config.ARGB_8888);
+                    Canvas c = new Canvas(b);
+                    icon.draw(c);
+                    
+                    canvas.drawBitmap(b, 0, 0, glowPaint);
+                    icon.setColorFilter(null);
+                } else if (iconColorFilter != null) {
                     // Re-color the icon to match the theme, and draw a shadow for it manually.
                     //
                     // This doesn't seem to look quite right, possibly a problem with using
