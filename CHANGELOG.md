@@ -18,8 +18,11 @@ All notable changes to this project will be documented in this file.
     - **Unified Component System**: Implemented `btn_key_tokyonight.xml` (Universal Key Drawable), `preview_tokyonight_dynamic.xml` (Universal Preview), and `popup_tokyonight_dynamic.xml` (Universal Shape).
     - **Dynamic Theme Wrapping**: Modified `KeyboardSwitcher.java` to use `ContextThemeWrapper`, enabling the keyboard to swap its entire color palette at runtime without layout duplication.
     - **Surgical Vector Tinting**: Transitioned all keyboard symbols (`sym_keyboard_*.xml`) to use `?attr/kbdColorText` for perfect theme adherence.
+    - **Technical Iconography**: Replaced text-based "Ctrl" and "Alt" labels with minimalist, modern vector icons.
+    - **Mechanical Glow**: Implemented a dynamic **Tokyo Night Orange Glow** (`#FF9E64`) for active technical modifiers (Ctrl, Alt, Shift), simulating a backlit mechanical keycap feel.
 
 ### Fixed
+- **Indicator Cleanup**: Removed the legacy orange bottom line indicator from `btn_key_tokyonight.xml` in favor of the cleaner, more professional Icon Glow system.
 - **The Boxy Corner Bug**: Successfully eliminated the persistent dark rectangular artifact behind rounded popups by transitioning to a `layer-list` with explicit transparent base layers and purging theme-inherited backgrounds.
 - **Optical Centering**: Fine-tuned vertical character alignment within the Pill geometry by adjusting asymmetric padding to compensate for font baseline descenders.
 - **Abnormal Popup Behavior**: Corrected the `.` key popup by prioritizing character labels over hint icons in the preview window.
