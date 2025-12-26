@@ -1008,7 +1008,15 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
             
             // Only draw background if it's NOT a mini-keyboard, or if the key is pressed (for feedback)
             if (!mIsMiniKeyboard || key.pressed) {
-                keyBackground.draw(canvas);
+                if (mIsMiniKeyboard) {
+                    // Final Polish: Inset the highlight so it sits beautifully inside the container tray
+                    Rect origBounds = keyBackground.getBounds();
+                    keyBackground.setBounds(2, 2, key.width - 2, key.height - 2);
+                    keyBackground.draw(canvas);
+                    keyBackground.setBounds(origBounds); // Restore for other keys
+                } else {
+                    keyBackground.draw(canvas);
+                }
             }
             keyBackground.setAlpha(originalAlpha); // Reset alpha
 
