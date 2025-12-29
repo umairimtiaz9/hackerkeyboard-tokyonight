@@ -1304,7 +1304,7 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         }
 
         int popupPreviewX = key.x - (popupWidth - key.width) / 2;
-        int popupPreviewY = key.y - popupHeight + mPreviewOffset;
+        int popupPreviewY = key.y - popupHeight;
 
         mHandler.cancelDismissPreview();
         if (mOffsetInWindow == null) {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Unified Dynamic Popup Shape with Explicit Layer-List Transparency -->
+<!-- Unified Dynamic Popup Shape with Connection to Key -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Explicit Transparent Base Layer -->
     <item>
@@ -7,10 +7,14 @@
             <solid android:color="#00000000" />
         </shape>
     </item>
-    <!-- Rounded Popup with Margins (Replacing Insets) -->
-    <item android:left="6dp" android:top="6dp" android:right="6dp" android:bottom="6dp">
+    <!-- Rounded Popup with Connection to Key -->
+    <item android:left="6dp" android:top="0dp" android:right="6dp" android:bottom="6dp">
         <shape android:shape="rectangle">
-            <corners android:radius="12dp" />
+            <corners
+                android:topLeftRadius="12dp"
+                android:topRightRadius="12dp"
+                android:bottomLeftRadius="12dp"
+                android:bottomRightRadius="12dp" />
             <solid android:color="?attr/kbdColorBase" />
             <stroke android:width="2dp" android:color="?attr/kbdColorPopup" />
         </shape>

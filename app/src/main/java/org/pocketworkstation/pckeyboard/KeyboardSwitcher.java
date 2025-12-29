@@ -67,20 +67,20 @@ public class KeyboardSwitcher implements
     public static final String DEFAULT_LAYOUT_ID = "10";
     public static final String PREF_KEYBOARD_LAYOUT = "pref_keyboard_layout";
     private static final int[] THEMES = new int[] {
-        R.layout.input_tokyonight_storm, // 0 -> Mapped to Storm as fallback
-        R.layout.input_tokyonight_storm, // 1 -> Legacy Stone Bold
-        R.layout.input_tokyonight_storm, // 2 -> Legacy Trans Neon
-        R.layout.input_tokyonight_storm, // 3 -> Legacy Material Dark
-        R.layout.input_tokyonight_storm, // 4 -> Legacy Material Light
-        R.layout.input_tokyonight_storm, // 5 -> Legacy ICS Darker
-        R.layout.input_tokyonight_storm, // 6 -> Legacy Material Black
-        R.layout.input_tokyonight_storm, // 7 -> Legacy Gingerbread
-        R.layout.input_tokyonight_storm, // 8
-        R.layout.input_tokyonight_storm, // 9
-        R.layout.input_tokyonight_storm, // 10
-        R.layout.input_tokyonight_night, // 11
-        R.layout.input_tokyonight_day,   // 12
-        R.layout.input_tokyonight_moon,  // 13
+        R.layout.input_tokyonight_dynamic, // 0 -> Mapped to Storm as fallback
+        R.layout.input_tokyonight_dynamic, // 1 -> Legacy Stone Bold
+        R.layout.input_tokyonight_dynamic, // 2 -> Legacy Trans Neon
+        R.layout.input_tokyonight_dynamic, // 3 -> Legacy Material Dark
+        R.layout.input_tokyonight_dynamic, // 4 -> Legacy Material Light
+        R.layout.input_tokyonight_dynamic, // 5 -> Legacy ICS Darker
+        R.layout.input_tokyonight_dynamic, // 6 -> Legacy Material Black
+        R.layout.input_tokyonight_dynamic, // 7 -> Legacy Gingerbread
+        R.layout.input_tokyonight_dynamic, // 8
+        R.layout.input_tokyonight_dynamic, // 9
+        R.layout.input_tokyonight_dynamic, // 10 - Storm
+        R.layout.input_tokyonight_dynamic, // 11 - Night
+        R.layout.input_tokyonight_dynamic, // 12 - Day
+        R.layout.input_tokyonight_dynamic, // 13 - Moon
     };
 
     private static final int[] STYLES = new int[] {

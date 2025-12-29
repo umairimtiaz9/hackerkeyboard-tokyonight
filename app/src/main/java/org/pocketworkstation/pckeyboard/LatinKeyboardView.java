@@ -448,7 +448,7 @@ public class LatinKeyboardView extends LatinKeyboardBaseView {
             LayoutInflater li = (LayoutInflater) getContext().getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
             mExtension = (LatinKeyboardView) li.inflate(mExtensionLayoutResId == 0 ?
-                    R.layout.input_tokyonight_storm : mExtensionLayoutResId, null);
+                    R.layout.input_tokyonight_dynamic : mExtensionLayoutResId, null);
             Keyboard keyboard = mExtensionKeyboard;
             mExtension.setKeyboard(keyboard);
             mExtension.setExtensionType(true);
