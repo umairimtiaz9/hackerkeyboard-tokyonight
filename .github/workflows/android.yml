@@ -62,11 +62,29 @@ jobs:
           name: hackers-keyboard-tokyonight-signed
           path: ${{ env.SIGNED_APK_PATH }}
 
-      - name: Create Release
+      - name: Create Release (Tags)
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
         with:
           files: ${{ env.SIGNED_APK_PATH }}
           generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update Latest Release (Master)
+        if: github.ref == 'refs/heads/master'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: latest
+          name: "Latest Tokyo Night Build"
+          body: |
+            This is an automated build of the latest `master` branch.
+
+            **Warning**: This is a development build and may be unstable.
+
+            Built on: ${{ github.event.head_commit.timestamp }}
+            Commit: ${{ github.sha }}
+          files: ${{ env.SIGNED_APK_PATH }}
+          prerelease: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
