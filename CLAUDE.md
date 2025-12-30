@@ -12,7 +12,7 @@
 - [x] **Data-Oriented Colors**: Move from hardcoded XML colors to a centralized attribute-based system.
 - [x] **Official Alignment**: Sync all hex values with the latest `tokyonight.nvim` releases.
 - [x] **Designer Typography**: Integrate **Google Sans Code** font for superior professional legibility.
-- [ ] **Precision Connectivity**: Bridge the gap between keys and popups (AnySoft style) for a direct tactile link.
+- [x] **Precision Connectivity**: Bridge the gap between keys and popups (AnySoft style) for a direct tactile link.
 - [ ] **More to come**
 
 ## Future Roadmap: Modernization Phase II
@@ -22,7 +22,7 @@
 - [x] **Physics & Curves**: Implement "Spring" or "Overshoot" interpolators for popup animations to eliminate the "clunky" feel.
 - [x] **Latency Neutralization**: Eliminate the artificial popup delay (set to 0ms) and implement dynamic long-press triggers for instantaneous feedback.
 - [x] **Transparency Fix**: Resolve the "Square/Triangle Background" rendering bug where the area outside the rounded corners becomes visible in certain applications.
-- [ ] **Physical Connectivity**: Redesign popup positioning to be flush with the key top (AnySoft style) to eliminate the floating gap and create a direct tactile link.
+- [x] **Physical Connectivity**: Redesign popup positioning to be flush with the key top (AnySoft style) to eliminate the floating gap and create a direct tactile link.
 
 ### 2. Typographic & Geometric Overhaul
 - [x] **Designer Typography**: Integrate **Google Sans Code** font across all keys and popups to achieve a high-end "Modern IDE" look with superior legibility.

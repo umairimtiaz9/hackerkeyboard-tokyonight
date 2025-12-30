@@ -1,37 +1,74 @@
-## Overview ##
+# Hacker's Keyboard: Tokyo Night Edition
 
-**WARNING:** *This is a rather ancient project that was originally developed back in 2011 based on the Android 2.3 (Gingerbread) AOSP keyboard. While it still works as-is for many users, it would need some major rewrites to work with newer APIs, and some features such as language switching or popup keys don't work right on modern Android systems. I'm not currently planning on significant updates, and it's possible that it will stop working on modern devices or will no longer be updateable via the Google Play store due to minimum API level requirements. Play Store requires targeting API level 29 (Android 10), while the code was written for API level 9 (Android 2.3) from 2011.*
+A modernization project of the legendary Hacker's Keyboard, bringing a high-performance, IDE-inspired aesthetic and modern Android UX to the most powerful soft keyboard ever made.
 
-Are you missing the key layout you're used to from your computer when using an Android device? This software keyboard has separate number keys, punctuation in the usual places, and arrow keys. It is based on the AOSP Gingerbread soft keyboard, so it supports multitouch for the modifier keys.
+![Modern Preview](hk-5row-en-s.png)
 
-This keyboard is especially useful if you use ConnectBot for SSH access. It provides working Tab/Ctrl/Esc keys, and the arrow keys are essential for devices such as the Xoom tablet or Nexus S that don't have a trackball or D-Pad.
+## 📜 The History: From 2011 to Today
 
-The supported keyboard layouts include Armenian (Հայերեն), Arabic (العربية),
-British (en\_GB), Bulgarian (български език), Czech (Čeština), Danish (dansk),
-Carpalx English (language "en-CX"), Dvorak English (language "en-DV"), English
-(QWERTY), Finnish (Suomi), French (Français, AZERTY), German (Deutsch, QWERTZ),
-German Neo2 (Deutsch, language "de-NE"),
-Greek (ελληνικά), Hebrew (עברית), Hungarian (Magyar), Italian (Italiano), Lao
-(ພາສາລາວ), Norwegian (Norsk bokmål), Persian (فارسی), Portuguese (Português),
-Romanian (Română), Russian (Русский), Russian phonetic (Русский, ru-rPH),
-Serbian (Српски), Slovak (Slovenčina), Slovenian
-(Slovenščina)/Bosnian/Croatian/Latin Serbian, Spanish (Español, Español
-Latinoamérica), Swedish (Svenska), Tamil (தமிழ்), Thai (ไทย), Turkish (Türkçe),
-and Ukrainian (українська мова).
+Hacker's Keyboard was originally developed in 2011, based on the Android 2.3 (Gingerbread) AOSP keyboard. It became the gold standard for power users, developers, and sysadmins due to its full 5-row layout, working Tab/Ctrl/Esc keys, and essential arrow keys for SSH (ConnectBot) and terminal usage.
 
-To install, get **[Hacker's
-Keyboard](https://play.google.com/store/apps/details?id=org.pocketworkstation.pckeyboard)**
-from the Play Store, plus optional [dictionary
-packs](https://play.google.com/store/apps/developer?id=Klaus+Weidner).
+### The Modernization Journey
+This project transforms the "ancient" Gingerbread-style UI into a professional, data-driven modernization:
+- **Phase I**: Purged 14+ inconsistent legacy themes and replaced them with the **Tokyo Night** design system.
+- **Phase II**: Overhauled the core rendering logic from static bitmap nine-patches to a dynamic, attribute-driven XML system.
+- **Phase III**: Refined interaction design with fluid animations, designer typography, and "AnySoft" style continuous stroke popups.
 
-## Additional resources ##
+## ✨ Key Features (Modernized)
 
-See the **[Release Notes](https://github.com/klausw/hackerskeyboard/wiki/ReleaseNotes)** for changes in the Play Store released versions.
+### 🎨 Tokyo Night Design System
+Integrated 4 high-contrast variants based on the popular Neovim color scheme:
+- **Storm** (Default): A balanced, deep blue-grey.
+- **Night**: Darker, more intense tones for OLED and low-light.
+- **Moon**: A slightly softer, cooler midnight palette.
+- **Day**: A crisp, high-legibility light theme.
 
-Having problems? See the **[User's Guide](https://github.com/klausw/hackerskeyboard/wiki/UsersGuide)** and **[FAQ](https://github.com/klausw/hackerskeyboard/wiki/FrequentlyAskedQuestions)**, and check the [issue tracker](https://github.com/klausw/hackerskeyboard/issues) for known bugs or filing new ones.
+### ⌨️ Professional Typography
+- **Google Sans Code Integration**: Integrated designer typography across all keys and popups for superior professional legibility.
+- **Typographic Hierarchy**: High-opacity bold labels for primary functions and low-opacity hint characters for reduced visual noise.
 
-Comments, requests, or contributions? Join the [discussion group](http://groups.google.com/group/hackerskeyboard/).
+### 🚀 Fluid Interactions
+- **Spring Physics**: Popups use "Overshoot" interpolators for responsive, tactile feedback.
+- **Continuous Stroke**: A seamless visual bridge between the pressed key and the popup, eliminating the floating box feel.
+- **Mechanical Glow**: Active technical modifiers (Ctrl, Alt, Shift) feature a Gaussian orange glow, simulating backlit mechanical keycaps.
+- **Latency Neutralization**: 0ms popup delay with dynamic long-press triggers for instantaneous usage.
 
-Application developers: see [the page about keyboard support in applications](https://github.com/klausw/hackerskeyboard/wiki/KeyboardSupportInApplications) if you want to enable the additional keys in your Android application, the same method also works for hardware USB or Bluetooth keyboards.
+## 🛠 Technical Architecture
 
-![hk-5row-en-s.png](hk-5row-en-s.png)
+The project has been migrated to a modern, semantic architecture:
+
+### 1. Data-Oriented Colors (`attrs.xml`)
+Themes are no longer hardcoded. We use semantic roles to define the palette:
+- `kbdColorBase`: Main keyboard tray background.
+- `kbdColorAlpha`: Standard character key background.
+- `kbdColorMod`: Functional key background (Shift, Ctrl, Alt).
+- `kbdColorHighlight`: Pressed or Sticky (Locked) states.
+- `kbdColorText`: Global label and icon color.
+- `kbdColorPopup`: Border/Stroke color for overlays.
+
+### 2. Unified Asset System
+Instead of maintaining dozens of bitmap files, we use a single, high-fidelity XML drawable system:
+- `btn_key_tokyonight.xml`: Handles all key states with 2dp insets for a guaranteed 4dp visual gutter.
+- **Vector Icons**: All keyboard symbols are vector-based and surgically tinted via theme attributes.
+
+### 3. Java Integration
+- **ContextThemeWrapper**: Injects theme attributes at runtime before layout inflation.
+- **Dynamic Connection Patch**: Real-time positioning of an invisible overlay to merge keys and popups visually.
+
+## 🤝 Contributing
+
+We welcome contributions! This project aims to maintain the "power user" soul of Hacker's Keyboard while keeping the UI modern.
+
+1. **Bug Fixes**: Help us resolve any legacy rendering issues on modern Android versions.
+2. **Layouts**: Add support for more languages while adhering to the new visual guidelines.
+3. **Themes**: While Tokyo Night is the focus, the dynamic system allows for easy addition of new high-quality color schemes.
+
+## 📥 Installation
+
+1. Clone this repository.
+2. Build using Android Studio or via Gradle in Termux.
+3. Enable "Hacker's Keyboard" in your Android system settings.
+
+---
+
+*Based on the original work by Klaus Weidner.*
