@@ -1,4 +1,4 @@
-# Hacker's Keyboard: Tokyo Night Edition
+# Hacker Keyboard: Tokyo Night
 
 A modernization project of the legendary Hacker's Keyboard, bringing a high-performance, IDE-inspired aesthetic and modern Android UX to the most powerful soft keyboard ever made.
 
