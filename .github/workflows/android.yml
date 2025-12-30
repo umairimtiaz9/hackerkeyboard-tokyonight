@@ -30,8 +30,13 @@ jobs:
           chmod +x gradlew
 
       - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          log-accepted-android-sdk-licenses: false
+
+      - name: Install Android Build Tools
         run: |
-          yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --install "build-tools;34.0.4" "platforms;android-33"
+          sdkmanager "build-tools;34.0.4" "platforms;android-33"
 
       - name: Build with Gradle
         run: ./gradlew assembleRelease
