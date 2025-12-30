@@ -1282,23 +1282,33 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         // Initialize SeamlessPopupDrawable if needed
         if (mPreviewPopupDrawable == null) {
             mPreviewPopupDrawable = new SeamlessPopupDrawable(getContext());
-            // Resolve theme colors
-            TypedValue typedValue = new TypedValue();
-            Resources.Theme theme = getContext().getTheme();
-            int backgroundColor = 0xFF1a1b26; // Default Storm
-            if (theme.resolveAttribute(R.attr.kbdColorBase, typedValue, true)) {
-                backgroundColor = typedValue.data;
-            }
-            int strokeColor = 0xFF414868; // Default
-            if (theme.resolveAttribute(R.attr.kbdColorPopup, typedValue, true)) {
-                strokeColor = typedValue.data;
-            }
-            mPreviewPopupDrawable.setColors(backgroundColor, strokeColor);
             mPreviewPopupDrawable.setStrokeWidth(2.0f * getResources().getDisplayMetrics().density);
             mPreviewPopupDrawable.setCornerRadius(8.0f * getResources().getDisplayMetrics().density);
             mPreviewPopupDrawable.setKeyCornerRadius(8.0f * getResources().getDisplayMetrics().density);
             mPreviewText.setBackgroundDrawable(mPreviewPopupDrawable);
         }
+
+        // Update colors for the current key
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = getContext().getTheme();
+
+        int keyColor = 0xFF1a1b26; // Default Storm
+        // Use kbdColorMod for modifiers, kbdColorAlpha for standard keys
+        int attrId = key.modifier ? R.attr.kbdColorMod : R.attr.kbdColorAlpha;
+
+        if (theme.resolveAttribute(attrId, typedValue, true)) {
+            keyColor = typedValue.data;
+        } else if (theme.resolveAttribute(R.attr.kbdColorBase, typedValue, true)) {
+             // Fallback to base if specific key color not found
+             keyColor = typedValue.data;
+        }
+
+        int strokeColor = 0xFF414868; // Default
+        if (theme.resolveAttribute(R.attr.kbdColorPopup, typedValue, true)) {
+            strokeColor = typedValue.data;
+        }
+
+        mPreviewPopupDrawable.setColors(keyColor, strokeColor);
 
         // Adjust padding to make room for the key replica at the bottom
         // Original padding from XML is roughly 6dp.
@@ -1652,6 +1662,26 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
 
         // Configure SeamlessPopupDrawable
         if (mSeamlessPopupDrawable != null) {
+            // Update colors for the current key
+            TypedValue typedValue = new TypedValue();
+            Resources.Theme theme = getContext().getTheme();
+
+            int keyColor = 0xFF1a1b26; // Default Storm
+            // Use kbdColorMod for modifiers, kbdColorAlpha for standard keys
+            int attrId = popupKey.modifier ? R.attr.kbdColorMod : R.attr.kbdColorAlpha;
+
+            if (theme.resolveAttribute(attrId, typedValue, true)) {
+                keyColor = typedValue.data;
+            } else if (theme.resolveAttribute(R.attr.kbdColorBase, typedValue, true)) {
+                 keyColor = typedValue.data;
+            }
+
+            int strokeColor = 0xFF414868; // Default
+            if (theme.resolveAttribute(R.attr.kbdColorPopup, typedValue, true)) {
+                strokeColor = typedValue.data;
+            }
+            mSeamlessPopupDrawable.setColors(keyColor, strokeColor);
+
             // Calculate relative coordinates for the drawable
             // popupRect: The bubble containing the mini keys. (0, 0) to (width, contentHeight)
             Rect popupRect = new Rect(0, 0, mMiniKeyboardContainer.getMeasuredWidth(), contentHeight);

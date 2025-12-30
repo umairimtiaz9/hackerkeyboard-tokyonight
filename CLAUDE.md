@@ -13,6 +13,7 @@
 - [x] **Official Alignment**: Sync all hex values with the latest `tokyonight.nvim` releases.
 - [x] **Designer Typography**: Integrate **Google Sans Code** font for superior professional legibility.
 - [x] **Precision Connectivity**: Bridge the gap between keys and popups (AnySoft style) for a direct tactile link.
+- [x] **Modifier Blending**: Ensure seamless popup connections correctly inherit modifier colors (`kbdColorMod`) to prevent visual breaks.
 - [ ] **More to come**
 
 ## Future Roadmap: Modernization Phase II
@@ -89,12 +90,13 @@ All keyboard icons are now tinted using `?attr/kbdColorText` to ensure they adap
 The project now uses a dedicated `SeamlessPopupDrawable` to render popups, replacing legacy patch systems.
 - **Concept**: Instead of a separate popup window floating above a key, the drawable renders a unified shape comprising both the popup "bubble" and a "replica" of the key below it.
 - **Geometry**:
-    - **Adaptive Connection**: Uses Bezier curves (`quadTo`) and arcs (`arcTo`) to create a smooth, continuous path between the key and popup.
+    - **Adaptive Connection**: Uses circular arcs (`arcTo`) exclusively to create a mathematically perfect smooth path between the key and popup.
     - **Snap Logic**: Aligns vertical strokes perfectly when the key is within `mCornerRadius` of the popup edge.
     - **Fillet Control**: Uses a fillet radius of `mKeyCornerRadius` (8dp) for connections to match the key aesthetics.
 - **Implementation**:
     - `LatinKeyboardBaseView` calculates the combined bounds and passes them to `SeamlessPopupDrawable.setGeometry()`.
+    - `LatinKeyboardBaseView` resolves theme attributes (`kbdColorMod` vs `kbdColorAlpha`) to set the correct key color on the drawable.
     - The drawable handles its own stroking (inset by `strokeWidth/2`) and drawing.
 
 ## Recent Commits
-* [pending] feat: implement true SeamlessPopupDrawable with adaptive connection logic and snap tolerance
+* [pending] feat: perfect seamless popup geometry with arcTo, dynamic radius scaling, and modifier color support

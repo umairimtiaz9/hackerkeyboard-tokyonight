@@ -10,10 +10,12 @@ All notable changes to this project will be documented in this file.
 - **Precision Visuals**:
     - **Snap Logic**: Added sub-pixel snapping to ensure vertical strokes are perfectly straight when keys are aligned.
     - **Adaptive Fillets**: Dynamic corner radius calculation to prevent "too round" connections, ensuring a crisp "square-round" aesthetic matching the keycaps.
+    - **Modifier Integration**: Updated `LatinKeyboardBaseView` to dynamically resolve `kbdColorMod` or `kbdColorAlpha` for seamless popups, ensuring proper blending for Shift/Ctrl/Alt keys.
 - **Seamless Geometry**: Updated `popup_container_tokyonight.xml` with full 8dp rounded corners and restored strokes for a polished "Pill" container that merges into the keyboard tray.
 
 ### Changed
 - **Visual Refinement**: Adjusted `SeamlessPopupDrawable` stroke rendering (inset by half stroke width) to prevent clipping and ensure consistent stroke weight.
+- **Curve Perfection**: Replaced approximate Bezier curves (`quadTo`) with perfect circular arcs (`arcTo`) in `SeamlessPopupDrawable` for mathematically correct rounded corners.
 - **Unified Font Sizing**: Harmonized text sizes between character previews and key labels (standardized at 24sp) for a more consistent typographic weight.
 - **Breathe Design Refinement**: Optimized `btn_key_tokyonight.xml` insets to guarantee a strict 4dp visual gutter across all key types.
 - **Popup Animation Polish**: Fine-tuned `popup_enter_modern.xml` with better scaling and alpha transitions for a more fluid "portal" appearance.
@@ -22,6 +24,8 @@ All notable changes to this project will be documented in this file.
 - **The Floating Gap**: Resolved the visual disconnect between popups and keys by increasing vertical overlap and using the patch system to hide the separator line.
 - **Horizontal Drifting**: Corrected the horizontal alignment logic in `LatinKeyboardBaseView.java` to ensure mini-keyboards are perfectly centered or edge-aligned with their parent keys.
 - **Sub-pixel Aliasing**: Increased the connection patch height to 6dp to safely mask the 2dp border stroke and prevent "line ghosting" artifacts.
+- **Double Corner Glitch**: Fixed an issue where long popups extending to the left would render disjointed connection curves by implementing dynamic radius scaling for tight spaces.
+- **Diagonal Start Cut**: Resolved a visual artifact where the path starting point created a diagonal line at the bottom-left corner of the key connection.
 
 ## [Tokyo Night Edition] - 2025-12-26
 

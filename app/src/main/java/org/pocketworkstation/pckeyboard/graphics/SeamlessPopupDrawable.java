@@ -88,14 +88,14 @@ public class SeamlessPopupDrawable extends Drawable {
         float keyLeft = mKeyRect.left + halfStroke;
         float keyRight = mKeyRect.right - halfStroke;
         float keyBottom = mKeyRect.bottom - halfStroke;
-        // Key Top is mKeyTopY.
+        float keyTop = mKeyTopY;
 
         float popupLeft = mPopupRect.left + halfStroke;
         float popupRight = mPopupRect.right - halfStroke;
-        float popupBottom = mPopupRect.bottom; // No inset needed for internal connection
-        float popupTop = mPopupRect.top + halfStroke; // mPopupTopY
+        float popupTop = mPopupRect.top + halfStroke;
+        // float popupBottom = mPopupRect.bottom; // Same as keyTop
 
-        // Apply Snap Logic - Aggressive snapping to ensure vertical lines
+        // Apply Snap Logic
         if (Math.abs(keyLeft - popupLeft) <= mCornerRadius) {
             popupLeft = keyLeft;
         }
@@ -103,7 +103,6 @@ public class SeamlessPopupDrawable extends Drawable {
             popupRight = keyRight;
         }
 
-        // Use consistent radius for connections to match key corners
         float filletRadius = mKeyCornerRadius;
 
         // --- Start Drawing ---
@@ -111,51 +110,41 @@ public class SeamlessPopupDrawable extends Drawable {
         // 1. Start at Key Left Edge (Just above bottom corner)
         mPath.moveTo(keyLeft, keyBottom - mKeyCornerRadius);
 
-        // 2. Line to Key Top-Left (Connection)
+        // 2. Left Side Connection
         float leftDelta = keyLeft - popupLeft;
 
         if (leftDelta > 0) {
-            // Key is inside Popup (Typical case)
-            if (leftDelta >= mCornerRadius + filletRadius) {
-                // Enough space for full details
-                mPath.lineTo(keyLeft, mKeyTopY + filletRadius);
-                mPath.arcTo(new RectF(keyLeft - 2 * filletRadius, mKeyTopY, keyLeft, mKeyTopY + 2 * filletRadius), 0f, -90f); // Counter-clockwise arc? No.
-                // We are going Up. We want to turn Right.
-                // Previous logic: quadTo.
-                // Let's use arcTo for precision.
-                // Current Point: (keyLeft, mKeyTopY + filletRadius)
-                // We want to end at: (keyLeft - filletRadius, mKeyTopY)
-                // Center is (keyLeft - filletRadius, mKeyTopY + filletRadius)
-                // Start Angle: 0 (Right). Sweep: -90 (Up to Top).
-                // Wait, we are on the Right side of the circle?
-                // Key Edge is X=keyLeft. Circle center is Left of that.
-                // So we are at 0 degrees relative to center.
-                // We want to go to -90 (Top).
-                // Yes.
-                // mPath.arcTo(new RectF(keyLeft - 2*filletRadius, mKeyTopY, keyLeft, mKeyTopY + 2*filletRadius), 0f, -90f);
-                // But arcTo forces a lineTo if not at start.
+            // Key is inside Popup (Key Right of Popup Left)
+            // We need to go Left to reach Popup
 
-                // Simpler: Just stick to quadTo for the connection fillet to be safe, but with full radius.
-                 mPath.lineTo(keyLeft, mKeyTopY + filletRadius);
-                 mPath.quadTo(keyLeft, mKeyTopY, keyLeft - filletRadius, mKeyTopY);
+            float availableSpace = leftDelta;
+            float requiredSpace = mCornerRadius + filletRadius;
 
-                 mPath.lineTo(popupLeft + mCornerRadius, mKeyTopY);
-                 // Popup Corner: Bottom-Left of Popup
-                 mPath.arcTo(new RectF(popupLeft, popupBottom - 2 * mCornerRadius, popupLeft + 2 * mCornerRadius, popupBottom), 90f, 90f);
+            if (availableSpace >= requiredSpace) {
+                // Standard S-Curve
+                mPath.lineTo(keyLeft, keyTop + filletRadius);
+                // Turn Left (CCW) onto shelf
+                mPath.arcTo(new RectF(keyLeft - 2 * filletRadius, keyTop, keyLeft, keyTop + 2 * filletRadius), 0f, -90f);
+                mPath.lineTo(popupLeft + mCornerRadius, keyTop);
+                // Turn Right (CW) onto popup
+                mPath.arcTo(new RectF(popupLeft, keyTop - 2 * mCornerRadius, popupLeft + 2 * mCornerRadius, keyTop), 90f, 90f);
             } else {
-                // Tight space: Snapping failed but we are close.
-                // We shouldn't be here if snapping is mCornerRadius.
-                // But if we are... bridge the gap.
-                // Draw line to intersection height
-                mPath.lineTo(keyLeft, mKeyTopY + mCornerRadius);
-                // Curve to popup
-                mPath.quadTo(keyLeft, mKeyTopY, popupLeft, mKeyTopY - mCornerRadius);
-                mPath.lineTo(popupLeft, popupTop + mCornerRadius);
+                // Tight Space - Dynamic Radius Scaling
+                // Split the available delta between the two curves
+                float dynamicRadius = availableSpace / 2f;
+
+                mPath.lineTo(keyLeft, keyTop + dynamicRadius);
+                // Turn Left (CCW)
+                mPath.arcTo(new RectF(keyLeft - 2 * dynamicRadius, keyTop, keyLeft, keyTop + 2 * dynamicRadius), 0f, -90f);
+                // No lineTo needed, we are at the midpoint
+                // Turn Right (CW)
+                mPath.arcTo(new RectF(popupLeft, keyTop - 2 * dynamicRadius, popupLeft + 2 * dynamicRadius, keyTop), 90f, 90f);
             }
         } else {
-            // Key is aligned (snapped) or hanging out
-            mPath.lineTo(keyLeft, mKeyTopY);
-            if (keyLeft != popupLeft) mPath.lineTo(popupLeft, mKeyTopY);
+            // Key is aligned or hanging out (Key Left of Popup Left)
+            // Just go straight up
+            mPath.lineTo(keyLeft, keyTop);
+            if (keyLeft != popupLeft) mPath.lineTo(popupLeft, keyTop);
             mPath.lineTo(popupLeft, popupTop + mCornerRadius);
         }
 
@@ -170,18 +159,29 @@ public class SeamlessPopupDrawable extends Drawable {
         float rightDelta = popupRight - keyRight;
 
         if (rightDelta > 0) {
-            // Key is inside Popup
-            if (rightDelta >= mCornerRadius + filletRadius) {
-                 // Enough space
-                 mPath.lineTo(popupRight, popupBottom - mCornerRadius);
-                 mPath.arcTo(new RectF(popupRight - 2 * mCornerRadius, popupBottom - 2 * mCornerRadius, popupRight, popupBottom), 0f, 90f);
-                 mPath.lineTo(keyRight + filletRadius, mKeyTopY);
-                 // Curve down onto key
-                 mPath.quadTo(keyRight, mKeyTopY, keyRight, mKeyTopY + filletRadius);
+            // Key is inside Popup (Key Left of Popup Right)
+            // We need to go Left to reach Key
+
+            float availableSpace = rightDelta;
+            float requiredSpace = mCornerRadius + filletRadius;
+
+            if (availableSpace >= requiredSpace) {
+                 // Standard S-Curve
+                 mPath.lineTo(popupRight, keyTop - mCornerRadius);
+                 // Turn Right (CW) onto shelf
+                 mPath.arcTo(new RectF(popupRight - 2 * mCornerRadius, keyTop - 2 * mCornerRadius, popupRight, keyTop), 0f, 90f);
+                 mPath.lineTo(keyRight + filletRadius, keyTop);
+                 // Turn Left (CCW) onto key
+                 mPath.arcTo(new RectF(keyRight, keyTop, keyRight + 2 * filletRadius, keyTop + 2 * filletRadius), 270f, -90f);
             } else {
-                 // Tight space
-                 mPath.lineTo(popupRight, popupBottom - mCornerRadius);
-                 mPath.quadTo(popupRight, mKeyTopY, keyRight, mKeyTopY + mCornerRadius);
+                 // Tight Space - Dynamic Radius Scaling
+                 float dynamicRadius = availableSpace / 2f;
+
+                 mPath.lineTo(popupRight, keyTop - dynamicRadius);
+                 // Turn Right (CW)
+                 mPath.arcTo(new RectF(popupRight - 2 * dynamicRadius, keyTop - 2 * dynamicRadius, popupRight, keyTop), 0f, 90f);
+                 // Turn Left (CCW)
+                 mPath.arcTo(new RectF(keyRight, keyTop, keyRight + 2 * dynamicRadius, keyTop + 2 * dynamicRadius), 270f, -90f);
             }
             mPath.lineTo(keyRight, keyBottom - mKeyCornerRadius);
         } else {
