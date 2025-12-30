@@ -2,6 +2,8 @@
 
 A modernization project of the legendary Hacker's Keyboard, bringing aesthetic and modern Android UX to the most powerful soft keyboard ever made.
 
+Changelog: (CHANGELOG.md)
+
 ![Modern Preview](hk-5row-us.jpg)
 
 ## 📜 The History: From 2011 to Today
