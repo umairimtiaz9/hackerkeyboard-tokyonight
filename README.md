@@ -1,12 +1,12 @@
 # Hacker Keyboard: Tokyo Night
 
-A modernization project of the legendary Hacker's Keyboard, bringing a high-performance, IDE-inspired aesthetic and modern Android UX to the most powerful soft keyboard ever made.
+A modernization project of the legendary Hacker's Keyboard, bringing aesthetic and modern Android UX to the most powerful soft keyboard ever made.
 
 ![Modern Preview](hk-5row-us.jpg)
 
 ## 📜 The History: From 2011 to Today
 
-Hacker's Keyboard was originally developed in 2011, based on the Android 2.3 (Gingerbread) AOSP keyboard. It became the gold standard for power users, developers, and sysadmins due to its full 5-row layout, working Tab/Ctrl/Esc keys, and essential arrow keys for SSH (ConnectBot) and terminal usage.
+Hacker's Keyboard was originally developed in 2011, based on the Android 2.3 (Gingerbread) AOSP keyboard. It became the gold standard for power users, developers, and sysadmins due to its full 5-row layout, working Tab/Ctrl/Esc keys, and essential arrow keys for SSH and terminal usage.
 
 ### The Modernization Journey
 This project transforms the "ancient" Gingerbread-style UI into a professional, data-driven modernization:
@@ -30,7 +30,6 @@ Integrated 4 high-contrast variants based on the popular Neovim color scheme:
 ### 🚀 Fluid Interactions
 - **Spring Physics**: Popups use "Overshoot" interpolators for responsive, tactile feedback.
 - **Continuous Stroke**: A seamless visual bridge between the pressed key and the popup, eliminating the floating box feel.
-- **Mechanical Glow**: Active technical modifiers (Ctrl, Alt, Shift) feature a Gaussian orange glow, simulating backlit mechanical keycaps.
 - **Latency Neutralization**: 0ms popup delay with dynamic long-press triggers for instantaneous usage.
 
 ## 🛠 Technical Architecture
