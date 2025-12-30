@@ -4,7 +4,7 @@ A modernization project of the legendary Hacker's Keyboard, bringing aesthetic a
 
 Changelog: ([CHANGELOG.md])
 
-![Modern Preview](hk-5row-us.jpg)
+![Modern Preview](screenshots/hk-5row-us.jpg)
 
 ## 📜 The History: From 2011 to Today
 
