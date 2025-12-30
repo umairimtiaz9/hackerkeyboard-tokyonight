@@ -15,10 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
           cache: gradle
 
@@ -28,6 +28,10 @@ jobs:
           sed -i '/android.aapt2FromMavenOverride/d' gradle.properties
           # Ensure Gradle wrapper is executable
           chmod +x gradlew
+
+      - name: Setup Android SDK
+        run: |
+          yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --install "build-tools;34.0.4" "platforms;android-33"
 
       - name: Build with Gradle
         run: ./gradlew assembleRelease
