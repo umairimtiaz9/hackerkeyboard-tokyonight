@@ -37,6 +37,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 
 import org.pocketworkstation.pckeyboard.Keyboard.Key;
+import org.pocketworkstation.pckeyboard.graphics.SeamlessPopupDrawable;
 
 import android.os.Handler;
 import android.os.Message;
@@ -225,10 +226,11 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
     protected PopupWindow mMiniKeyboardPopup;
     protected LatinKeyboardBaseView mMiniKeyboard;
     protected View mMiniKeyboardContainer;
-    protected View mPopupPatch;
     protected View mMiniKeyboardParent;
     protected boolean mMiniKeyboardVisible;
     protected boolean mIsMiniKeyboard = false;
+    protected SeamlessPopupDrawable mSeamlessPopupDrawable;
+    protected SeamlessPopupDrawable mPreviewPopupDrawable;
     protected final WeakHashMap<Key, Keyboard> mMiniKeyboardCacheMain = new WeakHashMap<Key, Keyboard>();
     protected final WeakHashMap<Key, Keyboard> mMiniKeyboardCacheShift = new WeakHashMap<Key, Keyboard>();
     protected final WeakHashMap<Key, Keyboard> mMiniKeyboardCacheCaps = new WeakHashMap<Key, Keyboard>();
@@ -1270,12 +1272,37 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         Key key = tracker.getKey(keyIndex);
         if (key == null)
             return;
-        
+
         // Invalidate old and new keys for Portal Transition (dimming)
         if (mOldPreviewKeyIndex != NOT_A_KEY && mOldPreviewKeyIndex < mKeys.length) {
             invalidateKey(mKeys[mOldPreviewKeyIndex]);
         }
         invalidateKey(key);
+
+        // Initialize SeamlessPopupDrawable if needed
+        if (mPreviewPopupDrawable == null) {
+            mPreviewPopupDrawable = new SeamlessPopupDrawable(getContext());
+            // Resolve theme colors
+            TypedValue typedValue = new TypedValue();
+            Resources.Theme theme = getContext().getTheme();
+            int backgroundColor = 0xFF1a1b26; // Default Storm
+            if (theme.resolveAttribute(R.attr.kbdColorBase, typedValue, true)) {
+                backgroundColor = typedValue.data;
+            }
+            int strokeColor = 0xFF414868; // Default
+            if (theme.resolveAttribute(R.attr.kbdColorPopup, typedValue, true)) {
+                strokeColor = typedValue.data;
+            }
+            mPreviewPopupDrawable.setColors(backgroundColor, strokeColor);
+            mPreviewPopupDrawable.setStrokeWidth(2.0f * getResources().getDisplayMetrics().density);
+            mPreviewPopupDrawable.setCornerRadius(12.0f * getResources().getDisplayMetrics().density);
+            mPreviewText.setBackgroundDrawable(mPreviewPopupDrawable);
+        }
+
+        // Adjust padding to make room for the key replica at the bottom
+        // Original padding from XML is roughly 6dp.
+        int padding = (int)(6 * getResources().getDisplayMetrics().density);
+        mPreviewText.setPadding(padding, padding, padding, padding + key.height);
 
         //Log.i(TAG, "showKey() for " + this);
         // Should not draw hint icon in key preview
@@ -1301,16 +1328,25 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         // to create a seamless vertical "extrusion" look.
         int popupWidth = key.width;
         final int popupHeight = Math.max(mPreviewText.getMeasuredHeight(), mPreviewHeight);
+
         LayoutParams lp = mPreviewText.getLayoutParams();
         if (lp != null) {
             lp.width = popupWidth;
             lp.height = popupHeight;
         }
 
-        // Tokyo Night: Shift down by 2dp to align perfectly with the key's visible top edge
-        // (accounting for the 2dp inset in btn_key_tokyonight.xml).
+        // Calculate position
+        // We want the "key replica" (bottom of drawable) to cover the key.
+        // Drawable Height = popupHeight.
+        // Replica Height = key.height.
+        // So Bottom of Popup = Bottom of Key.
+        // Top of Popup = Bottom of Key - popupHeight.
+        // key.y is Top of Key.
+        // Bottom of Key = key.y + key.height.
+        // Top of Popup = key.y + key.height - popupHeight.
+
         int popupPreviewX = key.x;
-        int popupPreviewY = key.y - popupHeight + (int) (4 * getResources().getDisplayMetrics().density);
+        int popupPreviewY = key.y + key.height - popupHeight;
 
         mHandler.cancelDismissPreview();
         if (mOffsetInWindow == null) {
@@ -1322,12 +1358,7 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         int[] windowLocation = new int[2];
         getLocationOnScreen(windowLocation);
         mWindowY = windowLocation[1];
-        
-        // Set the preview background state.
-        // Retrieve and cache the popup keyboard if any.
-        // boolean hasPopup = (getLongPressKeyboard(key) != null);
-        // Set background manually, the StateListDrawable doesn't work.
-        // mPreviewText.setBackgroundDrawable(getResources().getDrawable(hasPopup ? R.drawable.keyboard_key_feedback_more_background : R.drawable.keyboard_key_feedback_background));
+
         popupPreviewX += mOffsetInWindow[0];
         popupPreviewY += mOffsetInWindow[1];
 
@@ -1341,6 +1372,27 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
                 popupPreviewX -= (int) (key.width * 2.5);
             }
             popupPreviewY += popupHeight;
+        }
+
+        // Configure SeamlessPopupDrawable Geometry
+        if (mPreviewPopupDrawable != null) {
+            int contentHeight = popupHeight - key.height;
+            // Ensure contentHeight is at least something reasonable
+            if (contentHeight < 0) contentHeight = 0;
+
+            Rect popupRect = new Rect(0, 0, popupWidth, contentHeight);
+            Rect keyRect = new Rect(0, contentHeight, popupWidth, popupHeight);
+
+            float density = getResources().getDisplayMetrics().density;
+            mPreviewPopupDrawable.setGeometry(
+                keyRect,
+                popupRect,
+                key.height,
+                contentHeight,
+                10 * density, // Neck height
+                keyRect.top,
+                popupRect.top
+            );
         }
 
         if (mPreviewPopup.isShowing()) {
@@ -1417,7 +1469,27 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
 
         mMiniKeyboard =
                 (LatinKeyboardBaseView)container.findViewById(R.id.LatinKeyboardBaseView);
-        mPopupPatch = container.findViewById(R.id.popup_patch);
+
+        // Initialize SeamlessPopupDrawable
+        mSeamlessPopupDrawable = new SeamlessPopupDrawable(getContext());
+
+        // Resolve theme colors
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = getContext().getTheme();
+        int backgroundColor = 0xFF1a1b26; // Default Storm
+        if (theme.resolveAttribute(R.attr.kbdColorBase, typedValue, true)) {
+            backgroundColor = typedValue.data;
+        }
+        int strokeColor = 0xFF414868; // Default
+        if (theme.resolveAttribute(R.attr.kbdColorPopup, typedValue, true)) {
+            strokeColor = typedValue.data;
+        }
+        mSeamlessPopupDrawable.setColors(backgroundColor, strokeColor);
+        mSeamlessPopupDrawable.setStrokeWidth(2.0f * getResources().getDisplayMetrics().density);
+        mSeamlessPopupDrawable.setCornerRadius(12.0f * getResources().getDisplayMetrics().density);
+
+        container.setBackgroundDrawable(mSeamlessPopupDrawable);
+
         mMiniKeyboard.mIsMiniKeyboard = true;
         mMiniKeyboard.setOnKeyboardActionListener(new OnKeyboardActionListener() {
             public void onKey(int primaryCode, int[] keyCodes, int x, int y) {
@@ -1516,6 +1588,13 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         }
         if (mMiniKeyboard == null) return false;
         mMiniKeyboard.setKeyboard(kbd);
+
+        // Seamless Popup Logic:
+        // We need the container to cover the original key so the drawable can render the "replica" key.
+        // We add bottom padding to the container equal to the key height.
+        // This pushes the mini-keyboard content up, leaving space at the bottom for the replica.
+        mMiniKeyboardContainer.setPadding(0, 0, 0, popupKey.height);
+
         mMiniKeyboardContainer.measure(MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.AT_MOST),
                 MeasureSpec.makeMeasureSpec(getHeight(), MeasureSpec.AT_MOST));
 
@@ -1545,12 +1624,19 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
             popupX -= mMiniKeyboardContainer.getMeasuredWidth();
             popupX += mMiniKeyboardContainer.getPaddingRight();
         }
-        int popupY = popupKey.y + mWindowOffset[1];
-        popupY += getPaddingTop();
-        popupY -= mMiniKeyboardContainer.getMeasuredHeight();
-        popupY += mMiniKeyboardContainer.getPaddingBottom();
-        // Tokyo Night: Shift down by 4dp to align perfectly with the key's visible top edge
-        popupY += (int) (4 * getResources().getDisplayMetrics().density);
+
+        // Calculate Y position
+        // We want the mini-keyboard keys (content) to be above the pressed key.
+        // The container height = content height + keyHeight (padding).
+        // So if we position the top of the container at (KeyTop - ContentHeight),
+        // the bottom of the container will be at (KeyTop + KeyHeight) = KeyBottom.
+        // This covers the key perfectly.
+
+        int contentHeight = mMiniKeyboardContainer.getMeasuredHeight() - popupKey.height;
+        int popupY = popupKey.y + mWindowOffset[1] + getPaddingTop();
+        popupY -= contentHeight;
+
+
         final int x = popupX;
         final int y = mShowPreview && isOneRowKeys(miniKeys) ? mPopupPreviewDisplayedY : popupY;
 
@@ -1562,13 +1648,36 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         }
         // Log.i(TAG, "x=" + x + " y=" + y + " adjustedX=" + adjustedX + " getMeasuredWidth()=" + getMeasuredWidth());
 
-        if (mPopupPatch != null) {
-            int patchX = popupKey.x + mWindowOffset[0] + getPaddingLeft() - adjustedX;
-            FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mPopupPatch.getLayoutParams();
-            lp.width = popupKey.width;
-            lp.leftMargin = patchX;
-            lp.gravity = Gravity.LEFT | Gravity.BOTTOM;
-            mPopupPatch.setLayoutParams(lp);
+        // Configure SeamlessPopupDrawable
+        if (mSeamlessPopupDrawable != null) {
+            // Calculate relative coordinates for the drawable
+            // popupRect: The bubble containing the mini keys. (0, 0) to (width, contentHeight)
+            Rect popupRect = new Rect(0, 0, mMiniKeyboardContainer.getMeasuredWidth(), contentHeight);
+
+            // keyRect: The replica of the pressed key.
+            // Relative X: KeyGlobalX - PopupGlobalX
+            int keyGlobalX = popupKey.x + mWindowOffset[0] + getPaddingLeft();
+            int relativeKeyX = keyGlobalX - adjustedX;
+
+            // Relative Y: Starts at contentHeight.
+            // Note: If we shifted y (popupY), we need to account for that.
+            // Here y is the top of the container.
+            // The key top is at (popupKey.y + ...).
+            // contentHeight was calculated as (KeyTop - y).
+            // So relative KeyTop is exactly contentHeight.
+
+            Rect keyRect = new Rect(relativeKeyX, contentHeight, relativeKeyX + popupKey.width, contentHeight + popupKey.height);
+
+            float density = getResources().getDisplayMetrics().density;
+            mSeamlessPopupDrawable.setGeometry(
+                keyRect,
+                popupRect,
+                popupKey.height,
+                contentHeight,
+                10 * density, // Neck height (curve size)
+                keyRect.top,
+                popupRect.top
+            );
         }
 
         mMiniKeyboardOriginX = adjustedX + mMiniKeyboardContainer.getPaddingLeft() - mWindowOffset[0];

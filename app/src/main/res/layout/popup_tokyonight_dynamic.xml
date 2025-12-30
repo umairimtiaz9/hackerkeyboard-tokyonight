@@ -14,13 +14,4 @@
         android:layout_height="wrap_content"
         />
 
-    <!-- The Patch View: Dynamically sized/positioned in Java to hide the bottom stroke -->
-    <!-- Height increased to 6dp to safely cover the 2dp stroke and any sub-pixel aliasing -->
-    <View
-        android:id="@+id/popup_patch"
-        android:layout_width="0dp"
-        android:layout_height="6dp"
-        android:layout_gravity="bottom"
-        android:background="?attr/kbdColorHighlight" />
-
 </FrameLayout>

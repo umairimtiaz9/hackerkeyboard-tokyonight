@@ -84,3 +84,29 @@ All keyboard icons are now tinted using `?attr/kbdColorText` to ensure they adap
 - `11`: Night
 - `12`: Day
 - `13`: Moon
+
+## Refactoring Plan: Seamless Popups (Focus Phase)
+
+This phase focuses on achieving the "AnySoft-style" visual connection between keys and popups, deferring advanced theming and animations.
+
+### 1. Core Implementation: "The Replica Strategy"
+
+*   **Objective**: Make the popup *be* the key, eliminating visual gaps and misalignment.
+*   **Approach**:
+    *   Create a new Java class, `SeamlessPopupDrawable.java`, responsible for drawing the combined shape of the key and the popup bubble as a single, continuous vector path.
+    *   Modify `LatinKeyboardBaseView.java`:
+        *   Remove the existing "patch" view logic.
+        *   Implement new logic to position the popup window precisely, ensuring its "key" part perfectly covers the original key on the keyboard.
+        *   Handle basic animation (fade-in/scale-up) for the popup appearance/disappearance using `ValueAnimator`.
+*   **Key Files Involved**:
+    *   `SeamlessPopupDrawable.java` (new)
+    *   `LatinKeyboardBaseView.java` (modified)
+*   **Estimated Time**: 2.5 - 3.5 hours (for focused implementation and basic testing).
+
+### 2. Future Considerations (Deferred)
+
+*   **Advanced Theming**: Integration with `KeyboardAttributes` for dynamic colors, dimensions, and typography.
+*   **Geometry Engine**: Dedicated calculators for key/popup geometry.
+*   **Animation Framework**: Physics-based animations, state-driven morphing.
+
+This focused approach allows us to address the immediate visual goal within a tight timeframe, with clear steps for future enhancements.
