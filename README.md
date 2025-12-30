@@ -1,3 +1,5 @@
+<div align="center">
+
 # Hacker Keyboard: Tokyo Night
 
 ![Latest Release](https://img.shields.io/github/v/release/umairimtiaz9/hackerkeyboard-tokyonight?label=Latest%20Build&color=7aa2f7&style=for-the-badge)
@@ -6,7 +8,11 @@
 
 A professional modernization of the legendary **Hacker's Keyboard**. This project brings a premium, high-performance aesthetic and modern Android UX to the most powerful soft keyboard ever made, featuring the iconic **Tokyo Night** design system.
 
-![Modern Preview](screenshots/hk-5row-us.jpg)
+<img src="screenshots/hk-5row-us.jpg" width="800" alt="Modern Preview">
+
+</div>
+
+---
 
 ## 📜 The Story
 
@@ -53,5 +59,9 @@ We welcome contributions that respect the "power user" soul of Hacker's Keyboard
 
 ---
 
+<div align="center">
+
 *Based on the original work by Klaus Weidner.*
 [Changelog](CHANGELOG.md) | [History](https://github.com/klausw/hackerskeyboard)
+
+</div>

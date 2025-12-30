@@ -25,6 +25,7 @@ All notable changes to this project will be documented in this file.
 - **Popup Animation Polish**: Fine-tuned `popup_enter_modern.xml` with better scaling and alpha transitions for a more fluid "portal" appearance.
 
 ### Fixed
+- **Modifier Stroke Ghosting**: Resolved a persistent visual bug where a green border stroke appeared on sticky modifier keys (Shift, Ctrl, Alt). Standardized `LatinKey` logic to ensure all functional keys correctly inherit non-stroke styles from the Tokyo Night design system.
 - **The Floating Gap**: Resolved the visual disconnect between popups and keys by increasing vertical overlap and using the patch system to hide the separator line.
 - **Horizontal Drifting**: Corrected the horizontal alignment logic in `LatinKeyboardBaseView.java` to ensure mini-keyboards are perfectly centered or edge-aligned with their parent keys.
 - **Sub-pixel Aliasing**: Increased the connection patch height to 6dp to safely mask the 2dp border stroke and prevent "line ghosting" artifacts.

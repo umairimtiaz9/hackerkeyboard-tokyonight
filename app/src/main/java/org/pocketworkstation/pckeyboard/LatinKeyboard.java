@@ -786,15 +786,27 @@ public class LatinKeyboard extends Keyboard {
                 android.R.attr.state_pressed
         };
 
+        // functional checked state (for sticky modifiers like Shift/Alt/Ctrl)
+        private final int[] KEY_STATE_FUNCTIONAL_CHECKED = {
+                android.R.attr.state_single,
+                android.R.attr.state_checked
+        };
+
+        // functional pressed + checked state
+        private final int[] KEY_STATE_FUNCTIONAL_PRESSED_CHECKED = {
+                android.R.attr.state_single,
+                android.R.attr.state_pressed,
+                android.R.attr.state_checked
+        };
+
         public LatinKey(Resources res, Keyboard.Row parent, int x, int y,
                 XmlResourceParser parser) {
             super(res, parent, x, y, parser);
         }
 
-        // sticky is used for shift key.  If a key is not sticky and is modifier,
-        // the key will be treated as functional.
+        // functional is used for styling.
         private boolean isFunctionalKey() {
-            return !sticky && modifier;
+            return modifier;
         }
 
         /**
@@ -816,9 +828,9 @@ public class LatinKeyboard extends Keyboard {
         public int[] getCurrentDrawableState() {
             if (isFunctionalKey()) {
                 if (pressed) {
-                    return KEY_STATE_FUNCTIONAL_PRESSED;
+                    return (sticky && (on || locked)) ? KEY_STATE_FUNCTIONAL_PRESSED_CHECKED : KEY_STATE_FUNCTIONAL_PRESSED;
                 } else {
-                    return KEY_STATE_FUNCTIONAL_NORMAL;
+                    return (sticky && (on || locked)) ? KEY_STATE_FUNCTIONAL_CHECKED : KEY_STATE_FUNCTIONAL_NORMAL;
                 }
             }
             return super.getCurrentDrawableState();

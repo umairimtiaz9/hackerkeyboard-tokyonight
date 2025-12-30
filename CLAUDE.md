@@ -13,7 +13,7 @@
 - [x] **Official Alignment**: Sync all hex values with the latest `tokyonight.nvim` releases.
 - [x] **Designer Typography**: Integrate **Google Sans Code** font for superior professional legibility.
 - [x] **Precision Connectivity**: Bridge the gap between keys and popups (AnySoft style) for a direct tactile link.
-- [x] **Modifier Blending**: Ensure seamless popup connections correctly inherit modifier colors (`kbdColorMod`) to prevent visual breaks.
+- [x] **Modifier Blending**: Resolved green stroke ghosting on Shift/Ctrl/Alt keys by standardizing functional key logic in `LatinKeyboard.java`.
 - [ ] **More to come**
 
 ## Future Roadmap: Modernization Phase II
