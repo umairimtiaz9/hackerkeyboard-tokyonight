@@ -1283,8 +1283,8 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         if (mPreviewPopupDrawable == null) {
             mPreviewPopupDrawable = new SeamlessPopupDrawable(getContext());
             mPreviewPopupDrawable.setStrokeWidth(2.0f * getResources().getDisplayMetrics().density);
-            mPreviewPopupDrawable.setCornerRadius(8.0f * getResources().getDisplayMetrics().density);
-            mPreviewPopupDrawable.setKeyCornerRadius(8.0f * getResources().getDisplayMetrics().density);
+            mPreviewPopupDrawable.setCornerRadius(4.0f * getResources().getDisplayMetrics().density);
+            mPreviewPopupDrawable.setKeyCornerRadius(4.0f * getResources().getDisplayMetrics().density);
             mPreviewText.setBackgroundDrawable(mPreviewPopupDrawable);
         }
 
@@ -1309,6 +1309,10 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         }
 
         mPreviewPopupDrawable.setColors(keyColor, strokeColor);
+
+        // Dynamically set stroke width (0 for modifiers, 2dp for others)
+        float density = getResources().getDisplayMetrics().density;
+        mPreviewPopupDrawable.setStrokeWidth(shouldDrawStroke(key) ? 2.0f * density : 0);
 
         // Adjust padding to make room for the key replica at the bottom
         // Original padding from XML is roughly 6dp.
@@ -1394,7 +1398,6 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
             Rect popupRect = new Rect(0, 0, popupWidth, contentHeight);
             Rect keyRect = new Rect(0, contentHeight, popupWidth, popupHeight);
 
-            float density = getResources().getDisplayMetrics().density;
             mPreviewPopupDrawable.setGeometry(
                 keyRect,
                 popupRect,
@@ -1496,9 +1499,9 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
             strokeColor = typedValue.data;
         }
         mSeamlessPopupDrawable.setColors(backgroundColor, strokeColor);
-        mSeamlessPopupDrawable.setStrokeWidth(2.0f * getResources().getDisplayMetrics().density);
-        mSeamlessPopupDrawable.setCornerRadius(8.0f * getResources().getDisplayMetrics().density);
-        mSeamlessPopupDrawable.setKeyCornerRadius(8.0f * getResources().getDisplayMetrics().density);
+        // mSeamlessPopupDrawable.setStrokeWidth(2.0f * getResources().getDisplayMetrics().density); // Set dynamically in onLongPress
+        mSeamlessPopupDrawable.setCornerRadius(4.0f * getResources().getDisplayMetrics().density);
+        mSeamlessPopupDrawable.setKeyCornerRadius(4.0f * getResources().getDisplayMetrics().density);
 
         container.setBackgroundDrawable(mSeamlessPopupDrawable);
 
@@ -1682,6 +1685,10 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
             }
             mSeamlessPopupDrawable.setColors(keyColor, strokeColor);
 
+            // Dynamically set stroke width (0 for modifiers, 2dp for others)
+            float density = getResources().getDisplayMetrics().density;
+            mSeamlessPopupDrawable.setStrokeWidth(popupKey.modifier ? 0 : 2.0f * density);
+
             // Calculate relative coordinates for the drawable
             // popupRect: The bubble containing the mini keys. (0, 0) to (width, contentHeight)
             Rect popupRect = new Rect(0, 0, mMiniKeyboardContainer.getMeasuredWidth(), contentHeight);
@@ -1700,7 +1707,6 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
 
             Rect keyRect = new Rect(relativeKeyX, contentHeight, relativeKeyX + popupKey.width, contentHeight + popupKey.height);
 
-            float density = getResources().getDisplayMetrics().density;
             mSeamlessPopupDrawable.setGeometry(
                 keyRect,
                 popupRect,
@@ -1746,6 +1752,24 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         // isNumberAtEdgeOfPopupChars(key) ||
         return isNonMicLatinF1Key(key)
                 || LatinKeyboard.hasPuncOrSmileysPopup(key);
+    }
+
+    private boolean shouldDrawStroke(Key key) {
+        if (key.modifier) return false;
+        if (key.codes == null || key.codes.length == 0) return true;
+        int code = key.codes[0];
+        // Suppress stroke for Shift (-1), Mode Change (-2), Alt (-6)
+        if (code == Keyboard.KEYCODE_SHIFT
+                || code == Keyboard.KEYCODE_MODE_CHANGE
+                || code == Keyboard.KEYCODE_ALT_SYM) {
+            return false;
+        }
+        // Suppress for Ctrl (-113), Alt Left (-57), Meta (-117)
+        // Values match LatinKeyboardView constants
+        if (code == -113 || code == -57 || code == -117) {
+            return false;
+        }
+        return true;
     }
 
     private boolean shouldAlignLeftmost(Key key) {

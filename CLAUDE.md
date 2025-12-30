@@ -27,11 +27,9 @@
 
 ### 2. Typographic & Geometric Overhaul
 - [x] **Designer Typography**: Integrate **Google Sans Code** font across all keys and popups to achieve a high-end "Modern IDE" look with superior legibility.
-- [ ] **Precision Corners**: Transition from the current friendly 8dp radius to a technical **3dp or 4dp precision radius** to match professional hardware aesthetics.
 ### 3. Interaction Design
 - [x] **Portal Transition**: Implement a visual link between the pressed key and the appearing popup (e.g., dimming the underlying key) to create a sense of continuous motion.
 - [x] **Mechanical Glow**: Implement Gaussian aura effects (`ShadowLayer`) for active modifiers to simulate high-end backlit mechanical keycaps.
-- [ ] **Contextual Scaling**: Dynamically adjust popup widths based on content (Letters vs. Symbols) to reduce visual noise.
 
 ## Project Knowledge Base
 
@@ -98,5 +96,3 @@ The project now uses a dedicated `SeamlessPopupDrawable` to render popups, repla
     - `LatinKeyboardBaseView` resolves theme attributes (`kbdColorMod` vs `kbdColorAlpha`) to set the correct key color on the drawable.
     - The drawable handles its own stroking (inset by `strokeWidth/2`) and drawing.
 
-## Recent Commits
-* [pending] feat: perfect seamless popup geometry with arcTo, dynamic radius scaling, and modifier color support
