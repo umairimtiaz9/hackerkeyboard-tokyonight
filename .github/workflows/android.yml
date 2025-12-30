@@ -32,11 +32,8 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
         with:
+          packages: "platforms;android-33 build-tools;34.0.4 platform-tools"
           log-accepted-android-sdk-licenses: false
-
-      - name: Install Android Build Tools
-        run: |
-          sdkmanager "build-tools;34.0.4" "platforms;android-33"
 
       - name: Build with Gradle
         run: ./gradlew assembleRelease
