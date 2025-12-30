@@ -11,7 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.View;
 
-import org.pocketworkstation.pckeyboard.Key;
+import org.pocketworkstation.pckeyboard.Keyboard.Key;
 import org.pocketworkstation.pckeyboard.LatinKeyboardBaseView;
 
 public class SeamlessPopupDrawable extends Drawable {
@@ -25,6 +25,7 @@ public class SeamlessPopupDrawable extends Drawable {
     private float mPopupHeight;
     private float mStrokeWidth;
     private float mCornerRadius;
+    private float mKeyCornerRadius;
     private float mNeckHeight;
     private float mKeyTopY;
     private float mPopupTopY;
@@ -57,6 +58,10 @@ public class SeamlessPopupDrawable extends Drawable {
         mCornerRadius = cornerRadius;
     }
 
+    public void setKeyCornerRadius(float keyCornerRadius) {
+        mKeyCornerRadius = keyCornerRadius;
+    }
+
     // This method needs to be called by LatinKeyboardBaseView whenever geometry changes
     public void setGeometry(Rect keyRect, Rect popupRect, float keyHeight, float popupHeight, float neckHeight, float keyTopY, float popupTopY) {
         mKeyRect.set(keyRect);
@@ -74,75 +79,126 @@ public class SeamlessPopupDrawable extends Drawable {
     private void updatePath() {
         mPath.reset();
 
-        float keyLeft = mKeyRect.left;
-        float keyRight = mKeyRect.right;
-        float keyBottom = mKeyRect.bottom;
+        // Inset by half the stroke width to avoid clipping, as STROKE draws centered on the path.
+        float halfStroke = mStrokeWidth / 2f;
+
+        // Small snap tolerance to ensure crisp vertical lines when virtually aligned
+        float snapDistance = mStrokeWidth;
+
+        float keyLeft = mKeyRect.left + halfStroke;
+        float keyRight = mKeyRect.right - halfStroke;
+        float keyBottom = mKeyRect.bottom - halfStroke;
         // Key Top is mKeyTopY.
 
-        float popupLeft = mPopupRect.left;
-        float popupRight = mPopupRect.right;
-        float popupBottom = mPopupRect.bottom;
-        float popupTop = mPopupRect.top; // mPopupTopY
+        float popupLeft = mPopupRect.left + halfStroke;
+        float popupRight = mPopupRect.right - halfStroke;
+        float popupBottom = mPopupRect.bottom; // No inset needed for internal connection
+        float popupTop = mPopupRect.top + halfStroke; // mPopupTopY
 
-        float filletRadius = mNeckHeight; // Reuse this parameter as fillet radius
+        // Apply Snap Logic - Aggressive snapping to ensure vertical lines
+        if (Math.abs(keyLeft - popupLeft) <= mCornerRadius) {
+            popupLeft = keyLeft;
+        }
+        if (Math.abs(keyRight - popupRight) <= mCornerRadius) {
+            popupRight = keyRight;
+        }
 
-        // Start at Key Bottom Left
-        mPath.moveTo(keyLeft, keyBottom);
+        // Use consistent radius for connections to match key corners
+        float filletRadius = mKeyCornerRadius;
 
-        // --- Left Side Connection ---
-        if (keyLeft > popupLeft + filletRadius) {
-            // Key is significantly inside the popup. Draw a fillet.
-            // Line up to start of fillet
-            mPath.lineTo(keyLeft, mKeyTopY + filletRadius);
-            // Curve to the left onto the popup bottom
-            // QuadTo using the corner (keyLeft, mKeyTopY) as control point
-            mPath.quadTo(keyLeft, mKeyTopY, keyLeft - filletRadius, mKeyTopY);
+        // --- Start Drawing ---
 
-            // Draw the Bottom-Left corner of the popup
-            mPath.lineTo(popupLeft + mCornerRadius, mKeyTopY);
-            mPath.arcTo(new RectF(popupLeft, popupBottom - 2 * mCornerRadius, popupLeft + 2 * mCornerRadius, popupBottom), 90f, 90f);
-        } else {
-            // Key is aligned or close to left edge. Vertical extrusion.
-            // Continue up to the Top-Left curve start of the popup.
-            mPath.lineTo(keyLeft, mKeyTopY);
-            // If there's a small mismatch (keyLeft > popupLeft but < radius), ideally we just merge them.
-            // For now, draw line to popupLeft to be safe.
-            if (keyLeft != popupLeft) {
-                mPath.lineTo(popupLeft, mKeyTopY);
+        // 1. Start at Key Left Edge (Just above bottom corner)
+        mPath.moveTo(keyLeft, keyBottom - mKeyCornerRadius);
+
+        // 2. Line to Key Top-Left (Connection)
+        float leftDelta = keyLeft - popupLeft;
+
+        if (leftDelta > 0) {
+            // Key is inside Popup (Typical case)
+            if (leftDelta >= mCornerRadius + filletRadius) {
+                // Enough space for full details
+                mPath.lineTo(keyLeft, mKeyTopY + filletRadius);
+                mPath.arcTo(new RectF(keyLeft - 2 * filletRadius, mKeyTopY, keyLeft, mKeyTopY + 2 * filletRadius), 0f, -90f); // Counter-clockwise arc? No.
+                // We are going Up. We want to turn Right.
+                // Previous logic: quadTo.
+                // Let's use arcTo for precision.
+                // Current Point: (keyLeft, mKeyTopY + filletRadius)
+                // We want to end at: (keyLeft - filletRadius, mKeyTopY)
+                // Center is (keyLeft - filletRadius, mKeyTopY + filletRadius)
+                // Start Angle: 0 (Right). Sweep: -90 (Up to Top).
+                // Wait, we are on the Right side of the circle?
+                // Key Edge is X=keyLeft. Circle center is Left of that.
+                // So we are at 0 degrees relative to center.
+                // We want to go to -90 (Top).
+                // Yes.
+                // mPath.arcTo(new RectF(keyLeft - 2*filletRadius, mKeyTopY, keyLeft, mKeyTopY + 2*filletRadius), 0f, -90f);
+                // But arcTo forces a lineTo if not at start.
+
+                // Simpler: Just stick to quadTo for the connection fillet to be safe, but with full radius.
+                 mPath.lineTo(keyLeft, mKeyTopY + filletRadius);
+                 mPath.quadTo(keyLeft, mKeyTopY, keyLeft - filletRadius, mKeyTopY);
+
+                 mPath.lineTo(popupLeft + mCornerRadius, mKeyTopY);
+                 // Popup Corner: Bottom-Left of Popup
+                 mPath.arcTo(new RectF(popupLeft, popupBottom - 2 * mCornerRadius, popupLeft + 2 * mCornerRadius, popupBottom), 90f, 90f);
+            } else {
+                // Tight space: Snapping failed but we are close.
+                // We shouldn't be here if snapping is mCornerRadius.
+                // But if we are... bridge the gap.
+                // Draw line to intersection height
+                mPath.lineTo(keyLeft, mKeyTopY + mCornerRadius);
+                // Curve to popup
+                mPath.quadTo(keyLeft, mKeyTopY, popupLeft, mKeyTopY - mCornerRadius);
+                mPath.lineTo(popupLeft, popupTop + mCornerRadius);
             }
+        } else {
+            // Key is aligned (snapped) or hanging out
+            mPath.lineTo(keyLeft, mKeyTopY);
+            if (keyLeft != popupLeft) mPath.lineTo(popupLeft, mKeyTopY);
             mPath.lineTo(popupLeft, popupTop + mCornerRadius);
         }
 
-        // --- Top Left Corner ---
+        // 3. Popup Top-Left Corner
         mPath.arcTo(new RectF(popupLeft, popupTop, popupLeft + 2 * mCornerRadius, popupTop + 2 * mCornerRadius), 180f, 90f);
 
-        // --- Top Right Corner ---
+        // 4. Popup Top Edge & Top-Right Corner
         mPath.lineTo(popupRight - mCornerRadius, popupTop);
         mPath.arcTo(new RectF(popupRight - 2 * mCornerRadius, popupTop, popupRight, popupTop + 2 * mCornerRadius), 270f, 90f);
 
-        // --- Right Side Connection ---
-        if (keyRight < popupRight - filletRadius) {
-             // Key is inside.
-             // Line down to bottom-right corner start
-             mPath.lineTo(popupRight, popupBottom - mCornerRadius);
-             // Arc to bottom edge
-             mPath.arcTo(new RectF(popupRight - 2 * mCornerRadius, popupBottom - 2 * mCornerRadius, popupRight, popupBottom), 0f, 90f);
+        // 5. Right Side Connection
+        float rightDelta = popupRight - keyRight;
 
-             // Now at (popupRight - R, popupBottom).
-             // Line left to start of fillet
-             mPath.lineTo(keyRight + filletRadius, mKeyTopY); // mKeyTopY == popupBottom
-             // Curve down to Key Right Edge
-             mPath.quadTo(keyRight, mKeyTopY, keyRight, mKeyTopY + filletRadius);
-             // Line down to Key Bottom Right
-             mPath.lineTo(keyRight, keyBottom);
+        if (rightDelta > 0) {
+            // Key is inside Popup
+            if (rightDelta >= mCornerRadius + filletRadius) {
+                 // Enough space
+                 mPath.lineTo(popupRight, popupBottom - mCornerRadius);
+                 mPath.arcTo(new RectF(popupRight - 2 * mCornerRadius, popupBottom - 2 * mCornerRadius, popupRight, popupBottom), 0f, 90f);
+                 mPath.lineTo(keyRight + filletRadius, mKeyTopY);
+                 // Curve down onto key
+                 mPath.quadTo(keyRight, mKeyTopY, keyRight, mKeyTopY + filletRadius);
+            } else {
+                 // Tight space
+                 mPath.lineTo(popupRight, popupBottom - mCornerRadius);
+                 mPath.quadTo(popupRight, mKeyTopY, keyRight, mKeyTopY + mCornerRadius);
+            }
+            mPath.lineTo(keyRight, keyBottom - mKeyCornerRadius);
         } else {
-             // Aligned or close.
+             // Aligned or hanging out
              mPath.lineTo(popupRight, mKeyTopY);
-             if (keyRight != popupRight) {
-                 mPath.lineTo(keyRight, mKeyTopY);
-             }
-             mPath.lineTo(keyRight, keyBottom);
+             if (keyRight != popupRight) mPath.lineTo(keyRight, mKeyTopY);
+             mPath.lineTo(keyRight, keyBottom - mKeyCornerRadius);
         }
+
+        // 6. Key Bottom-Right Corner
+        mPath.arcTo(new RectF(keyRight - 2 * mKeyCornerRadius, keyBottom - 2 * mKeyCornerRadius, keyRight, keyBottom), 0f, 90f);
+
+        // 7. Key Bottom Edge
+        mPath.lineTo(keyLeft + mKeyCornerRadius, keyBottom);
+
+        // 8. Key Bottom-Left Corner
+        mPath.arcTo(new RectF(keyLeft, keyBottom - 2 * mKeyCornerRadius, keyLeft + 2 * mKeyCornerRadius, keyBottom), 90f, 90f);
 
         mPath.close();
     }
@@ -175,8 +231,7 @@ public class SeamlessPopupDrawable extends Drawable {
     }
 
     // Helper method to get current bounds for invalidation
-    @Override
-    public Rect getBounds() {
+    public Rect getCombinedBounds() {
         // This method should return the bounds of the drawable.
         // For a popup, this would be the combined bounds of the key replica and the popup content.
         // For simplicity, we'll use the popup rect as a base and expand if needed.

@@ -1295,7 +1295,8 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
             }
             mPreviewPopupDrawable.setColors(backgroundColor, strokeColor);
             mPreviewPopupDrawable.setStrokeWidth(2.0f * getResources().getDisplayMetrics().density);
-            mPreviewPopupDrawable.setCornerRadius(12.0f * getResources().getDisplayMetrics().density);
+            mPreviewPopupDrawable.setCornerRadius(8.0f * getResources().getDisplayMetrics().density);
+            mPreviewPopupDrawable.setKeyCornerRadius(8.0f * getResources().getDisplayMetrics().density);
             mPreviewText.setBackgroundDrawable(mPreviewPopupDrawable);
         }
 
@@ -1486,7 +1487,8 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         }
         mSeamlessPopupDrawable.setColors(backgroundColor, strokeColor);
         mSeamlessPopupDrawable.setStrokeWidth(2.0f * getResources().getDisplayMetrics().density);
-        mSeamlessPopupDrawable.setCornerRadius(12.0f * getResources().getDisplayMetrics().density);
+        mSeamlessPopupDrawable.setCornerRadius(8.0f * getResources().getDisplayMetrics().density);
+        mSeamlessPopupDrawable.setKeyCornerRadius(8.0f * getResources().getDisplayMetrics().density);
 
         container.setBackgroundDrawable(mSeamlessPopupDrawable);
 

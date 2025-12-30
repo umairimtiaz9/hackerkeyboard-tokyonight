@@ -85,28 +85,16 @@ All keyboard icons are now tinted using `?attr/kbdColorText` to ensure they adap
 - `12`: Day
 - `13`: Moon
 
-## Refactoring Plan: Seamless Popups (Focus Phase)
+### 6. Seamless Popup Architecture
+The project now uses a dedicated `SeamlessPopupDrawable` to render popups, replacing legacy patch systems.
+- **Concept**: Instead of a separate popup window floating above a key, the drawable renders a unified shape comprising both the popup "bubble" and a "replica" of the key below it.
+- **Geometry**:
+    - **Adaptive Connection**: Uses Bezier curves (`quadTo`) and arcs (`arcTo`) to create a smooth, continuous path between the key and popup.
+    - **Snap Logic**: Aligns vertical strokes perfectly when the key is within `mCornerRadius` of the popup edge.
+    - **Fillet Control**: Uses a fillet radius of `mKeyCornerRadius` (8dp) for connections to match the key aesthetics.
+- **Implementation**:
+    - `LatinKeyboardBaseView` calculates the combined bounds and passes them to `SeamlessPopupDrawable.setGeometry()`.
+    - The drawable handles its own stroking (inset by `strokeWidth/2`) and drawing.
 
-This phase focuses on achieving the "AnySoft-style" visual connection between keys and popups, deferring advanced theming and animations.
-
-### 1. Core Implementation: "The Replica Strategy"
-
-*   **Objective**: Make the popup *be* the key, eliminating visual gaps and misalignment.
-*   **Approach**:
-    *   Create a new Java class, `SeamlessPopupDrawable.java`, responsible for drawing the combined shape of the key and the popup bubble as a single, continuous vector path.
-    *   Modify `LatinKeyboardBaseView.java`:
-        *   Remove the existing "patch" view logic.
-        *   Implement new logic to position the popup window precisely, ensuring its "key" part perfectly covers the original key on the keyboard.
-        *   Handle basic animation (fade-in/scale-up) for the popup appearance/disappearance using `ValueAnimator`.
-*   **Key Files Involved**:
-    *   `SeamlessPopupDrawable.java` (new)
-    *   `LatinKeyboardBaseView.java` (modified)
-*   **Estimated Time**: 2.5 - 3.5 hours (for focused implementation and basic testing).
-
-### 2. Future Considerations (Deferred)
-
-*   **Advanced Theming**: Integration with `KeyboardAttributes` for dynamic colors, dimensions, and typography.
-*   **Geometry Engine**: Dedicated calculators for key/popup geometry.
-*   **Animation Framework**: Physics-based animations, state-driven morphing.
-
-This focused approach allows us to address the immediate visual goal within a tight timeframe, with clear steps for future enhancements.
+## Recent Commits
+* [pending] feat: implement true SeamlessPopupDrawable with adaptive connection logic and snap tolerance

@@ -5,11 +5,15 @@ All notable changes to this project will be documented in this file.
 ## [Tokyo Night Edition] - 2025-12-30
 
 ### Added
-- **Continuous Stroke Visuals**: Implemented a "Patch Solution" using a dynamic `View` overlay to create a seamless connection between the pressed key and its popup, emulating the AnySoftKeyboard aesthetic.
-- **Dynamic Connection Logic**: Added Java logic in `LatinKeyboardBaseView.java` to calculate and position the connection patch in real-time based on key width and alignment.
+- **True Seamless Popups**: Implemented `SeamlessPopupDrawable`, a custom vector drawer that renders the key and popup as a single continuous shape, replacing the previous "patch" overlay solution for pixel-perfect connectivity.
+- **Adaptive Connection Logic**: Implemented intelligent path generation that handles misalignment and tight spaces using adaptive Bezier curves and snap-to-grid logic (`SeamlessPopupDrawable.java`).
+- **Precision Visuals**:
+    - **Snap Logic**: Added sub-pixel snapping to ensure vertical strokes are perfectly straight when keys are aligned.
+    - **Adaptive Fillets**: Dynamic corner radius calculation to prevent "too round" connections, ensuring a crisp "square-round" aesthetic matching the keycaps.
 - **Seamless Geometry**: Updated `popup_container_tokyonight.xml` with full 8dp rounded corners and restored strokes for a polished "Pill" container that merges into the keyboard tray.
 
 ### Changed
+- **Visual Refinement**: Adjusted `SeamlessPopupDrawable` stroke rendering (inset by half stroke width) to prevent clipping and ensure consistent stroke weight.
 - **Unified Font Sizing**: Harmonized text sizes between character previews and key labels (standardized at 24sp) for a more consistent typographic weight.
 - **Breathe Design Refinement**: Optimized `btn_key_tokyonight.xml` insets to guarantee a strict 4dp visual gutter across all key types.
 - **Popup Animation Polish**: Fine-tuned `popup_enter_modern.xml` with better scaling and alpha transitions for a more fluid "portal" appearance.
