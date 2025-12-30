@@ -32,7 +32,7 @@
 - [x] **Mechanical Glow**: Implement Gaussian aura effects (`ShadowLayer`) for active modifiers to simulate high-end backlit mechanical keycaps.
 
 ### 4. CI/CD & Automation
-- [ ] **GitHub Actions Integration**: Implement a cloud build pipeline that dynamically removes Termux-specific `aapt2` overrides during execution to allow for automated APK releases.
+- [x] **GitHub Actions Integration**: Implemented a robust cloud build pipeline that dynamically handles Termux-specific `aapt2` and `buildToolsVersion` overrides for automated APK artifacts.
 - [ ] **Automated Release Cycle**: Configure tag-based triggers for signing and deploying production-ready APKs directly to GitHub Releases.
 
 ## Project Knowledge Base

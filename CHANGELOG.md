@@ -11,6 +11,10 @@ All notable changes to this project will be documented in this file.
     - **Snap Logic**: Added sub-pixel snapping to ensure vertical strokes are perfectly straight when keys are aligned.
     - **Adaptive Fillets**: Dynamic corner radius calculation to prevent "too round" connections, ensuring a crisp "square-round" aesthetic matching the keycaps.
     - **Modifier Integration**: Updated `LatinKeyboardBaseView` to dynamically resolve `kbdColorMod` or `kbdColorAlpha` for seamless popups, ensuring proper blending for Shift/Ctrl/Alt keys.
+- **CI/CD Infrastructure**:
+    - **GitHub Actions Pipeline**: Implemented automated builds via `.github/workflows/android.yml` that generate unsigned APK artifacts on every push to `master`.
+    - **Termux Environment Sanitization**: Added dynamic `sed` logic to the workflow to bypass Termux-specific `aapt2` and `buildToolsVersion` overrides, ensuring cloud builds are portable.
+    - **Automated Release Triggers**: Configured tag-based triggers for automated GitHub Releases with generated release notes.
 - **Seamless Geometry**: Updated `popup_container_tokyonight.xml` with full 8dp rounded corners and restored strokes for a polished "Pill" container that merges into the keyboard tray.
 
 ### Changed
