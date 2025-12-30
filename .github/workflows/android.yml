@@ -26,13 +26,15 @@ jobs:
         run: |
           # Remove Termux-specific aapt2 override for CI
           sed -i '/android.aapt2FromMavenOverride/d' gradle.properties
+          # Remove hardcoded buildToolsVersion to let CI use defaults
+          sed -i '/buildToolsVersion/d' app/build.gradle
           # Ensure Gradle wrapper is executable
           chmod +x gradlew
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
         with:
-          packages: "platforms;android-33 build-tools;34.0.4 platform-tools"
+          packages: "platforms;android-33"
           log-accepted-android-sdk-licenses: false
 
       - name: Build with Gradle
