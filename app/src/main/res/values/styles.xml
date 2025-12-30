@@ -104,7 +104,7 @@
     </style>
     
     <style name="MiniKeyboardAnimation">
-        <item name="android:windowEnterAnimation">@anim/mini_keyboard_fadein</item>
+        <item name="android:windowEnterAnimation">@anim/popup_enter_modern</item>
         <item name="android:windowExitAnimation">@anim/mini_keyboard_fadeout</item>
     </style>
 </resources>

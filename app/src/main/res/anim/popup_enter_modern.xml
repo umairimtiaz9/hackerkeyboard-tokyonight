@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android"
-    android:interpolator="@android:anim/overshoot_interpolator">
+    android:interpolator="@android:anim/decelerate_interpolator">
     <alpha
         android:fromAlpha="0.0"
         android:toAlpha="1.0"
-        android:duration="60" />
+        android:duration="80" />
     <scale
-        android:fromXScale="0.7"
+        android:fromXScale="0.8"
         android:toXScale="1.0"
-        android:fromYScale="0.7"
+        android:fromYScale="0.4"
         android:toYScale="1.0"
         android:pivotX="50%"
         android:pivotY="100%"

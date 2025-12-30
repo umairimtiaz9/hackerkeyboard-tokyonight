@@ -1,43 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Unified Tokyo Night Key Selector -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    
-    <!-- PRESSED STATE -->
-    <item android:state_pressed="true">
+
+    <!-- 1. PRESSED MODIFIER KEY (Closed Border, No Extrusion) -->
+    <!-- Must come BEFORE generic modifiers to take precedence -->
+    <item android:state_single="true" android:state_pressed="true">
         <inset android:insetLeft="2dp" android:insetTop="2dp" android:insetRight="2dp" android:insetBottom="2dp">
             <shape android:shape="rectangle">
-                <corners android:radius="8dp" />
+                <corners android:radius="4dp" />
                 <solid android:color="?attr/kbdColorHighlight" />
+                <!-- No stroke for modifiers to keep them clean/flat -->
             </shape>
         </inset>
     </item>
 
-    <!-- STICKY/LOCKED STATE (e.g. Caps Lock, Ctrl, Alt) -->
-    <item android:state_checked="true">
+    <!-- 2. LOCKED/STICKY MODIFIER KEY (e.g., Caps Lock) -->
+    <!-- Must come BEFORE generic modifiers -->
+    <item android:state_single="true" android:state_checked="true">
         <inset android:insetLeft="2dp" android:insetTop="2dp" android:insetRight="2dp" android:insetBottom="2dp">
             <shape android:shape="rectangle">
-                <corners android:radius="8dp" />
+                <corners android:radius="4dp" />
                 <solid android:color="?attr/kbdColorHighlight" />
+                <!-- No stroke, just solid active color -->
             </shape>
         </inset>
     </item>
 
-    <!-- MODIFIER KEYS (Shift, Alt, Ctrl) -->
-    <!-- Hacker's Keyboard uses state_single to identify functional/modifier keys -->
+    <!-- 3. DEFAULT MODIFIER KEY (Functional Keys) -->
     <item android:state_single="true">
         <inset android:insetLeft="2dp" android:insetTop="2dp" android:insetRight="2dp" android:insetBottom="2dp">
             <shape android:shape="rectangle">
-                <corners android:radius="8dp" />
+                <corners android:radius="4dp" />
                 <solid android:color="?attr/kbdColorMod" />
             </shape>
         </inset>
     </item>
-    
-    <!-- STANDARD ALPHA KEYS -->
+
+    <!-- 4. PRESSED STANDARD KEY (Extrusion Effect) -->
+    <!-- Uses a full border. The popup (shifted down 4dp via Java) will cover the top stroke,
+         creating a seamless "connected" look. -->
+    <item android:state_pressed="true">
+        <inset android:insetLeft="2dp" android:insetTop="2dp" android:insetRight="2dp" android:insetBottom="2dp">
+            <shape android:shape="rectangle">
+                <corners android:radius="4dp" />
+                <solid android:color="?attr/kbdColorHighlight" />
+                <stroke android:width="2dp" android:color="?attr/kbdColorPopup" />
+            </shape>
+        </inset>
+    </item>
+
+    <!-- 5. STANDARD ALPHA KEYS (Default) -->
     <item>
         <inset android:insetLeft="2dp" android:insetTop="2dp" android:insetRight="2dp" android:insetBottom="2dp">
             <shape android:shape="rectangle">
-                <corners android:radius="8dp" />
+                <corners android:radius="4dp" />
                 <solid android:color="?attr/kbdColorAlpha" />
             </shape>
         </inset>

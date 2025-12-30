@@ -8,15 +8,20 @@
         </shape>
     </item>
     <!-- Rounded Popup with Connection to Key -->
-    <item android:left="6dp" android:top="0dp" android:right="6dp" android:bottom="6dp">
-        <shape android:shape="rectangle">
-            <corners
-                android:topLeftRadius="12dp"
-                android:topRightRadius="12dp"
-                android:bottomLeftRadius="12dp"
-                android:bottomRightRadius="12dp" />
-            <solid android:color="?attr/kbdColorBase" />
-            <stroke android:width="2dp" android:color="?attr/kbdColorPopup" />
-        </shape>
+    <item android:left="2dp" android:top="0dp" android:right="2dp" android:bottom="0dp">
+        <layer-list>
+            <!-- Clip the bottom stroke by offsetting the item downwards -->
+            <item android:bottom="-2dp">
+                <shape android:shape="rectangle">
+                    <corners
+                        android:topLeftRadius="4dp"
+                        android:topRightRadius="4dp"
+                        android:bottomLeftRadius="0dp"
+                        android:bottomRightRadius="0dp" />
+                    <solid android:color="?attr/kbdColorHighlight" />
+                    <stroke android:width="2dp" android:color="?attr/kbdColorPopup" />
+                </shape>
+            </item>
+        </layer-list>
     </item>
 </layer-list>

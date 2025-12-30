@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Unified Dynamic Popup Layout -->
+<!-- Unified Dynamic Popup Layout with Connection Patch -->
 <!-- This is the container for the mini-keyboard that appears on long-press -->
-<org.pocketworkstation.pckeyboard.LatinKeyboardBaseView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/LatinKeyboardBaseView"
-    android:background="@drawable/popup_container_tokyonight"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    />
+    android:background="@drawable/popup_container_tokyonight"
+    android:clipToPadding="false">
+
+    <org.pocketworkstation.pckeyboard.LatinKeyboardBaseView
+        android:id="@+id/LatinKeyboardBaseView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <!-- The Patch View: Dynamically sized/positioned in Java to hide the bottom stroke -->
+    <!-- Height increased to 6dp to safely cover the 2dp stroke and any sub-pixel aliasing -->
+    <View
+        android:id="@+id/popup_patch"
+        android:layout_width="0dp"
+        android:layout_height="6dp"
+        android:layout_gravity="bottom"
+        android:background="?attr/kbdColorHighlight" />
+
+</FrameLayout>

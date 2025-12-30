@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Tokyo Night Edition] - 2025-12-30
+
+### Added
+- **Continuous Stroke Visuals**: Implemented a "Patch Solution" using a dynamic `View` overlay to create a seamless connection between the pressed key and its popup, emulating the AnySoftKeyboard aesthetic.
+- **Dynamic Connection Logic**: Added Java logic in `LatinKeyboardBaseView.java` to calculate and position the connection patch in real-time based on key width and alignment.
+- **Seamless Geometry**: Updated `popup_container_tokyonight.xml` with full 8dp rounded corners and restored strokes for a polished "Pill" container that merges into the keyboard tray.
+
+### Changed
+- **Unified Font Sizing**: Harmonized text sizes between character previews and key labels (standardized at 24sp) for a more consistent typographic weight.
+- **Breathe Design Refinement**: Optimized `btn_key_tokyonight.xml` insets to guarantee a strict 4dp visual gutter across all key types.
+- **Popup Animation Polish**: Fine-tuned `popup_enter_modern.xml` with better scaling and alpha transitions for a more fluid "portal" appearance.
+
+### Fixed
+- **The Floating Gap**: Resolved the visual disconnect between popups and keys by increasing vertical overlap and using the patch system to hide the separator line.
+- **Horizontal Drifting**: Corrected the horizontal alignment logic in `LatinKeyboardBaseView.java` to ensure mini-keyboards are perfectly centered or edge-aligned with their parent keys.
+- **Sub-pixel Aliasing**: Increased the connection patch height to 6dp to safely mask the 2dp border stroke and prevent "line ghosting" artifacts.
+
 ## [Tokyo Night Edition] - 2025-12-26
 
 ### Added

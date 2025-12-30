@@ -13,3 +13,4 @@ gradle
 .externalNativeBuild
 tokyonight.nvim/
 screenshots/
+/app/build

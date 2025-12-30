@@ -7,12 +7,19 @@
             <solid android:color="#00000000" />
         </shape>
     </item>
-    <!-- Rounded Container without internal gaps -->
-    <item android:left="2dp" android:top="2dp" android:right="2dp" android:bottom="2dp">
+    <!-- Rounded Container with Full Stroke -->
+    <!-- The "Patch" view will hide the stroke at the connection point -->
+    <item android:left="2dp" android:top="2dp" android:right="2dp" android:bottom="0dp">
         <shape android:shape="rectangle">
-            <corners android:radius="12dp" />
-            <solid android:color="?attr/kbdColorBase" />
+            <!-- 8dp corners to match the key corners and user request -->
+            <corners
+                android:topLeftRadius="8dp"
+                android:topRightRadius="8dp"
+                android:bottomLeftRadius="8dp"
+                android:bottomRightRadius="8dp" />
+            <solid android:color="?attr/kbdColorHighlight" />
             <stroke android:width="2dp" android:color="?attr/kbdColorPopup" />
+            <!-- Padding to ensure content doesn't touch the edges -->
             <padding android:left="4dp" android:top="4dp" android:right="4dp" android:bottom="4dp" />
         </shape>
     </item>

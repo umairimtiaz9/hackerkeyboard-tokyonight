@@ -48,6 +48,7 @@ import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.widget.FrameLayout;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -224,6 +225,7 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
     protected PopupWindow mMiniKeyboardPopup;
     protected LatinKeyboardBaseView mMiniKeyboard;
     protected View mMiniKeyboardContainer;
+    protected View mPopupPatch;
     protected View mMiniKeyboardParent;
     protected boolean mMiniKeyboardVisible;
     protected boolean mIsMiniKeyboard = false;
@@ -1019,7 +1021,7 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
             
             int originalAlpha = mBackgroundAlpha;
             if (isPreviewed) {
-                keyBackground.setAlpha(100);
+                keyBackground.setAlpha(170);
             } else if (mBackgroundAlpha != 255) {
                 keyBackground.setAlpha(mBackgroundAlpha);
             } else {
@@ -1294,8 +1296,10 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         }
         mPreviewText.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
                 MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
-        int popupWidth = Math.max(mPreviewText.getMeasuredWidth(), key.width
-                + mPreviewText.getPaddingLeft() + mPreviewText.getPaddingRight());
+
+        // Tokyo Night: Force popup width to match the key width for single-key previews
+        // to create a seamless vertical "extrusion" look.
+        int popupWidth = key.width;
         final int popupHeight = Math.max(mPreviewText.getMeasuredHeight(), mPreviewHeight);
         LayoutParams lp = mPreviewText.getLayoutParams();
         if (lp != null) {
@@ -1303,8 +1307,10 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
             lp.height = popupHeight;
         }
 
-        int popupPreviewX = key.x - (popupWidth - key.width) / 2;
-        int popupPreviewY = key.y - popupHeight;
+        // Tokyo Night: Shift down by 2dp to align perfectly with the key's visible top edge
+        // (accounting for the 2dp inset in btn_key_tokyonight.xml).
+        int popupPreviewX = key.x;
+        int popupPreviewY = key.y - popupHeight + (int) (4 * getResources().getDisplayMetrics().density);
 
         mHandler.cancelDismissPreview();
         if (mOffsetInWindow == null) {
@@ -1411,6 +1417,7 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
 
         mMiniKeyboard =
                 (LatinKeyboardBaseView)container.findViewById(R.id.LatinKeyboardBaseView);
+        mPopupPatch = container.findViewById(R.id.popup_patch);
         mMiniKeyboard.mIsMiniKeyboard = true;
         mMiniKeyboard.setOnKeyboardActionListener(new OnKeyboardActionListener() {
             public void onKey(int primaryCode, int[] keyCodes, int x, int y) {
@@ -1542,6 +1549,8 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         popupY += getPaddingTop();
         popupY -= mMiniKeyboardContainer.getMeasuredHeight();
         popupY += mMiniKeyboardContainer.getPaddingBottom();
+        // Tokyo Night: Shift down by 4dp to align perfectly with the key's visible top edge
+        popupY += (int) (4 * getResources().getDisplayMetrics().density);
         final int x = popupX;
         final int y = mShowPreview && isOneRowKeys(miniKeys) ? mPopupPreviewDisplayedY : popupY;
 
@@ -1552,6 +1561,16 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
             adjustedX = getMeasuredWidth() - mMiniKeyboardContainer.getMeasuredWidth();
         }
         // Log.i(TAG, "x=" + x + " y=" + y + " adjustedX=" + adjustedX + " getMeasuredWidth()=" + getMeasuredWidth());
+
+        if (mPopupPatch != null) {
+            int patchX = popupKey.x + mWindowOffset[0] + getPaddingLeft() - adjustedX;
+            FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mPopupPatch.getLayoutParams();
+            lp.width = popupKey.width;
+            lp.leftMargin = patchX;
+            lp.gravity = Gravity.LEFT | Gravity.BOTTOM;
+            mPopupPatch.setLayoutParams(lp);
+        }
+
         mMiniKeyboardOriginX = adjustedX + mMiniKeyboardContainer.getPaddingLeft() - mWindowOffset[0];
         mMiniKeyboardOriginY = y + mMiniKeyboardContainer.getPaddingTop() - mWindowOffset[1];
         mMiniKeyboard.setPopupOffset(adjustedX, y);
