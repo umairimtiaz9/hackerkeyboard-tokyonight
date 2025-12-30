@@ -2,7 +2,7 @@
 
 A modernization project of the legendary Hacker's Keyboard, bringing a high-performance, IDE-inspired aesthetic and modern Android UX to the most powerful soft keyboard ever made.
 
-![Modern Preview](hk-5row-en-s.png)
+![Modern Preview](hk-5row-us.jpg)
 
 ## 📜 The History: From 2011 to Today
 
