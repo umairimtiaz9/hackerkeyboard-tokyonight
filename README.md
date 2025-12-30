@@ -2,7 +2,7 @@
 
 A modernization project of the legendary Hacker's Keyboard, bringing aesthetic and modern Android UX to the most powerful soft keyboard ever made.
 
-Changelog: [CHANGELOG.md](CHANGELOG.md)
+[CHANGELOG](CHANGELOG.md)
 
 ![Modern Preview](screenshots/hk-5row-us.jpg)
 
@@ -21,18 +21,14 @@ This project transforms the "ancient" Gingerbread-style UI into a professional, 
 ### 🎨 Tokyo Night Design System
 Integrated 4 high-contrast variants based on the popular Neovim color scheme:
 - **Storm** (Default): A balanced, deep blue-grey.
-- **Night**: Darker, more intense tones for OLED and low-light.
+- **Night**: Darker, more intense tones for AMOLED/OLED and low-light.
 - **Moon**: A slightly softer, cooler midnight palette.
 - **Day**: A crisp, high-legibility light theme.
 
 ### ⌨️ Professional Typography
 - **Google Sans Code Integration**: Integrated designer typography across all keys and popups for superior professional legibility.
-- **Typographic Hierarchy**: High-opacity bold labels for primary functions and low-opacity hint characters for reduced visual noise.
+- **Typographic Hierarchy**: High-opacity bold labels for primary functions and low-opacity hint characters for reduced visual noise
 
-### 🚀 Fluid Interactions
-- **Spring Physics**: Popups use "Overshoot" interpolators for responsive, tactile feedback.
-- **Continuous Stroke**: A seamless visual bridge between the pressed key and the popup, eliminating the floating box feel.
-- **Latency Neutralization**: 0ms popup delay with dynamic long-press triggers for instantaneous usage.
 
 ## 🛠 Technical Architecture
 
@@ -61,15 +57,15 @@ Instead of maintaining dozens of bitmap files, we use a single, high-fidelity XM
 We welcome contributions! This project aims to maintain the "power user" soul of Hacker's Keyboard while keeping the UI modern.
 
 1. **Bug Fixes**: Help us resolve any legacy rendering issues on modern Android versions.
-2. **Layouts**: Add support for more languages while adhering to the new visual guidelines.
-3. **Themes**: While Tokyo Night is the focus, the dynamic system allows for easy addition of new high-quality color schemes.
+2. **Themes**: While Tokyo Night is the focus, the dynamic system allows for easy addition of new high-quality color schemes.
 
 ## 📥 Installation
 
 1. Clone this repository.
-2. Build using Android Studio or via Gradle in Termux.
+2. Build using Android Studio or via Gradle.
 3. Enable "Hacker's Keyboard" in your Android system settings.
 
+*Or Simply download & install from releases.*
 ---
 
 *Based on the original work by Klaus Weidner.*
