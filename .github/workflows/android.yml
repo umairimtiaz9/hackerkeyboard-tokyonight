@@ -40,17 +40,33 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew assembleRelease
 
+      - name: Sign APK
+        run: |
+          # Generate a dummy keystore
+          keytool -genkey -v -keystore dummy.keystore -alias dummy -keyalg RSA -keysize 2048 -validity 10000 -storepass password -keypass password -dname "CN=HackerKeyboard, OU=TokyoNight, O=TokyoNight, L=Termux, S=Linux, C=US"
+
+          # Find the unsigned APK
+          UNSIGNED_APK=$(find app/build/outputs/apk/release -name "*.apk" | head -n 1)
+          SIGNED_APK="app/build/outputs/apk/release/hackers-keyboard-tokyonight-signed.apk"
+
+          # Sign the APK
+          # apksigner is usually in $ANDROID_HOME/build-tools/<version>/apksigner
+          APKSIGNER=$(find $ANDROID_HOME/build-tools -name apksigner | sort -r | head -n 1)
+          $APKSIGNER sign --ks dummy.keystore --ks-key-alias dummy --ks-pass pass:password --key-pass pass:password --out "$SIGNED_APK" "$UNSIGNED_APK"
+
+          echo "SIGNED_APK_PATH=$SIGNED_APK" >> $GITHUB_ENV
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: hackers-keyboard-modern-unsigned
-          path: app/build/outputs/apk/release/*.apk
+          name: hackers-keyboard-tokyonight-signed
+          path: ${{ env.SIGNED_APK_PATH }}
 
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
         with:
-          files: app/build/outputs/apk/release/*.apk
+          files: ${{ env.SIGNED_APK_PATH }}
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
