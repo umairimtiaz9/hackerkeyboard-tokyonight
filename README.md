@@ -18,7 +18,7 @@ A professional modernization of the legendary **Hacker's Keyboard**. This projec
 
 Hacker's Keyboard was originally developed in 2011, based on the Gingerbread-era AOSP keyboard. It became the gold standard for power users, developers, and sysadmins due to its full 5-row layout, working Tab/Ctrl/Esc keys, and essential arrow keys for SSH and terminal usage.
 
-This project carries that legacy forward, replacing decade-old assets and rendering logic with a data-driven architecture and a professional design language inspired by modern IDEs.
+This project carries that legacy forward, replacing decade-old assets and rendering logic with a data-driven architecture and a professional design language inspired by Tokyonight theme.
 
 ---
 

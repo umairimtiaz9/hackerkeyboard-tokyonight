@@ -26,7 +26,7 @@
 - [x] **Physical Connectivity**: Redesign popup positioning to be flush with the key top (AnySoft style) to eliminate the floating gap and create a direct tactile link.
 
 ### 2. Typographic & Geometric Overhaul
-- [x] **Designer Typography**: Integrate **Google Sans Code** font across all keys and popups to achieve a high-end "Modern IDE" look with superior legibility.
+- [x] **Designer Typography**: Integrate **Google Sans Code** font across all keys and popups to achieve a glamirous look with superior legibility.
 ### 3. Interaction Design
 - [x] **Portal Transition**: Implement a visual link between the pressed key and the appearing popup (e.g., dimming the underlying key) to create a sense of continuous motion.
 - [x] **Mechanical Glow**: Implement Gaussian aura effects (`ShadowLayer`) for active modifiers to simulate high-end backlit mechanical keycaps.

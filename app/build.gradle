@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId 'org.pocketworkstation.pckeyboard.modern'
-        minSdk 29
+        minSdk 21
         targetSdk 33
         versionCode 1041001
         versionName "v1.41.1-modern"
