@@ -6,7 +6,7 @@
 ![Build Status](https://img.shields.io/github/actions/workflow/status/umairimtiaz9/hackerkeyboard-tokyonight/android.yml?branch=master&style=for-the-badge&label=Build)
 ![License](https://img.shields.io/github/license/umairimtiaz9/hackerkeyboard-tokyonight?style=for-the-badge&color=9ece6a)
 
-A professional modernization of the legendary **Hacker's Keyboard**. This project brings a premium, high-performance aesthetic and modern Android UX to the most powerful soft keyboard ever made, featuring the iconic **Tokyo Night** design system.
+A professional modernization of the legendary **Hacker's Keyboard**. This project brings a aesthetic and modern Android UX to the most powerful soft keyboard ever made, featuring the iconic **Tokyo Night** theme.
 
 <img src="screenshots/hk-5row-us.jpg" width="800" alt="Modern Preview">
 
@@ -55,7 +55,7 @@ The fastest way to get started is to download the latest signed APK:
 
 ## 🤝 Contributing
 
-We welcome contributions that respect the "power user" soul of Hacker's Keyboard while adhering to the modern Tokyo Night visual guidelines. Whether it's language layouts, bug fixes, or theme refinements, your help is appreciated.
+We welcome contributions that respect the "power user" soul of Hacker's Keyboard while adhering to the modern Tokyo Night visual guidelines. Whether it's code, bug fixes, or theme refinements, your help is appreciated.
 
 ---
 
