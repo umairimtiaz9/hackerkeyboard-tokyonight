@@ -8,7 +8,7 @@
 
 A professional modernization of the legendary **Hacker's Keyboard**. This project brings a aesthetic and modern Android UX to the most powerful soft keyboard ever made, featuring the iconic **Tokyo Night** theme.
 
-<img src="screenshots/hk-5row-us.jpg" width="800" alt="Modern Preview">
+<img src="images/hk-5row-us.jpg" width="800" alt="Modern Preview">
 
 </div>
 
