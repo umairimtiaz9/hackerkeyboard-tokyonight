@@ -3,8 +3,11 @@
     android:height="24dp"
     android:viewportWidth="24"
     android:viewportHeight="24"
-    android:tint="?attr/kbdColorText">
+    android:tint="?attr/kbdColorAccent">
     <path
-        android:fillColor="@android:color/white"
-        android:pathData="M12,4L4,12H9V20H15V12H20L12,4Z"/>
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@android:color/white"
+        android:strokeWidth="2"
+        android:strokeLineJoin="round"
+        android:pathData="M12,5 L4,13 L8,13 L8,20 L16,20 L16,13 L20,13 Z"/>
 </vector>

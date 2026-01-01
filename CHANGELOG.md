@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Visual Modernization & Cleanup] - 2026-01-01
+
+### Added
+- **Modern Vector Icons**: Implemented a professional, "AnySoft" inspired icon set for key functional elements.
+    - **Shift**: Clean outline-style arrow.
+    - **Shift Locked**: Matching outline arrow with a detached "locked" bar.
+    - **Backspace**: Modern "tag" shape with a centered 'X'.
+    - **Enter**: Minimalist L-shaped return arrow.
+    - **Settings**: Solid, modern gear icon.
+    - **Search**: Refined magnifying glass vector.
+    - **Mic**: Updated microphone silhouette.
+    - **Tab**: Modern alignment icon.
+- **Vector Feedback System**: Created/Updated `sym_keyboard_feedback_*.xml` resources for all key interactions, wrapping vector drawables in `<layer-list>` to ensure proper scaling and tinting support, replacing the legacy bitmap-based feedback system.
+
+### Changed
+- **Icon Styling**:
+    - **Stroke Engine**: Switched vector paths to use white strokes (`@android:color/white`) to allow for reliable runtime tinting via `?attr/kbdColorText` and `?attr/kbdColorAccent`.
+    - **Accent Integration**: Applied the theme's accent color (Purple/Magenta) to Shift, Shift Locked, and Delete keys for better visual hierarchy.
+    - **Geometry Alignment**: Synchronized the dimensions and positioning of Shift and Shift Locked icons to ensure no visual jumping occurs when toggling states.
+- **Resource Cleanup**:
+    - **Bitmap Purge**: Deleted dozens of legacy `.png` assets for old keyboard themes and feedback icons, significantly reducing the app's resource footprint.
+    - **Layout Consolidation**: Removed unused legacy layouts (`bubble_text.xml`, `voice_punctuation_hint.xml`, `voice_swipe_hint.xml`).
+
+### Fixed
+- **Build System Restoration**: Recreated `null_layout.xml` (as a `<merge />` tag) to resolve compilation errors where the build system expected this resource for specific device configurations.
+- **Missing Resource Links**: Resolved multiple "cannot find symbol" errors in `LatinKeyboard.java` by ensuring all referenced feedback drawables were correctly implemented as XML vectors.
+
 ## [Tokyo Night Edition] - 2025-12-30
 
 ### Added

@@ -20,6 +20,6 @@
         android:drawable="@android:color/transparent" />
 
     <item android:state_pressed="true"
-        android:drawable="@drawable/highlight_pressed" />
+        android:drawable="?attr/kbdColorHighlight" />
 
 </selector>
