@@ -75,7 +75,7 @@ jobs:
         with:
           tag_name: latest
           target_commitish: ${{ github.sha }}
-          name: "Hacker Keyboard - Tokyonight"
+          name: "Latest Build"
           body: |
             This is an automated build of the latest `master` branch.
 
@@ -84,6 +84,7 @@ jobs:
             Built on: ${{ github.event.head_commit.timestamp }}
             Commit: ${{ github.sha }}
           files: ${{ env.SIGNED_APK_PATH }}
+          draft: false
           prerelease: false
           make_latest: true
         env:
