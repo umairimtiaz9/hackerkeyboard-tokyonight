@@ -1,7 +1,5 @@
 ## Contextual History
-*   **Past**: A "mess" of 14+ themes, inconsistent spacing, and mixed assets.
 *   **Present**: Complete Tokyo Night overhaul with 4 variations. Fluid, high-performance popups with modern animations.
-*   **Future**: A robust, data-driven architecture allowing instant theme switching and professional maintenance.
 
 ## TODO: Future Modernization Plans
 - [x] **Visual Breathe Geometry**: Set `key_bottom_gap` and `key_horizontal_gap` to `0dp` and use strict `2dp` insets to guarantee a uniform `4dp` gutter across all keys, eliminating the 'messy slab' look.
@@ -13,6 +11,7 @@
 - [x] **Official Alignment**: Sync all hex values with the latest `tokyonight.nvim` releases.
 - [x] **Designer Typography**: Integrate **Google Sans Code** font for superior professional legibility.
 - [x] **Precision Connectivity**: Bridge the gap between keys and popups (AnySoft style) for a direct tactile link.
+- [x] **Modifier Blending**: Resolved green stroke ghosting on Shift/Ctrl/Alt keys by standardizing functional key logic in `LatinKeyboard.java`.
 - [ ] **More to come**
 
 ## Future Roadmap: Modernization Phase II
@@ -25,12 +24,14 @@
 - [x] **Physical Connectivity**: Redesign popup positioning to be flush with the key top (AnySoft style) to eliminate the floating gap and create a direct tactile link.
 
 ### 2. Typographic & Geometric Overhaul
-- [x] **Designer Typography**: Integrate **Google Sans Code** font across all keys and popups to achieve a high-end look with superior legibility.
-- [ ] **Precision Corners**: Transition from the current friendly 8dp radius to a technical **3dp or 4dp precision radius** to match professional hardware aesthetics.
+- [x] **Designer Typography**: Integrate **Google Sans Code** font across all keys and popups to achieve a glamirous look with superior legibility.
 ### 3. Interaction Design
 - [x] **Portal Transition**: Implement a visual link between the pressed key and the appearing popup (e.g., dimming the underlying key) to create a sense of continuous motion.
 - [x] **Mechanical Glow**: Implement Gaussian aura effects (`ShadowLayer`) for active modifiers to simulate high-end backlit mechanical keycaps.
-- [ ] **Contextual Scaling**: Dynamically adjust popup widths based on content (Letters vs. Symbols) to reduce visual noise.
+
+### 4. CI/CD & Automation
+- [x] **GitHub Actions Integration**: Implemented a robust cloud build pipeline that dynamically handles Termux-specific `aapt2` and `buildToolsVersion` overrides for automated APK artifacts.
+- [ ] **Automated Release Cycle**: Configure tag-based triggers for signing and deploying production-ready APKs directly to GitHub Releases.
 
 ## Project Knowledge Base
 
@@ -84,3 +85,16 @@ All keyboard icons are now tinted using `?attr/kbdColorText` to ensure they adap
 - `11`: Night
 - `12`: Day
 - `13`: Moon
+
+### 6. Seamless Popup Architecture
+The project now uses a dedicated `SeamlessPopupDrawable` to render popups, replacing legacy patch systems.
+- **Concept**: Instead of a separate popup window floating above a key, the drawable renders a unified shape comprising both the popup "bubble" and a "replica" of the key below it.
+- **Geometry**:
+    - **Adaptive Connection**: Uses circular arcs (`arcTo`) exclusively to create a mathematically perfect smooth path between the key and popup.
+    - **Snap Logic**: Aligns vertical strokes perfectly when the key is within `mCornerRadius` of the popup edge.
+    - **Fillet Control**: Uses a fillet radius of `mKeyCornerRadius` (8dp) for connections to match the key aesthetics.
+- **Implementation**:
+    - `LatinKeyboardBaseView` calculates the combined bounds and passes them to `SeamlessPopupDrawable.setGeometry()`.
+    - `LatinKeyboardBaseView` resolves theme attributes (`kbdColorMod` vs `kbdColorAlpha`) to set the correct key color on the drawable.
+    - The drawable handles its own stroking (inset by `strokeWidth/2`) and drawing.
+
