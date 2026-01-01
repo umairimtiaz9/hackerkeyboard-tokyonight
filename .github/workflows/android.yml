@@ -76,7 +76,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: latest
-          name: "Latest Tokyo Night Build"
+          name: "Latest Build"
           body: |
             This is an automated build of the latest `master` branch.
 
