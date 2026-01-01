@@ -46,7 +46,7 @@ Integrated 4 high-contrast variants based on the popular Neovim color scheme:
 
 The fastest way to get started is to download the latest signed APK:
 
-1.  **Download**: Get the latest signed APK from the [**Releases Page**](https://github.com/umairimtiaz9/hackerkeyboard-tokyonight/releases/tag/latest).
+1.  **Download**: Get the latest signed APK from the [**Releases Page**](https://github.com/umairimtiaz9/hackerkeyboard-tokyonight/releases).
 2.  **Install**: Open the `.apk` file on your Android device.
 3.  **Enable**: Go to **Settings > System > Languages & input > On-screen keyboard** and enable "Hacker's Keyboard".
 4.  **Enjoy**: Switch your input method and select your favorite Tokyo Night variant in the keyboard settings.
