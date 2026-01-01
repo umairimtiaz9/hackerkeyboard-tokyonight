@@ -75,7 +75,7 @@ jobs:
         with:
           tag_name: latest
           target_commitish: ${{ github.sha }}
-          name: "Latest Build"
+          name: "Hacker Keyboard - Tokyonight"
           body: |
             This is an automated build of the latest `master` branch.
 
