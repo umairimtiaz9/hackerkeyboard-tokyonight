@@ -73,4 +73,5 @@
     <color name="latinkeyboard_bar_language_shadow_black">#FFFFFF</color>
     <color name="latinkeyboard_feedback_language_text">#C0CAF5</color>
     <color name="latinkeyboard_transparent">#00000000</color>
+    <color name="ic_launcher_background">@color/tn_day_bg</color>
 </resources>

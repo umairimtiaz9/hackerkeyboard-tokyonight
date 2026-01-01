@@ -14,7 +14,7 @@
             android:hardwareAccelerated="true"
             android:killAfterRestore="false"
             android:theme="@style/Theme.HackerKeyboard"
-            android:icon="@drawable/icon">
+            android:icon="@mipmap/ic_launcher">
 
         <service android:name="LatinIME"
                 android:label="@string/english_ime_name"
