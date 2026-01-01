@@ -62,12 +62,10 @@ jobs:
           name: hackers-keyboard-tokyonight-signed
           path: ${{ env.SIGNED_APK_PATH }}
 
-      - name: Create Release (Tags)
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v1
-        with:
-          files: ${{ env.SIGNED_APK_PATH }}
-          generate_release_notes: true
+      - name: Delete Old Latest Release
+        if: github.ref == 'refs/heads/master'
+        run: |
+          gh release delete latest --yes --cleanup-tag || true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
