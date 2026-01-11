@@ -27,13 +27,6 @@
             <meta-data android:name="android.view.im" android:resource="@xml/method" />
         </service>
 
-        <activity android:name="Main" android:label="Hacker's Keyboard" android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-
         <activity android:name="LatinIMESettings" android:label="@string/english_ime_settings" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -97,8 +90,7 @@
                 android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-                <action android:name="org.pocketworkstation.pckeyboard.MATERIAL_MAIN"/>
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 </application>
