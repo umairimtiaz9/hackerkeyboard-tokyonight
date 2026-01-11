@@ -618,6 +618,8 @@
     <string name="main_setup_get_dicts">More</string>
     <string name="main_setup_input_lang">Input languages</string>
     <string name="main_setup_settings">Settings</string>
+    <string name="main_setup_material_settings">New Settings</string>
+    <string name="material_main_description"><![CDATA[<b>Hacker\'s Keyboard</b> provides a full 5-row keyboard with arrow keys, Ctrl, Alt, and other keys typically found on desktop keyboards. Perfect for terminal emulators, SSH clients, and programming on the go.<br/><br/>For more information, visit the project page or report issues on GitHub.]]></string>
     <string name="main_setup_test">Test</string>
     <string name="main_body"><Data>
       <![CDATA["
@@ -666,4 +668,12 @@
     <!-- Modern Compose Settings -->
     <string name="modern_settings_title">Modern Settings (Beta)</string>
     <string name="modern_settings_summary">Open the new Material 3 settings interface with Tokyo Night themes</string>
+
+    <!-- About Section -->
+    <string name="about_title">About</string>
+    <string name="about_description">Hacker\'s Keyboard is a free, open-source keyboard designed for power users. It features a full 5-row layout with arrow keys, Ctrl, Alt, Esc, and function keys - everything you need for terminal work, SSH sessions, and coding on the go.</string>
+    <string name="about_github_title">View on GitHub</string>
+    <string name="about_github_subtitle">Star, fork, or contribute to the project</string>
+    <string name="about_license">Licensed under Apache License 2.0</string>
+    <string name="about_github_url" translatable="false">https://github.com/umairimtiaz9/hackerkeyboard-tokyonight</string>
 </resources>

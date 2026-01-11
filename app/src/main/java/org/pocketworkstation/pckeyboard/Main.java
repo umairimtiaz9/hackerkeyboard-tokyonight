@@ -94,6 +94,13 @@ public class Main extends AppCompatActivity {
                 startActivityForResult(new Intent(that, LatinIMESettings.class), 0);
             }
         });
-    }    
+
+        final Button materialMainBtn = (Button) findViewById(R.id.main_setup_btn_material_main);
+        materialMainBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(Main.this, MaterialMainActivity.class));
+            }
+        });
+    }
 }
 

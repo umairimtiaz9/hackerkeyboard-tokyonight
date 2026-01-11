@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Material 3 Welcome Page] - 2026-01-11
+
+### Added
+- **Material 3 Welcome Activity**: Implemented a modern, theme-aware welcome/setup page as an alternative to the legacy Main activity.
+    - **Setup Card**: Step-by-step setup with numbered indicators for enabling keyboard and setting input method.
+    - **Customize Card**: Quick access to the Material 3 Settings activity.
+    - **Test Keyboard Card**: Built-in text field for testing keyboard functionality.
+    - **About Card**: Project information with description, GitHub link, and license info.
+- **GitHub Integration**: Clickable link to the project repository (https://github.com/umairimtiaz9/hackerkeyboard-tokyonight).
+- **Decorative Tokyo Night Pink Lines**: Three beautiful horizontal accent lines below the About section with graduated opacity (100%, 70%, 40%).
+- **Vector Icons**: Added `ic_github.xml` and `ic_open_in_new.xml` for the About section.
+- **Legacy UI Bridge**: Added "New Settings" button to the legacy Main activity to launch the new Material 3 welcome page.
+
+### Changed
+- **Theme Support**: Welcome page supports all 4 Tokyo Night variants (Storm, Night, Moon, Day) with instant theme switching.
+- **String Resources**: Added about_title, about_description, about_github_title, about_github_subtitle, about_license, and about_github_url.
+
+---
+
 ## [Material 3 Settings UI] - 2026-01-11
 
 ### Added

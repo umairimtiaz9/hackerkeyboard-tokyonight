@@ -91,5 +91,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity android:name="MaterialMainActivity"
+                android:label="@string/english_ime_name"
+                android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="org.pocketworkstation.pckeyboard.MATERIAL_MAIN"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 </application>
 </manifest>

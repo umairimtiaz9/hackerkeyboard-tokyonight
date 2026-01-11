@@ -94,6 +94,9 @@
     <color name="tn_day_pressed">@color/tn_day_bg_highlight</color>
     <color name="tn_day_accent">@color/tn_day_magenta</color>
 
+    <!-- Tokyo Night Pink (for UI accents) -->
+    <color name="tokyonight_pink">#f7768e</color>
+
     <color name="candidate_normal">#00000000</color>
     <color name="candidate_recommended">@color/tn_storm_fg</color>
     <color name="candidate_other">@color/tn_storm_fg</color>
