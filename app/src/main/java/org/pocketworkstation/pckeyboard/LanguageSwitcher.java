@@ -16,7 +16,9 @@
 
 package org.pocketworkstation.pckeyboard;
 
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -31,6 +33,21 @@ import android.util.Log;
 public class LanguageSwitcher {
 
     private static final String TAG = "HK/LanguageSwitcher";
+
+    public static final Set<String> NOCAPS_LANGUAGES = new HashSet<String>();
+    public static final Set<String> NODEADKEY_LANGUAGES = new HashSet<String>();
+    public static final Set<String> NOAUTOSPACE_LANGUAGES = new HashSet<String>();
+    static {
+        NOCAPS_LANGUAGES.add("ar");
+        NOCAPS_LANGUAGES.add("iw");
+        NOCAPS_LANGUAGES.add("th");
+
+        NODEADKEY_LANGUAGES.add("ar");
+        NODEADKEY_LANGUAGES.add("iw");
+        NODEADKEY_LANGUAGES.add("th");
+
+        NOAUTOSPACE_LANGUAGES.add("th");
+    }
     private Locale[] mLocales;
     private LatinIME mIme;
     private String[] mSelectedLanguageArray;
@@ -119,19 +136,19 @@ public class LanguageSwitcher {
     public boolean allowAutoCap() {
         String lang = getInputLanguage();
         if (lang.length() > 2) lang = lang.substring(0, 2);
-        return !InputLanguageSelection.NOCAPS_LANGUAGES.contains(lang);
+        return !NOCAPS_LANGUAGES.contains(lang);
     }
     
     public boolean allowDeadKeys() {
         String lang = getInputLanguage();
         if (lang.length() > 2) lang = lang.substring(0, 2);
-        return !InputLanguageSelection.NODEADKEY_LANGUAGES.contains(lang);        
+        return !NODEADKEY_LANGUAGES.contains(lang);        
     }
     
     public boolean allowAutoSpace() {
         String lang = getInputLanguage();
         if (lang.length() > 2) lang = lang.substring(0, 2);
-        return !InputLanguageSelection.NOAUTOSPACE_LANGUAGES.contains(lang);                
+        return !NOAUTOSPACE_LANGUAGES.contains(lang);                
     }
     
     /**

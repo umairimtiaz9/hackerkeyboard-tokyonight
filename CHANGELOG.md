@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Material 3 Welcome Page] - 2026-01-11
+## [Material 3 Welcome Page] - 2026-01-12
 
 ### Added
 - **Material 3 Welcome Activity**: Implemented a modern, theme-aware welcome/setup page as an alternative to the legacy Main activity.
@@ -13,11 +13,23 @@ All notable changes to this project will be documented in this file.
 - **GitHub Integration**: Clickable link to the project repository (https://github.com/umairimtiaz9/hackerkeyboard-tokyonight).
 - **Decorative Tokyo Night Pink Lines**: Three beautiful horizontal accent lines below the About section with graduated opacity (100%, 70%, 40%).
 - **Vector Icons**: Added `ic_github.xml` and `ic_open_in_new.xml` for the About section.
-- **Legacy UI Bridge**: Added "New Settings" button to the legacy Main activity to launch the new Material 3 welcome page.
 
 ### Changed
 - **Theme Support**: Welcome page supports all 4 Tokyo Night variants (Storm, Night, Moon, Day) with instant theme switching.
 - **String Resources**: Added about_title, about_description, about_github_title, about_github_subtitle, about_license, and about_github_url.
+
+### Removed
+- **Legacy UI Purge**: Completely removed all legacy settings and welcome UI in favor of Material 3.
+    - Deleted `Main.java`, `main.xml` (legacy welcome page)
+    - Deleted `LatinIMESettings.java` (legacy settings activity)
+    - Deleted `InputLanguageSelection.java` (legacy language picker)
+    - Deleted `PrefScreenActions.java`, `PrefScreenView.java`, `PrefScreenFeedback.java` (legacy preference screens)
+    - Deleted `SettingsActivity.java`, `activity_settings.xml` (legacy settings container)
+- **Updated Settings Launch Points**: All keyboard settings now launch `MaterialSettingsActivity`:
+    - `LatinIME.launchSettings()` - keyboard settings key
+    - `NotificationReceiver` - notification settings action
+    - `method.xml` - Android system IME settings entry point
+- **Cleaned AndroidManifest**: Removed 5 legacy activity entries, keeping only Material 3 UI activities.
 
 ---
 

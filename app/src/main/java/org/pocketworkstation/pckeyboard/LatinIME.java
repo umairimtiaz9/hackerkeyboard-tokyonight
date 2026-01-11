@@ -3350,7 +3350,7 @@ public class LatinIME extends InputMethodService implements
     }
 
     protected void launchSettings() {
-        launchSettings(LatinIMESettings.class);
+        launchSettings(MaterialSettingsActivity.class);
     }
 
     protected void launchSettings(
