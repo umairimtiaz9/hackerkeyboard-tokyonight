@@ -81,5 +81,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity android:name="MaterialSettingsActivity"
+                android:label="Modern Settings"
+                android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="org.pocketworkstation.pckeyboard.MATERIAL_SETTINGS"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 </application>
 </manifest>

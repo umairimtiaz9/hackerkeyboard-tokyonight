@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Material 3 Settings UI] - 2026-01-11
+
+### Added
+- **Complete Material 3 Settings Activity**: Implemented a modern, theme-aware settings interface replacing the legacy PreferenceActivity.
+    - **Theme Selection**: Card-based theme picker with 6-color palette previews for Storm, Night, Moon, and Day variants.
+    - **Language Selection**: RecyclerView-based language picker with MaterialSwitch toggles.
+    - **Visual Appearance**: Sliders for keyboard height (portrait/landscape), label scale, suggestion scale, and 5th row height. MaterialButtonToggleGroup for keyboard mode (4-row, 5-row, 5-row full) and hint display mode.
+    - **Input Behavior**: Comprehensive settings for auto-capitalization, suggestions, auto-complete, recorrection, caps lock, shift lock modifiers, and more.
+    - **Gestures**: Dropdown menus for swipe actions (up/down/left/right) and volume key actions with 11 gesture options.
+    - **Feedback**: Sliders for vibration duration and volume with real-time value display.
+- **Modifier Key Code Settings**: Added Ctrl, Alt, and Meta key code dropdowns (None, Left, Right) in Input Behavior section.
+- **Theme-Specific Accent Colors**: RadioButton toggles use theme-appropriate colors (Storm=Green, Night=Blue, Moon=Pink, Day=Purple).
+- **Custom Dropdown Layout**: Created `item_dropdown.xml` for consistent Material 3 styled dropdown menus.
+- **Vector Tab Icons**: Added Material Design icons for all settings tabs (palette, language, visibility, keyboard, gesture, vibration).
+- **Color Preview Drawables**: Created rounded rectangle drawables for theme color previews.
+
+### Changed
+- **Day Theme Material 3 Colors**: Fixed color relationships - surface now lighter than background, using blue as primary color for better visibility.
+- **Day Theme Keyboard Style**: Changed `kbdColorMod` from `bg_dark` to `terminal_black` for better key differentiation.
+- **Dropdown Adapters**: Each dropdown now uses its own adapter instance to prevent sharing issues.
+- **MaterialButtonToggleGroup**: Added `selectionRequired="true"` to prevent visual deselection when clicking already-selected buttons.
+- **Info Cards**: Changed hardcoded `@color/tn_green` stroke to theme-aware `?attr/colorPrimary`.
+- **Loading Spinner**: Now uses theme-aware `colorPrimary` instead of hardcoded storm green.
+
+### Fixed
+- **Tick-in-Circle Indicator**: Removed checkmark icon from theme and language cards by setting `android:checkable="false"` and `app:checkedIcon="@null"`.
+- **Toggle Color Reset**: Fixed MaterialSwitch not resetting to default colors when toggled off - now properly uses ColorStateList with both checked and unchecked states.
+- **Card Stroke Reset**: Fixed card borders not resetting to theme's `colorOutline` when deselected.
+- **Storm Keyboard UI Colors**: Reverted accidentally changed Storm variant colors to original values.
+
 ## [Visual Modernization & Cleanup] - 2026-01-01
 
 ### Added

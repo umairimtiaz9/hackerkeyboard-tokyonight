@@ -19,6 +19,12 @@
         android:title="@string/english_ime_settings"
         android:key="english_ime_settings">
 
+    <PreferenceScreen
+            android:title="@string/modern_settings_title"
+            android:summary="@string/modern_settings_summary">
+        <intent android:action="org.pocketworkstation.pckeyboard.MATERIAL_SETTINGS"/>
+    </PreferenceScreen>
+
     <PreferenceCategory
             android:title="@string/title_keyboard_view_settings"
             android:key="graphics_settings">

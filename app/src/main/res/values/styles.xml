@@ -66,7 +66,7 @@
     <style name="Theme.TokyoNight.Day" parent="Theme.TokyoNight.Storm">
         <item name="kbdColorBase">@color/tn_day_bg</item>
         <item name="kbdColorAlpha">@color/tn_day_bg_dark</item>
-        <item name="kbdColorMod">@color/tn_day_bg_dark</item>
+        <item name="kbdColorMod">@color/tn_day_terminal_black</item>
         <item name="kbdColorHighlight">@color/tn_day_bg_highlight</item>
         <item name="kbdColorText">@color/tn_day_fg</item>
         <item name="kbdColorAccent">@color/tn_day_magenta</item>
@@ -106,5 +106,152 @@
     <style name="MiniKeyboardAnimation">
         <item name="android:windowEnterAnimation">@anim/popup_enter_modern</item>
         <item name="android:windowExitAnimation">@anim/mini_keyboard_fadeout</item>
+    </style>
+
+    <!-- ============================================== -->
+    <!-- MATERIAL 3 SETTINGS THEMES (TOKYO NIGHT)      -->
+    <!-- ============================================== -->
+
+    <!-- Base Material 3 Theme for Settings UI -->
+    <style name="Theme.HackerKeyboard.Material3" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+
+    <!-- Tokyo Night Storm (Default) -->
+    <style name="Theme.HackerKeyboard.Material3.Storm" parent="Theme.HackerKeyboard.Material3">
+        <item name="colorPrimary">@color/tn_storm_magenta</item>
+        <item name="colorOnPrimary">@color/tn_storm_bg</item>
+        <item name="colorPrimaryContainer">@color/tn_storm_bg_dark</item>
+        <item name="colorOnPrimaryContainer">@color/tn_storm_fg</item>
+
+        <item name="colorSecondary">@color/tn_storm_cyan</item>
+        <item name="colorOnSecondary">@color/tn_storm_bg</item>
+        <item name="colorSecondaryContainer">@color/tn_storm_bg_dark</item>
+        <item name="colorOnSecondaryContainer">@color/tn_storm_fg</item>
+
+        <item name="colorTertiary">@color/tn_storm_blue</item>
+        <item name="colorOnTertiary">@color/tn_storm_bg</item>
+        <item name="colorTertiaryContainer">@color/tn_storm_bg_dark</item>
+        <item name="colorOnTertiaryContainer">@color/tn_storm_fg</item>
+
+        <item name="colorError">@color/tn_storm_red</item>
+        <item name="colorOnError">@color/tn_storm_bg</item>
+        <item name="colorErrorContainer">@color/tn_storm_bg_dark</item>
+        <item name="colorOnErrorContainer">@color/tn_storm_red</item>
+
+        <item name="android:colorBackground">@color/tn_storm_bg</item>
+        <item name="colorOnBackground">@color/tn_storm_fg</item>
+        <item name="colorSurface">@color/tn_storm_bg_dark</item>
+        <item name="colorOnSurface">@color/tn_storm_fg</item>
+        <item name="colorSurfaceVariant">@color/tn_storm_terminal_black</item>
+        <item name="colorOnSurfaceVariant">@color/tn_storm_fg_dark</item>
+
+        <item name="colorOutline">@color/tn_storm_fg_gutter</item>
+        <item name="colorOutlineVariant">@color/tn_storm_bg_highlight</item>
+    </style>
+
+    <!-- Tokyo Night Night -->
+    <style name="Theme.HackerKeyboard.Material3.Night" parent="Theme.HackerKeyboard.Material3">
+        <item name="colorPrimary">@color/tn_night_magenta</item>
+        <item name="colorOnPrimary">@color/tn_night_bg</item>
+        <item name="colorPrimaryContainer">@color/tn_night_bg_dark</item>
+        <item name="colorOnPrimaryContainer">@color/tn_night_fg</item>
+
+        <item name="colorSecondary">@color/tn_night_cyan</item>
+        <item name="colorOnSecondary">@color/tn_night_bg</item>
+        <item name="colorSecondaryContainer">@color/tn_night_bg_dark</item>
+        <item name="colorOnSecondaryContainer">@color/tn_night_fg</item>
+
+        <item name="colorTertiary">@color/tn_night_blue</item>
+        <item name="colorOnTertiary">@color/tn_night_bg</item>
+        <item name="colorTertiaryContainer">@color/tn_night_bg_dark</item>
+        <item name="colorOnTertiaryContainer">@color/tn_night_fg</item>
+
+        <item name="colorError">@color/tn_night_red</item>
+        <item name="colorOnError">@color/tn_night_bg</item>
+        <item name="colorErrorContainer">@color/tn_night_bg_dark</item>
+        <item name="colorOnErrorContainer">@color/tn_night_red</item>
+
+        <item name="android:colorBackground">@color/tn_night_bg</item>
+        <item name="colorOnBackground">@color/tn_night_fg</item>
+        <item name="colorSurface">@color/tn_night_bg_dark</item>
+        <item name="colorOnSurface">@color/tn_night_fg</item>
+        <item name="colorSurfaceVariant">@color/tn_night_bg_dark</item>
+        <item name="colorOnSurfaceVariant">@color/tn_night_fg_dark</item>
+
+        <item name="colorOutline">@color/tn_night_fg_gutter</item>
+        <item name="colorOutlineVariant">@color/tn_night_bg_highlight</item>
+    </style>
+
+    <!-- Tokyo Night Moon -->
+    <style name="Theme.HackerKeyboard.Material3.Moon" parent="Theme.HackerKeyboard.Material3">
+        <item name="colorPrimary">@color/tn_moon_magenta</item>
+        <item name="colorOnPrimary">@color/tn_moon_bg</item>
+        <item name="colorPrimaryContainer">@color/tn_moon_bg_dark</item>
+        <item name="colorOnPrimaryContainer">@color/tn_moon_fg</item>
+
+        <item name="colorSecondary">@color/tn_moon_cyan</item>
+        <item name="colorOnSecondary">@color/tn_moon_bg</item>
+        <item name="colorSecondaryContainer">@color/tn_moon_bg_dark</item>
+        <item name="colorOnSecondaryContainer">@color/tn_moon_fg</item>
+
+        <item name="colorTertiary">@color/tn_moon_blue</item>
+        <item name="colorOnTertiary">@color/tn_moon_bg</item>
+        <item name="colorTertiaryContainer">@color/tn_moon_bg_dark</item>
+        <item name="colorOnTertiaryContainer">@color/tn_moon_fg</item>
+
+        <item name="colorError">@color/tn_moon_red</item>
+        <item name="colorOnError">@color/tn_moon_bg</item>
+        <item name="colorErrorContainer">@color/tn_moon_bg_dark</item>
+        <item name="colorOnErrorContainer">@color/tn_moon_red</item>
+
+        <item name="android:colorBackground">@color/tn_moon_bg</item>
+        <item name="colorOnBackground">@color/tn_moon_fg</item>
+        <item name="colorSurface">@color/tn_moon_bg_dark</item>
+        <item name="colorOnSurface">@color/tn_moon_fg</item>
+        <item name="colorSurfaceVariant">@color/tn_moon_bg_dark</item>
+        <item name="colorOnSurfaceVariant">@color/tn_moon_fg_dark</item>
+
+        <item name="colorOutline">@color/tn_moon_fg_gutter</item>
+        <item name="colorOutlineVariant">@color/tn_moon_bg_highlight</item>
+    </style>
+
+    <!-- Tokyo Night Day -->
+    <style name="Theme.HackerKeyboard.Material3.Day" parent="Theme.HackerKeyboard.Material3">
+        <item name="colorPrimary">@color/tn_day_blue</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">@color/tn_day_bg_highlight</item>
+        <item name="colorOnPrimaryContainer">@color/tn_day_blue</item>
+
+        <item name="colorSecondary">@color/tn_day_cyan</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSecondaryContainer">@color/tn_day_bg_highlight</item>
+        <item name="colorOnSecondaryContainer">@color/tn_day_cyan</item>
+
+        <item name="colorTertiary">@color/tn_day_magenta</item>
+        <item name="colorOnTertiary">#FFFFFF</item>
+        <item name="colorTertiaryContainer">@color/tn_day_bg_highlight</item>
+        <item name="colorOnTertiaryContainer">@color/tn_day_magenta</item>
+
+        <item name="colorError">@color/tn_day_red</item>
+        <item name="colorOnError">#FFFFFF</item>
+        <item name="colorErrorContainer">@color/tn_day_bg_highlight</item>
+        <item name="colorOnErrorContainer">@color/tn_day_red</item>
+
+        <item name="android:colorBackground">@color/tn_day_bg_dark</item>
+        <item name="colorOnBackground">@color/tn_day_fg</item>
+        <item name="colorSurface">@color/tn_day_bg</item>
+        <item name="colorOnSurface">@color/tn_day_fg</item>
+        <item name="colorSurfaceVariant">@color/tn_day_bg_highlight</item>
+        <item name="colorOnSurfaceVariant">@color/tn_day_fg_dark</item>
+
+        <item name="colorOutline">@color/tn_day_terminal_black</item>
+        <item name="colorOutlineVariant">@color/tn_day_bg_highlight</item>
+
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 </resources>

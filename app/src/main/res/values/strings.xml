@@ -662,4 +662,8 @@
     <string name="notification_channel_name">Hacker\'s Keyboard</string>
     <string name="notification_channel_description">Hacker\'s Keyboard</string>
     <string name="notification_action_settings">Settings</string>
+
+    <!-- Modern Compose Settings -->
+    <string name="modern_settings_title">Modern Settings (Beta)</string>
+    <string name="modern_settings_summary">Open the new Material 3 settings interface with Tokyo Night themes</string>
 </resources>
