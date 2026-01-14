@@ -64,4 +64,7 @@ We welcome contributions that respect the "power user" soul of Hacker's Keyboard
 *Based on the original work by Klaus Weidner.*
 [Changelog](CHANGELOG.md) | [History](https://github.com/klausw/hackerskeyboard)
 
+<br>
+<img src="https://img.shields.io/badge/Pair%20Programmed%20with-Amp-purple?style=flat-square&logo=openai" alt="Pair Programmed with Amp">
+
 </div>
