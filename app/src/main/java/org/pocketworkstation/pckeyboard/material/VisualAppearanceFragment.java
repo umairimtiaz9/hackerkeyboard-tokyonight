@@ -28,6 +28,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.app.Activity;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import java.io.File;
+import java.io.InputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.materialswitch.MaterialSwitch;
@@ -67,6 +77,29 @@ public class VisualAppearanceFragment extends Fragment {
     // Hint Mode Toggle Group
     private MaterialButtonToggleGroup hintModeGroup;
 
+    // Font Toggle Group
+    private MaterialButtonToggleGroup keyboardFontGroup;
+    private TextView customFontStatus;
+    private ActivityResultLauncher<Intent> filePickerLauncher;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        filePickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                        Uri uri = result.getData().getData();
+                        if (uri != null) {
+                            copyCustomFont(uri);
+                        }
+                    } else {
+                        // User cancelled, revert to stored preference
+                        loadPreferences();
+                    }
+                });
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -105,6 +138,10 @@ public class VisualAppearanceFragment extends Fragment {
 
             // Initialize hint mode toggle group
             hintModeGroup = view.findViewById(R.id.hint_mode_group);
+
+            // Initialize font toggle group
+            keyboardFontGroup = view.findViewById(R.id.keyboard_font_group);
+            customFontStatus = view.findViewById(R.id.custom_font_status);
 
             // Load current values
             loadPreferences();
@@ -237,6 +274,18 @@ public class VisualAppearanceFragment extends Fragment {
                 selectHintMode(1); // Default to On
             }
         }
+
+        // Load font mode (0=Code, 1=Mono, 2=Sans, 3=Serif)
+        if (keyboardFontGroup != null) {
+            try {
+                String fontStr = prefs.getString("pref_keyboard_font", "0");
+                int fontMode = Integer.parseInt(fontStr);
+                selectFontMode(fontMode);
+            } catch (Exception e) {
+                e.printStackTrace();
+                selectFontMode(0); // Default to Code
+            }
+        }
     }
 
     private void selectKeyboardModePortrait(int mode) {
@@ -284,6 +333,72 @@ public class VisualAppearanceFragment extends Fragment {
             case 2: // Preview
                 hintModeGroup.check(R.id.hint_mode_preview);
                 break;
+        }
+    }
+
+    private void selectFontMode(int mode) {
+        if (keyboardFontGroup == null) return;
+        keyboardFontGroup.clearChecked();
+        switch (mode) {
+            case 0: // Code (Default)
+                keyboardFontGroup.check(R.id.font_code);
+                break;
+            case 4: // Custom
+                keyboardFontGroup.check(R.id.font_custom);
+                break;
+            default: // Fallback for removed options or errors
+                keyboardFontGroup.check(R.id.font_code);
+                break;
+        }
+        
+        if (mode == 4) {
+            updateCustomFontStatus(true);
+        } else {
+            if (customFontStatus != null) customFontStatus.setVisibility(View.GONE);
+        }
+    }
+
+    private void copyCustomFont(Uri uri) {
+        try {
+            InputStream is = requireContext().getContentResolver().openInputStream(uri);
+            File outFile = new File(requireContext().getFilesDir(), "custom_font.ttf");
+            FileOutputStream fos = new FileOutputStream(outFile);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = is.read(buffer)) > 0) {
+                fos.write(buffer, 0, length);
+            }
+            fos.close();
+            is.close();
+            
+            // Persist the custom selection only after successful copy
+            prefs.edit().putString("pref_keyboard_font", "4").apply();
+            updateCustomFontStatus(true);
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            updateCustomFontStatus(false);
+            prefs.edit().putString("pref_keyboard_font", "0").apply(); // Revert to Code
+            loadPreferences();
+        }
+    }
+    
+    private void updateCustomFontStatus(boolean success) {
+        if (customFontStatus == null) return;
+        customFontStatus.setVisibility(View.VISIBLE);
+        if (success) {
+            File fontFile = new File(requireContext().getFilesDir(), "custom_font.ttf");
+            if (fontFile.exists()) {
+                customFontStatus.setText("Custom font loaded (" + (fontFile.length() / 1024) + " KB)");
+                // We don't have easy access to theme colors here without context compat, so just use default text color
+                // or try to set error color only on failure
+                customFontStatus.setTextColor(customFontStatus.getTextColors().getDefaultColor()); 
+            } else {
+                customFontStatus.setText("Custom font selected but file missing");
+            }
+        } else {
+            customFontStatus.setText("Failed to load font file");
+            customFontStatus.setTextColor(0xFFFF0000); // Red
         }
     }
 
@@ -413,6 +528,28 @@ public class VisualAppearanceFragment extends Fragment {
                         mode = 2;
                     }
                     prefs.edit().putString("pref_hint_mode", String.valueOf(mode)).apply();
+                }
+            });
+        }
+
+        // Font mode toggle group listener
+        if (keyboardFontGroup != null) {
+            keyboardFontGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+                if (isChecked) {
+                    int mode = 0; // Default to Code
+                    if (checkedId == R.id.font_code) {
+                        mode = 0;
+                    } else if (checkedId == R.id.font_custom) {
+                        mode = 4;
+                        // Launch file picker
+                        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                        intent.addCategory(Intent.CATEGORY_OPENABLE);
+                        intent.setType("*/*"); // Accept all, user must pick ttf/otf
+                        filePickerLauncher.launch(intent);
+                        return; // Don't save pref yet, wait for result
+                    }
+                    prefs.edit().putString("pref_keyboard_font", String.valueOf(mode)).apply();
+                    if (customFontStatus != null) customFontStatus.setVisibility(View.GONE);
                 }
             });
         }

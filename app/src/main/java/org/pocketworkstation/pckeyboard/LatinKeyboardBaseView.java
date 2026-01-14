@@ -18,7 +18,10 @@ package org.pocketworkstation.pckeyboard;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
+import androidx.preference.PreferenceManager;
 import android.content.res.Resources;
+import java.io.File;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BlurMaskFilter;
@@ -176,6 +179,9 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
     // Miscellaneous constants
     /* package */ static final int NOT_A_KEY = -1;
     private static final int NUMBER_HINT_VERTICAL_ADJUSTMENT_PIXEL = -1;
+    
+    private static Typeface sCustomTypeface;
+    private static int sCurrentFontMode = -1;
 
     // XML attribute
     private float mKeyTextSize;
@@ -295,11 +301,6 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
     private final ColorMatrixColorFilter mInvertingColorFilter = new ColorMatrixColorFilter(INVERTING_MATRIX);
 
     private final UIHandler mHandler = new UIHandler();
-    public static Typeface sCustomTypeface = null;
-
-    public static Typeface getCustomTypeface() {
-        return sCustomTypeface != null ? sCustomTypeface : Typeface.MONOSPACE;
-    }
 
     class UIHandler extends Handler {
         private static final int MSG_POPUP_PREVIEW = 1;
@@ -488,13 +489,35 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
     public LatinKeyboardBaseView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        if (sCustomTypeface == null) {
+        // Load font preference
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String fontPref = prefs.getString("pref_keyboard_font", "0");
+        int fontMode = 0;
+        try {
+            fontMode = Integer.parseInt(fontPref);
+        } catch (NumberFormatException e) { }
+
+        // Load typeface based on preference
+        if (sCustomTypeface == null || sCurrentFontMode != fontMode) {
             try {
-                sCustomTypeface = Typeface.createFromAsset(context.getAssets(), "fonts/GoogleSansCode-Regular.ttf");
+                switch (fontMode) {
+                    case 4: // Custom
+                        File customFont = new File(context.getFilesDir(), "custom_font.ttf");
+                        if (customFont.exists()) {
+                            sCustomTypeface = Typeface.createFromFile(customFont);
+                        } else {
+                            sCustomTypeface = Typeface.MONOSPACE; // Fallback
+                        }
+                        break;
+                    case 0: default: 
+                        sCustomTypeface = Typeface.createFromAsset(context.getAssets(), "fonts/GoogleSansCode-Regular.ttf");
+                        break;
+                }
             } catch (Exception e) {
                 Log.e(TAG, "Could not load custom font", e);
                 sCustomTypeface = Typeface.MONOSPACE;
             }
+            sCurrentFontMode = fontMode;
         }
 
         if (!isInEditMode())

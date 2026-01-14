@@ -28,6 +28,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import org.pocketworkstation.pckeyboard.material.settings.SettingsDefinitions;
+
 import java.lang.ref.SoftReference;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -738,6 +740,8 @@ public class KeyboardSwitcher implements
                     .getString(key, DEFAULT_LAYOUT_ID)), true);
         } else if (PREF_SETTINGS_KEY.equals(key)) {
             updateSettingsKeyState(sharedPreferences);
+            recreateInputView();
+        } else if (SettingsDefinitions.KEY_KEYBOARD_FONT.equals(key)) {
             recreateInputView();
         }
     }

@@ -49,6 +49,7 @@ public final class SettingsDefinitions {
     public static final String KEY_LABEL_SCALE = "pref_label_scale_v2";
     public static final String KEY_TOP_ROW_SCALE = "pref_top_row_scale";
     public static final String KEY_RENDER_MODE = "pref_render_mode";
+    public static final String KEY_KEYBOARD_FONT = "pref_keyboard_font";
 
     // Feedback
     public static final String KEY_VIBRATE_ON = "vibrate_on";
