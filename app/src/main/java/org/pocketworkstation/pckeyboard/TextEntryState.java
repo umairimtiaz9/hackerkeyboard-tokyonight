@@ -34,17 +34,9 @@ public class TextEntryState {
     private static boolean LOGGING = false;
 
     private static int sBackspaceCount = 0;
-    
-    private static int sAutoSuggestCount = 0;
-    
-    private static int sAutoSuggestUndoneCount = 0;
-    
-    private static int sManualSuggestCount = 0;
-    
-    private static int sWordNotInDictionaryCount = 0;
-    
+
     private static int sSessionCount = 0;
-    
+
     private static int sTypedChars;
 
     private static int sActualChars;
@@ -53,15 +45,7 @@ public class TextEntryState {
         UNKNOWN,
         START,
         IN_WORD,
-        ACCEPTED_DEFAULT,
-        PICKED_SUGGESTION,
-        PUNCTUATION_AFTER_WORD,
-        PUNCTUATION_AFTER_ACCEPTED,
-        SPACE_AFTER_ACCEPTED,
-        SPACE_AFTER_PICKED,
-        UNDO_COMMIT,
-        CORRECTING,
-        PICKED_CORRECTION;
+        PUNCTUATION_AFTER_WORD;
     }
 
     private static State sState = State.UNKNOWN;
@@ -71,15 +55,11 @@ public class TextEntryState {
     
     public static void newSession(Context context) {
         sSessionCount++;
-        sAutoSuggestCount = 0;
         sBackspaceCount = 0;
-        sAutoSuggestUndoneCount = 0;
-        sManualSuggestCount = 0;
-        sWordNotInDictionaryCount = 0;
         sTypedChars = 0;
         sActualChars = 0;
         sState = State.START;
-        
+
         if (LOGGING) {
             try {
                 sKeyLocationFile = context.openFileOutput("key.txt", Context.MODE_APPEND);
@@ -89,22 +69,18 @@ public class TextEntryState {
             }
         }
     }
-    
+
     public static void endSession() {
         if (sKeyLocationFile == null) {
             return;
         }
         try {
             sKeyLocationFile.close();
-            // Write to log file            
+            // Write to log file
             // Write timestamp, settings,
             String out = DateFormat.format("MM:dd hh:mm:ss", Calendar.getInstance().getTime())
                     .toString()
                     + " BS: " + sBackspaceCount
-                    + " auto: " + sAutoSuggestCount
-                    + " manual: " + sManualSuggestCount
-                    + " typed: " + sWordNotInDictionaryCount
-                    + " undone: " + sAutoSuggestUndoneCount
                     + " saved: " + ((float) (sActualChars - sTypedChars) / sActualChars)
                     + "\n";
             sUserActionFile.write(out.getBytes());
@@ -112,34 +88,14 @@ public class TextEntryState {
             sKeyLocationFile = null;
             sUserActionFile = null;
         } catch (IOException ioe) {
-            
+
         }
     }
     
     public static void acceptedDefault(CharSequence typedWord, CharSequence actualWord) {
-        if (typedWord == null) return;
-        if (!typedWord.equals(actualWord)) {
-            sAutoSuggestCount++;
-        }
-        sTypedChars += typedWord.length();
-        sActualChars += actualWord.length();
-        sState = State.ACCEPTED_DEFAULT;
-        displayState();
     }
 
-    // State.ACCEPTED_DEFAULT will be changed to other sub-states
-    // (see "case ACCEPTED_DEFAULT" in typedCharacter() below),
-    // and should be restored back to State.ACCEPTED_DEFAULT after processing for each sub-state.
     public static void backToAcceptedDefault(CharSequence typedWord) {
-        if (typedWord == null) return;
-        switch (sState) {
-            case SPACE_AFTER_ACCEPTED:
-            case PUNCTUATION_AFTER_ACCEPTED:
-            case IN_WORD:
-                sState = State.ACCEPTED_DEFAULT;
-                break;
-        }
-        displayState();
     }
 
     public static void manualTyped(CharSequence typedWord) {
@@ -148,28 +104,9 @@ public class TextEntryState {
     }
 
     public static void acceptedTyped(CharSequence typedWord) {
-        sWordNotInDictionaryCount++;
-        sState = State.PICKED_SUGGESTION;
-        displayState();
-    }
-
-    public static void acceptedSuggestion(CharSequence typedWord, CharSequence actualWord) {
-        sManualSuggestCount++;
-        State oldState = sState;
-        if (typedWord.equals(actualWord)) {
-            acceptedTyped(typedWord);
-        }
-        if (oldState == State.CORRECTING || oldState == State.PICKED_CORRECTION) {
-            sState = State.PICKED_CORRECTION;
-        } else {
-            sState = State.PICKED_SUGGESTION;
-        }
-        displayState();
     }
 
     public static void selectedForCorrection() {
-        sState = State.CORRECTING;
-        displayState();
     }
 
     public static void typedCharacter(char c, boolean isSeparator) {
@@ -178,35 +115,10 @@ public class TextEntryState {
             case IN_WORD:
                 if (isSpace || isSeparator) {
                     sState = State.START;
-                } else {
-                    // State hasn't changed.
-                }
-                break;
-            case ACCEPTED_DEFAULT:
-            case SPACE_AFTER_PICKED:
-                if (isSpace) {
-                    sState = State.SPACE_AFTER_ACCEPTED;
-                } else if (isSeparator) {
-                    sState = State.PUNCTUATION_AFTER_ACCEPTED;
-                } else {
-                    sState = State.IN_WORD;
-                }
-                break;
-            case PICKED_SUGGESTION:
-            case PICKED_CORRECTION:
-                if (isSpace) {
-                    sState = State.SPACE_AFTER_PICKED;
-                } else if (isSeparator) {
-                    // Swap 
-                    sState = State.PUNCTUATION_AFTER_ACCEPTED;
-                } else {
-                    sState = State.IN_WORD;
                 }
                 break;
             case START:
             case UNKNOWN:
-            case SPACE_AFTER_ACCEPTED:
-            case PUNCTUATION_AFTER_ACCEPTED:
             case PUNCTUATION_AFTER_WORD:
                 if (!isSpace && !isSeparator) {
                     sState = State.IN_WORD;
@@ -214,27 +126,11 @@ public class TextEntryState {
                     sState = State.START;
                 }
                 break;
-            case UNDO_COMMIT:
-                if (isSpace || isSeparator) {
-                    sState = State.ACCEPTED_DEFAULT;
-                } else {
-                    sState = State.IN_WORD;
-                }
-                break;
-            case CORRECTING:
-                sState = State.START;
-                break;
         }
         displayState();
     }
-    
+
     public static void backspace() {
-        if (sState == State.ACCEPTED_DEFAULT) {
-            sState = State.UNDO_COMMIT;
-            sAutoSuggestUndoneCount++;
-        } else if (sState == State.UNDO_COMMIT) {
-            sState = State.IN_WORD;
-        }
         sBackspaceCount++;
         displayState();
     }
@@ -252,7 +148,7 @@ public class TextEntryState {
     }
 
     public static boolean isCorrecting() {
-        return sState == State.CORRECTING || sState == State.PICKED_CORRECTION;
+        return false;
     }
 
     public static void keyPressedAt(Key key, int x, int y) {

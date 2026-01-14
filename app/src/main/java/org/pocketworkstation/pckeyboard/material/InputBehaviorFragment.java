@@ -44,13 +44,8 @@ public class InputBehaviorFragment extends Fragment {
 
     // Switches
     private MaterialSwitch autoCapSwitch;
-    private MaterialSwitch quickFixesSwitch;
-    private MaterialSwitch showSuggestionsSwitch;
-    private MaterialSwitch autoCompleteSwitch;
-    private MaterialSwitch recorrectionSwitch;
     private MaterialSwitch connectbotTabSwitch;
     private MaterialSwitch fullKeyboardPortraitSwitch;
-    private MaterialSwitch suggestionsLandscapeSwitch;
     private MaterialSwitch capsLockSwitch;
     private MaterialSwitch shiftLockModifiersSwitch;
     private MaterialSwitch fullscreenOverrideSwitch;
@@ -138,13 +133,8 @@ public class InputBehaviorFragment extends Fragment {
         try {
             // Initialize switches
             autoCapSwitch = view.findViewById(R.id.auto_cap_switch);
-            quickFixesSwitch = view.findViewById(R.id.quick_fixes_switch);
-            showSuggestionsSwitch = view.findViewById(R.id.show_suggestions_switch);
-            autoCompleteSwitch = view.findViewById(R.id.auto_complete_switch);
-            recorrectionSwitch = view.findViewById(R.id.recorrection_switch);
             connectbotTabSwitch = view.findViewById(R.id.connectbot_tab_switch);
             fullKeyboardPortraitSwitch = view.findViewById(R.id.full_keyboard_portrait_switch);
-            suggestionsLandscapeSwitch = view.findViewById(R.id.suggestions_landscape_switch);
             capsLockSwitch = view.findViewById(R.id.caps_lock_switch);
             shiftLockModifiersSwitch = view.findViewById(R.id.shift_lock_modifiers_switch);
             fullscreenOverrideSwitch = view.findViewById(R.id.fullscreen_override_switch);
@@ -178,17 +168,8 @@ public class InputBehaviorFragment extends Fragment {
 
     private void loadPreferences() {
         if (autoCapSwitch != null) autoCapSwitch.setChecked(prefs.getBoolean("auto_cap", true));
-        if (quickFixesSwitch != null) quickFixesSwitch.setChecked(prefs.getBoolean("quick_fixes", true));
-        if (showSuggestionsSwitch != null) showSuggestionsSwitch.setChecked(prefs.getBoolean("show_suggestions", true));
-        if (autoCompleteSwitch != null) {
-            autoCompleteSwitch.setChecked(prefs.getBoolean("auto_complete", true));
-            // auto_complete depends on show_suggestions
-            updateAutoCompleteDependency();
-        }
-        if (recorrectionSwitch != null) recorrectionSwitch.setChecked(prefs.getBoolean("recorrection_enabled", true));
         if (connectbotTabSwitch != null) connectbotTabSwitch.setChecked(prefs.getBoolean("connectbot_tab_hack", false));
         if (fullKeyboardPortraitSwitch != null) fullKeyboardPortraitSwitch.setChecked(prefs.getBoolean("full_keyboard_in_portrait", false));
-        if (suggestionsLandscapeSwitch != null) suggestionsLandscapeSwitch.setChecked(prefs.getBoolean("suggestions_in_landscape", true));
         if (capsLockSwitch != null) capsLockSwitch.setChecked(prefs.getBoolean("pref_caps_lock", true));
         if (shiftLockModifiersSwitch != null) shiftLockModifiersSwitch.setChecked(prefs.getBoolean("pref_shift_lock_modifiers", false));
         if (fullscreenOverrideSwitch != null) fullscreenOverrideSwitch.setChecked(prefs.getBoolean("fullscreen_override", false));
@@ -319,44 +300,10 @@ public class InputBehaviorFragment extends Fragment {
         return values[0];
     }
 
-    /**
-     * Update auto_complete switch state based on show_suggestions dependency.
-     */
-    private void updateAutoCompleteDependency() {
-        if (autoCompleteSwitch != null && showSuggestionsSwitch != null) {
-            boolean suggestionsEnabled = showSuggestionsSwitch.isChecked();
-            autoCompleteSwitch.setEnabled(suggestionsEnabled);
-            autoCompleteSwitch.setAlpha(suggestionsEnabled ? 1.0f : 0.4f);
-        }
-    }
-
     private void setupListeners() {
         if (autoCapSwitch != null) {
             autoCapSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
                     prefs.edit().putBoolean("auto_cap", isChecked).apply());
-        }
-
-        if (quickFixesSwitch != null) {
-            quickFixesSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
-                    prefs.edit().putBoolean("quick_fixes", isChecked).apply());
-        }
-
-        if (showSuggestionsSwitch != null) {
-            showSuggestionsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                prefs.edit().putBoolean("show_suggestions", isChecked).apply();
-                // Update auto_complete dependency state
-                updateAutoCompleteDependency();
-            });
-        }
-
-        if (autoCompleteSwitch != null) {
-            autoCompleteSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
-                    prefs.edit().putBoolean("auto_complete", isChecked).apply());
-        }
-
-        if (recorrectionSwitch != null) {
-            recorrectionSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
-                    prefs.edit().putBoolean("recorrection_enabled", isChecked).apply());
         }
 
         if (connectbotTabSwitch != null) {
@@ -367,11 +314,6 @@ public class InputBehaviorFragment extends Fragment {
         if (fullKeyboardPortraitSwitch != null) {
             fullKeyboardPortraitSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
                     prefs.edit().putBoolean("full_keyboard_in_portrait", isChecked).apply());
-        }
-
-        if (suggestionsLandscapeSwitch != null) {
-            suggestionsLandscapeSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
-                    prefs.edit().putBoolean("suggestions_in_landscape", isChecked).apply());
         }
 
         if (capsLockSwitch != null) {

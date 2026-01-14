@@ -34,7 +34,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import org.pocketworkstation.pckeyboard.material.ThemeSelectionFragment;
-import org.pocketworkstation.pckeyboard.material.LanguageSelectionFragment;
 import org.pocketworkstation.pckeyboard.material.InputBehaviorFragment;
 import org.pocketworkstation.pckeyboard.material.VisualAppearanceFragment;
 import org.pocketworkstation.pckeyboard.material.FeedbackFragment;
@@ -49,7 +48,7 @@ public class MaterialSettingsActivity extends AppCompatActivity
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = "MaterialSettings";
-    private static final int NUM_PAGES = 6;
+    private static final int NUM_PAGES = 5;
 
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
@@ -95,22 +94,18 @@ public class MaterialSettingsActivity extends AppCompatActivity
                     tab.setIcon(R.drawable.ic_palette);
                     break;
                 case 1:
-                    tab.setText("Language");
-                    tab.setIcon(R.drawable.ic_language);
-                    break;
-                case 2:
                     tab.setText("Input");
                     tab.setIcon(R.drawable.ic_keyboard);
                     break;
-                case 3:
+                case 2:
                     tab.setText("Visual");
                     tab.setIcon(R.drawable.ic_visibility);
                     break;
-                case 4:
+                case 3:
                     tab.setText("Feedback");
                     tab.setIcon(R.drawable.ic_vibration);
                     break;
-                case 5:
+                case 4:
                     tab.setText("Gestures");
                     tab.setIcon(R.drawable.ic_gesture);
                     break;
@@ -215,14 +210,12 @@ public class MaterialSettingsActivity extends AppCompatActivity
                 case 0:
                     return new ThemeSelectionFragment();
                 case 1:
-                    return new LanguageSelectionFragment();
-                case 2:
                     return new InputBehaviorFragment();
-                case 3:
+                case 2:
                     return new VisualAppearanceFragment();
-                case 4:
+                case 3:
                     return new FeedbackFragment();
-                case 5:
+                case 4:
                     return new GesturesFragment();
                 default:
                     return new ThemeSelectionFragment();

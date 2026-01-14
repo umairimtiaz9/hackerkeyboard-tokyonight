@@ -32,15 +32,9 @@ public final class SettingsDefinitions {
 
     // Input Behavior
     public static final String KEY_AUTO_CAP = "auto_cap";
-    public static final String KEY_QUICK_FIXES = "quick_fixes";
-    public static final String KEY_SHOW_SUGGESTIONS = "show_suggestions";
-    public static final String KEY_AUTO_COMPLETE = "auto_complete";
-    public static final String KEY_RECORRECTION = "recorrection_enabled";
     public static final String KEY_CONNECTBOT_TAB = "connectbot_tab_hack";
-    public static final String KEY_SUGGESTIONS_LANDSCAPE = "suggestions_in_landscape";
     public static final String KEY_LONG_PRESS_DURATION = "pref_long_press_duration";
     public static final String KEY_POPUP_CONTENT = "pref_popup_content";
-    public static final String KEY_SUGGESTED_PUNCTUATION = "pref_suggested_punctuation";
 
     // Visual Appearance
     public static final String KEY_HEIGHT_PORTRAIT = "settings_height_portrait";
@@ -53,7 +47,6 @@ public final class SettingsDefinitions {
     public static final String KEY_KEYBOARD_MODE_LANDSCAPE = "pref_keyboard_mode_landscape";
     public static final String KEY_HINT_MODE = "pref_hint_mode";
     public static final String KEY_LABEL_SCALE = "pref_label_scale_v2";
-    public static final String KEY_CANDIDATE_SCALE = "pref_candidate_scale";
     public static final String KEY_TOP_ROW_SCALE = "pref_top_row_scale";
     public static final String KEY_RENDER_MODE = "pref_render_mode";
 
@@ -95,21 +88,6 @@ public final class SettingsDefinitions {
         sections.add(new SettingsSection.Builder("Text Correction")
                 .addBoolean(KEY_AUTO_CAP, "Auto-capitalization",
                         "Capitalize first letter of sentences", true)
-                .addBoolean(KEY_QUICK_FIXES, "Quick fixes",
-                        "Correct common typing mistakes", true)
-                .addBoolean(KEY_SHOW_SUGGESTIONS, "Show suggestions",
-                        "Display word suggestions while typing", true)
-                .addBoolean(KEY_AUTO_COMPLETE, "Auto-complete",
-                        "Complete words automatically", true,
-                        null, null, KEY_SHOW_SUGGESTIONS)
-                .addBoolean(KEY_RECORRECTION, "Recorrection",
-                        "Allow correcting previously typed words", true)
-                .build());
-
-        // Keyboard Layout Section
-        sections.add(new SettingsSection.Builder("Keyboard Layout")
-                .addBoolean(KEY_SUGGESTIONS_LANDSCAPE, "Suggestions in landscape",
-                        "Show suggestion bar in landscape mode", true)
                 .build());
 
         // Advanced Section
@@ -215,7 +193,6 @@ public final class SettingsDefinitions {
         return new String[]{
                 "None",
                 "Close keyboard",
-                "Voice input",
                 "Shift",
                 "Caps lock",
                 "Ctrl",
@@ -236,7 +213,6 @@ public final class SettingsDefinitions {
         return new String[]{
                 "none",
                 "close",
-                "voice",
                 "shift",
                 "caps",
                 "ctrl",

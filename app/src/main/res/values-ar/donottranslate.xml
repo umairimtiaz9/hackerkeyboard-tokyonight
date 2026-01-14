@@ -23,5 +23,4 @@
     <!-- Symbols that are sentence separators, for purposes of making it hug the last sentence. -->
     <string name="sentence_separators">.،!؟)؛:</string>
     <!-- Symbols that are suggested between words -->
-    <string name="suggested_punctuations">!؟،«»:؛()-\u0022/@_</string>
 </resources>

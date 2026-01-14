@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Edge-to-Edge Navigation Integration] - 2026-01-14
+
+### Added
+- **Seamless Navigation Bar Integration**: The keyboard now extends behind the system navigation bar, matching the selected theme's background color (Storm, Night, Moon, Day).
+- **Edge-to-Edge Display**: Enabled `SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION` to allow the keyboard window to draw full-screen.
+- **Smart Bottom Padding**: Added dynamic bottom padding (2.7x system navigation bar height) to push keys up, ensuring a comfortable "chin" area that prevents accidental system gestures while typing.
+- **Theme-Aware Status**: The navigation bar now correctly respects the light/dark mode of the active theme for its icons (e.g., dark icons for Day theme).
+
 ## [Material 3 Welcome Page] - 2026-01-12
 
 ### Added

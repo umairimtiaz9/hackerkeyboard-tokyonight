@@ -139,8 +139,8 @@ public class KeyboardSwitcher implements
      * instead of what user actually typed.
      */
     private boolean mIsAutoCompletionActive;
-    private boolean mHasVoice;
-    private boolean mVoiceOnPrimary;
+    // private boolean mHasVoice;
+    // private boolean mVoiceOnPrimary;
     private boolean mPreferSymbols;
 
     private static final int AUTO_MODE_SWITCH_STATE_ALPHA = 0;
@@ -163,7 +163,6 @@ public class KeyboardSwitcher implements
     private static final int DEFAULT_SETTINGS_KEY_MODE = SETTINGS_KEY_MODE_AUTO;
 
     private int mLastDisplayWidth;
-    private LanguageSwitcher mLanguageSwitcher;
 
     private int mLayoutId;
 
@@ -200,20 +199,16 @@ public class KeyboardSwitcher implements
      *            the current input locale, or null for default locale with no
      *            locale button.
      */
-    public void setLanguageSwitcher(LanguageSwitcher languageSwitcher) {
-        mLanguageSwitcher = languageSwitcher;
-        languageSwitcher.getInputLocale(); // for side effect
-    }
 
     private KeyboardId makeSymbolsId(boolean hasVoice) {
         if (mFullMode == 1) {
-            return new KeyboardId(KBD_COMPACT_FN, KEYBOARDMODE_SYMBOLS, true, hasVoice);
+            return new KeyboardId(KBD_COMPACT_FN, KEYBOARDMODE_SYMBOLS, true, false);
         } else if (mFullMode == 2) {
-            return new KeyboardId(KBD_FULL_FN, KEYBOARDMODE_SYMBOLS, true, hasVoice);
+            return new KeyboardId(KBD_FULL_FN, KEYBOARDMODE_SYMBOLS, true, false);
         }
         return new KeyboardId(KBD_SYMBOLS,
                 mHasSettingsKey ? KEYBOARDMODE_SYMBOLS_WITH_SETTINGS_KEY
-                        : KEYBOARDMODE_SYMBOLS, false, hasVoice);
+                        : KEYBOARDMODE_SYMBOLS, false, false);
     }
 
     private KeyboardId makeSymbolsShiftedId(boolean hasVoice) {
@@ -221,13 +216,13 @@ public class KeyboardSwitcher implements
             return null;
         return new KeyboardId(KBD_SYMBOLS_SHIFT,
                 mHasSettingsKey ? KEYBOARDMODE_SYMBOLS_WITH_SETTINGS_KEY
-                        : KEYBOARDMODE_SYMBOLS, false, hasVoice);
+                        : KEYBOARDMODE_SYMBOLS, false, false);
     }
 
     public void makeKeyboards(boolean forceCreate) {
         mFullMode = LatinIME.sKeyboardSettings.keyboardMode;
-        mSymbolsId = makeSymbolsId(mHasVoice && !mVoiceOnPrimary);
-        mSymbolsShiftedId = makeSymbolsShiftedId(mHasVoice && !mVoiceOnPrimary);
+        mSymbolsId = makeSymbolsId(false);
+        mSymbolsShiftedId = makeSymbolsShiftedId(false);
 
         if (forceCreate)
             mKeyboards.clear();
@@ -294,42 +289,32 @@ public class KeyboardSwitcher implements
     }
 
     public void setVoiceMode(boolean enableVoice, boolean voiceOnPrimary) {
-        if (enableVoice != mHasVoice || voiceOnPrimary != mVoiceOnPrimary) {
-            mKeyboards.clear();
-        }
-        mHasVoice = enableVoice;
-        mVoiceOnPrimary = voiceOnPrimary;
-        setKeyboardMode(mMode, mImeOptions, mHasVoice, mIsSymbols);
+        // Voice mode removed
     }
 
     private boolean hasVoiceButton(boolean isSymbols) {
-        return mHasVoice && (isSymbols != mVoiceOnPrimary);
+        return false;
     }
 
-    public void setKeyboardMode(int mode, int imeOptions, boolean enableVoice) {
+    public void setKeyboardMode(int mode, int imeOptions) {
         mAutoModeSwitchState = AUTO_MODE_SWITCH_STATE_ALPHA;
         mPreferSymbols = mode == MODE_SYMBOLS;
         if (mode == MODE_SYMBOLS) {
             mode = MODE_TEXT;
         }
         try {
-            setKeyboardMode(mode, imeOptions, enableVoice, mPreferSymbols);
+            setKeyboardMode(mode, imeOptions, mPreferSymbols);
         } catch (RuntimeException e) {
             Log.e(TAG, "Got exception: " + mode + "," + imeOptions + ","
                     + mPreferSymbols + " msg=" + e.getMessage());
         }
     }
 
-    private void setKeyboardMode(int mode, int imeOptions, boolean enableVoice,
-            boolean isSymbols) {
+    private void setKeyboardMode(int mode, int imeOptions, boolean isSymbols) {
         if (mInputView == null)
             return;
         mMode = mode;
         mImeOptions = imeOptions;
-        if (enableVoice != mHasVoice) {
-            // TODO clean up this unnecessary recursive call.
-            setVoiceMode(enableVoice, mVoiceOnPrimary);
-        }
         mIsSymbols = isSymbols;
 
         mInputView.setPreviewEnabled(mInputMethodService.getPopupOn());
@@ -361,8 +346,7 @@ public class KeyboardSwitcher implements
             orig.updateConfiguration(conf, null);
             keyboard = new LatinKeyboard(mInputMethodService, id.mXml,
                     id.mKeyboardMode, id.mKeyboardHeightPercent);
-            keyboard.setVoiceMode(hasVoiceButton(id.mXml == R.xml.kbd_symbols), mHasVoice);
-            keyboard.setLanguageSwitcher(mLanguageSwitcher, mIsAutoCompletionActive);
+            keyboard.setVoiceMode(false, false);
 //            if (isFullMode()) {
 //                keyboard.setExtension(new LatinKeyboard(mInputMethodService,
 //                        R.xml.kbd_extension_full, 0, id.mRowHeightPercent));
@@ -480,7 +464,7 @@ public class KeyboardSwitcher implements
             mInputView.setShiftState(oldShiftState);
         } else {
             // Return to default keyboard state
-            setKeyboardMode(mMode, mImeOptions, mHasVoice, false);
+            setKeyboardMode(mMode, mImeOptions, false);
             mInputView.setShiftState(oldShiftState);
         }
     }
@@ -540,7 +524,7 @@ public class KeyboardSwitcher implements
     }
 
     public void toggleSymbols() {
-        setKeyboardMode(mMode, mImeOptions, mHasVoice, !mIsSymbols);
+        setKeyboardMode(mMode, mImeOptions, !mIsSymbols);
         if (mIsSymbols && !mPreferSymbols) {
             mAutoModeSwitchState = AUTO_MODE_SWITCH_STATE_SYMBOL_BEGIN;
         } else {
@@ -667,8 +651,24 @@ public class KeyboardSwitcher implements
             }
             mInputView.setExtensionLayoutResId(THEMES[newLayout]);
             mInputView.setOnKeyboardActionListener(mInputMethodService);
-            mInputView.setPadding(0, 0, 0, 0);
+
+            // Calculate nav bar height for edge-to-edge padding
+            int navBarHeight = 0;
+            // Only apply this on Oreo+ where we enabled the edge-to-edge flags
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                 int resourceId = mInputMethodService.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+                 if (resourceId > 0) {
+                     navBarHeight = mInputMethodService.getResources().getDimensionPixelSize(resourceId);
+                     // User requested 2.7x the system height for optimal clearance
+                     navBarHeight = (int) (navBarHeight * 2.7f);
+                 }
+            }
+            
+            mInputView.setPadding(0, 0, 0, navBarHeight);
             mLayoutId = newLayout;
+
+            // Update Navigation Bar Color to match the keyboard theme
+            updateNavigationBarColor(newLayout);
         }
         mInputMethodService.mHandler.post(new Runnable() {
             public void run() {
@@ -678,6 +678,57 @@ public class KeyboardSwitcher implements
                 mInputMethodService.updateInputViewShown();
             }
         });
+    }
+
+    private void updateNavigationBarColor(int layoutId) {
+        if (mInputMethodService == null || mInputMethodService.getWindow() == null) {
+            return;
+        }
+
+        // Map layout ID to Tokyo Night theme ID
+        // Note: Layout IDs 10, 11, 12, 13 correspond directly to Storm, Night, Day, Moon
+        // Older/Legacy IDs map to Storm (default)
+        int themeId;
+        switch (layoutId) {
+            case 11: themeId = TokyoNightPalette.THEME_NIGHT; break;
+            case 12: themeId = TokyoNightPalette.THEME_DAY; break;
+            case 13: themeId = TokyoNightPalette.THEME_MOON; break;
+            default: themeId = TokyoNightPalette.THEME_STORM; break; // Default for 10 and legacy
+        }
+
+        TokyoNightPalette.Variant variant = TokyoNightPalette.getVariant(themeId);
+        boolean isLight = TokyoNightPalette.isLightTheme(themeId);
+
+        // Apply colors to the window
+        // Note: InputMethodService.getWindow() returns the Dialog.
+        // We need the Window of that Dialog to set the navigation bar color.
+        android.app.Dialog dialog = mInputMethodService.getWindow();
+        if (dialog == null) {
+            return;
+        }
+        android.view.Window window = dialog.getWindow();
+        if (window == null) {
+            return;
+        }
+        
+        // Edge-to-Edge: Make navigation bar transparent and layout behind it
+        window.setNavigationBarColor(android.graphics.Color.TRANSPARENT);
+
+        // Handle light/dark navigation bar icons and edge-to-edge flags
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            int flags = window.getDecorView().getSystemUiVisibility();
+            
+            // Enable edge-to-edge
+            flags |= android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            flags |= android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
+            
+            if (isLight) {
+                flags |= android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+            } else {
+                flags &= ~android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+            }
+            window.getDecorView().setSystemUiVisibility(flags);
+        }
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
