@@ -662,7 +662,7 @@ public class KeyboardSwitcher implements
                  if (resourceId > 0) {
                      navBarHeight = mInputMethodService.getResources().getDimensionPixelSize(resourceId);
                      // User requested 2.7x the system height for optimal clearance
-                     navBarHeight = (int) (navBarHeight * 2.7f);
+                     navBarHeight = (int) (navBarHeight * 2.5f);
                  }
             }
             
