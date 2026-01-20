@@ -4,12 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Build and Development Commands
 
-This is an Android project managed by Gradle. Use the `./gradlew` wrapper for all commands.
+This is an Android project managed by Gradle. Use the system `gradle` command for all commands.
 
 ### Build Commands
 - `Build APK (Debug)`: `gradle assembleDebug`
 - `Build APK (Release)`: `gradle assembleRelease`
-- `Clean Build`: `gradle clean` !don't use it normally
+- `Clean Build`: `gradle clean` !don't use it
 
 ### Test Commands
 *(Note: No unit or instrumentation tests were detected in the current codebase structure.)*
