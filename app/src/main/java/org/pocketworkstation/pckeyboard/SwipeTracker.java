@@ -18,6 +18,11 @@ package org.pocketworkstation.pckeyboard;
 
 import android.view.MotionEvent;
 
+/**
+ * Tracks finger swipe motion by recording movement history and computing velocity.
+ * Uses a 4-event ring buffer to maintain the most recent touch points, allowing
+ * velocity calculations based on the movement between events.
+ */
 class SwipeTracker {
     private static final int NUM_PAST = 4;
     private static final int LONGEST_PAST_TIME = 200;
@@ -27,6 +32,14 @@ class SwipeTracker {
     private float mYVelocity;
     private float mXVelocity;
 
+    /**
+     * Records a motion event in the movement history buffer.
+     * On ACTION_DOWN, clears the buffer and returns. For other actions,
+     * processes all historical events and the current event within the
+     * time window to maintain velocity computation accuracy.
+     *
+     * @param ev the MotionEvent to record
+     */
     public void addMovement(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             mBuffer.clear();
@@ -51,10 +64,27 @@ class SwipeTracker {
         buffer.add(x, y, time);
     }
 
+    /**
+     * Computes the current velocity from the movement history buffer.
+     * Velocity is calculated as an exponential moving average of instantaneous
+     * velocities between each recorded point. Results are available via
+     * {@link #getXVelocity()} and {@link #getYVelocity()}.
+     *
+     * @param units the multiplier for velocity (e.g., pixels per time unit)
+     */
     public void computeCurrentVelocity(int units) {
         computeCurrentVelocity(units, Float.MAX_VALUE);
     }
 
+    /**
+     * Computes the current velocity from the movement history buffer with
+     * a maximum velocity constraint.
+     * Velocity is calculated as an exponential moving average of instantaneous
+     * velocities between each recorded point, clamped to the specified maximum.
+     *
+     * @param units the multiplier for velocity (e.g., pixels per time unit)
+     * @param maxVelocity the maximum allowed velocity magnitude
+     */
     public void computeCurrentVelocity(int units, float maxVelocity) {
         final EventRingBuffer buffer = mBuffer;
         final float oldestX = buffer.getX(0);
@@ -83,14 +113,34 @@ class SwipeTracker {
                 : Math.min(accumY, maxVelocity);
     }
 
+    /**
+     * Returns the X-axis velocity computed from the recent movement history.
+     * Valid only after calling {@link #computeCurrentVelocity(int)} or
+     * {@link #computeCurrentVelocity(int, float)}.
+     *
+     * @return the X velocity in pixels per unit
+     */
     public float getXVelocity() {
         return mXVelocity;
     }
 
+    /**
+     * Returns the Y-axis velocity computed from the recent movement history.
+     * Valid only after calling {@link #computeCurrentVelocity(int)} or
+     * {@link #computeCurrentVelocity(int, float)}.
+     *
+     * @return the Y velocity in pixels per unit
+     */
     public float getYVelocity() {
         return mYVelocity;
     }
 
+    /**
+     * A circular ring buffer that stores recent motion events (position and timestamp).
+     * Maintains up to {@link SwipeTracker#NUM_PAST} events, automatically discarding
+     * the oldest event when the buffer reaches capacity. Provides efficient access to
+     * events by relative index where 0 is the oldest event.
+     */
     static class EventRingBuffer {
         private final int bufSize;
         private final float xBuf[];

@@ -27,12 +27,53 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Interface for handling compose sequence callbacks.
+ * 
+ * Defines the contract for components that consume compose sequence results,
+ * providing methods to output text, update keyboard state, and query the current
+ * input editor context.
+ */
 interface ComposeSequencing {
+    /**
+     * Called when a compose sequence completes and produces text output.
+     * 
+     * @param text The resulting character sequence from the completed compose sequence
+     */
     public void onText(CharSequence text);
+    
+    /**
+     * Updates the shift key state based on the current input context.
+     * 
+     * @param attr The current editor information context
+     */
     public void updateShiftKeyState(EditorInfo attr);
+    
+    /**
+     * Retrieves the current input editor context information.
+     * 
+     * @return The current EditorInfo, or null if no editor is active
+     */
     public EditorInfo getCurrentInputEditorInfo();
 }
 
+/**
+ * Manages multi-key compose sequences for Unicode character input.
+ * 
+ * This class implements a compose key system that allows users to enter special
+ * Unicode characters through multi-key sequences. It maintains static maps containing
+ * 600+ compose key combinations (e.g., composing accented characters, mathematical
+ * symbols, emoji, and other Unicode characters).
+ * 
+ * The compose system works by:
+ * 1. Buffering keystrokes as they are entered
+ * 2. Checking if the accumulated sequence matches a known compose pattern
+ * 3. Either completing the sequence (if a match is found) or continuing to wait
+ *    for more input (if the sequence is a valid prefix of a longer sequence)
+ * 4. Discarding the sequence if it doesn't match any known pattern
+ * 
+ * @see ComposeSequencing for the callback interface used to deliver results
+ */
 public class ComposeSequence {
     private static final String TAG = "HK/ComposeSequence";
     
@@ -108,6 +149,13 @@ public class ComposeSequence {
         }
     };
 
+    /**
+     * Retrieves the composed character sequence for a given key sequence.
+     * 
+     * @param key The compose key sequence to look up
+     * @return The resulting character string if the key matches a known compose sequence,
+     *         or null if the key is empty or not found
+     */
     protected static String get(String key) {
         if (key == null || key.length() == 0) {
             return null;
@@ -116,8 +164,16 @@ public class ComposeSequence {
         return mMap.get(key);
     }
 
+    /**
+     * Converts a compose sequence string to a debug representation with character codes.
+     * 
+     * Appends character codes in decimal format to the string for debugging purposes.
+     * For example, "ab" becomes "ab{97,98}" where 97 and 98 are the Unicode values.
+     * 
+     * @param in The compose sequence string to format
+     * @return A debug representation with character codes appended in curly braces
+     */
     private static String showString(String in) {
-        // TODO Auto-generated method stub
         StringBuilder out = new StringBuilder(in);
         out.append("{");
         for (int i = 0; i < in.length(); ++i) {
@@ -128,6 +184,16 @@ public class ComposeSequence {
         return out.toString();
     }
 
+    /**
+     * Checks if a partial key sequence is a valid prefix of any known compose sequence.
+     * 
+     * This method verifies that the given key is either a complete compose sequence or
+     * a valid prefix of one. It is used during composition to determine whether to wait
+     * for more input (valid prefix) or reject the sequence (invalid prefix).
+     * 
+     * @param partialKey The partial compose sequence to validate
+     * @return true if the key is a valid prefix of a compose sequence, false otherwise
+     */
     private static boolean isValid(String partialKey) {
         if (partialKey == null || partialKey.length() == 0) {
             return false;
@@ -135,6 +201,16 @@ public class ComposeSequence {
         return mPrefixes.contains(partialKey);
     }
 
+    /**
+     * Formats a compose key sequence into a human-readable string representation.
+     * 
+     * Converts special keys (arrow keys, function keys, etc.) to their symbolic names
+     * and escapes special characters. For example, the sequence with arrow keys and
+     * regular characters is formatted with named symbols and quoted character sections.
+     * 
+     * @param seq The compose key sequence to format
+     * @return A formatted string suitable for display or logging (e.g., "↑ ↓ \"text\"")
+     */
     protected static String format(String seq) {
         String output = "";
         boolean quoted = false;
@@ -161,7 +237,18 @@ public class ComposeSequence {
         return output;
     }
 
+    /**
+     * Registers a compose key sequence mapping.
+     * 
+     * Adds a new compose sequence to the static map and updates the prefix set to enable
+     * efficient validation of partial sequences during input. Logs warnings if the sequence
+     * is a duplicate, subset, or superset of existing sequences.
+     * 
+     * @param key The compose key sequence (string of characters)
+     * @param value The resulting character(s) when the sequence is completed
+     */
     protected static void put(String key, String value) {
+
         boolean found = false;
 
         if (key.length() == 0 || value.length() == 0)
@@ -186,25 +273,68 @@ public class ComposeSequence {
     protected StringBuilder composeBuffer = new StringBuilder(10);
     protected ComposeSequencing composeUser;
 
+    /**
+     * Initializes the compose sequence handler with a callback interface.
+     * 
+     * Sets up the instance with a callback handler and clears any previous buffer state.
+     * This method is called during construction to establish the link between this compose
+     * processor and the keyboard component that will receive the composed output.
+     * 
+     * @param user The ComposeSequencing callback handler to receive compose results
+     */
     protected void init(ComposeSequencing user) {
         clear();
         composeUser = user;
     }
 
+    /**
+     * Constructs a new ComposeSequence instance.
+     * 
+     * Creates a new compose sequence processor with the given callback handler. The processor
+     * is immediately initialized and ready to buffer and execute compose sequences.
+     * 
+     * @param user The ComposeSequencing callback handler to receive compose results
+     */
     public ComposeSequence(ComposeSequencing user) {
         init(user);
     }
 
+    /**
+     * Clears the current compose key buffer, resetting it to an empty state.
+     * 
+     * Discards any partially entered compose sequence. This is typically called
+     * after a sequence is completed or rejected.
+     */
     public void clear() {
         composeBuffer.setLength(0);
     }
 
+    /**
+     * Buffers a single character code for the current compose sequence.
+     * 
+     * Appends the character to the internal buffer. The buffer is checked against
+     * known compose sequences to determine if the sequence is complete, valid but
+     * incomplete (waiting for more input), or invalid.
+     * 
+     * @param code The character code to add to the compose buffer
+     */
     public void bufferKey(char code) {
     	composeBuffer.append(code);
     	//Log.i(TAG, "bufferKey code=" + (int) code + " => " + showString(composeBuffer.toString()));
     }
 
-    // returns true if the compose sequence is valid but incomplete
+    /**
+     * Executes a compose sequence with a single character code, returning the result as a string.
+     * 
+     * Buffers the character code, handles shift key capitalization for alphabetic input,
+     * and checks if the accumulated sequence matches a known compose pattern. Returns the
+     * composed result if complete, an empty string if the sequence is invalid, or null if
+     * the sequence is valid but incomplete (waiting for more input).
+     * 
+     * @param code The character code to add to the compose sequence
+     * @return The composed character string if the sequence is complete, an empty string
+     *         if the sequence is invalid, or null if the sequence is valid but incomplete
+     */
     public String executeToString(int code) {
         KeyboardSwitcher ks = KeyboardSwitcher.getInstance();
         if (ks.getInputView().isShiftCaps()
@@ -226,6 +356,18 @@ public class ComposeSequence {
         return null;
     }
 
+    /**
+     * Executes a compose sequence with a single character code.
+     * 
+     * Processes the character through the compose sequence logic. If a complete sequence
+     * is found or an invalid sequence is detected, clears the buffer and notifies the
+     * callback handler with the result. Returns true if more input is expected (incomplete
+     * valid sequence), false if the sequence was completed or rejected.
+     * 
+     * @param code The character code to process through the compose system
+     * @return true if the sequence is valid but incomplete (waiting for more input),
+     *         false if the sequence was completed (output was sent) or invalid
+     */
     public boolean execute(int code) {
         String composed = executeToString(code);
         if (composed != null) {
@@ -236,6 +378,16 @@ public class ComposeSequence {
         return true;
     }
 
+    /**
+     * Executes a compose sequence with a character sequence.
+     * 
+     * Processes each character in the sequence through the compose system sequentially.
+     * The final return value indicates the result of processing the last character.
+     * 
+     * @param sequence The character sequence to process through the compose system
+     * @return true if the final character resulted in an incomplete valid sequence,
+     *         false if it resulted in a completed or invalid sequence
+     */
     public boolean execute(CharSequence sequence) {
         int i, len = sequence.length();
         boolean result = true;
@@ -245,6 +397,15 @@ public class ComposeSequence {
         return result; // only last one matters
     }
 
+   /**
+    * Initializes the static compose sequence maps with 600+ compose key combinations.
+    * 
+    * This static initialization method populates the mMap and mPrefixes data structures
+    * with all supported compose sequences. The sequences include accented characters,
+    * mathematical symbols, currency signs, emoji, and special Unicode characters from
+    * various languages (Vietnamese, Greek, Hebrew, etc.). This method is automatically
+    * called once when the class is loaded to populate the static database.
+    */
    private static void reset() {
         put("++", "#");
         put("' ", "'");

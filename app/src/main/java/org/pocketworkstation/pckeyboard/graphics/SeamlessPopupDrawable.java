@@ -14,6 +14,31 @@ import android.view.View;
 import org.pocketworkstation.pckeyboard.Keyboard.Key;
 import org.pocketworkstation.pckeyboard.LatinKeyboardBaseView;
 
+/**
+ * Custom drawable that renders a keyboard popup with smooth, seamless curves connecting
+ * the trigger key to the popup menu.
+ * 
+ * This drawable implements a sophisticated path rendering algorithm that creates visually
+ * appealing S-curves between the key and popup using dynamic radius scaling. When space is
+ * limited, the corner radii are automatically reduced to maintain smooth transitions while
+ * fitting within tight geometric constraints.
+ * 
+ * Key Features:
+ * - Dynamic radius scaling for tight spaces
+ * - Smooth S-curve connections on both left and right sides
+ * - Configurable corner radii for popup and key elements
+ * - Snap logic to align edges when nearly aligned (within corner radius distance)
+ * - Support for custom colors and stroke widths
+ * 
+ * The drawing algorithm constructs a path that:
+ * 1. Starts at the bottom-left corner of the key
+ * 2. Curves up the left side, transitioning from key to popup
+ * 3. Traces the popup outline with rounded corners
+ * 4. Curves down the right side, transitioning from popup back to key
+ * 5. Traces the bottom of the key with rounded corners and closes
+ * 
+ * @author Hacker's Keyboard
+ */
 public class SeamlessPopupDrawable extends Drawable {
 
     private Paint mBackgroundPaint;
@@ -30,7 +55,11 @@ public class SeamlessPopupDrawable extends Drawable {
     private float mKeyTopY;
     private float mPopupTopY;
 
-    // Constructor
+    /**
+     * Constructs a new SeamlessPopupDrawable with initialized paint objects and path components.
+     * 
+     * @param context The Android context (used for initialization, though not currently required)
+     */
     public SeamlessPopupDrawable(Context context) {
         mBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mBackgroundPaint.setStyle(Paint.Style.FILL);
@@ -43,27 +72,65 @@ public class SeamlessPopupDrawable extends Drawable {
         mPopupRect = new Rect();
     }
 
-    // Public methods to set geometry and colors
+    /**
+     * Sets the background and stroke colors for the popup drawable.
+     * 
+     * @param backgroundColor The fill color for the popup and key shapes
+     * @param strokeColor The outline color for the stroke
+     */
     public void setColors(int backgroundColor, int strokeColor) {
         mBackgroundPaint.setColor(backgroundColor);
         mStrokePaint.setColor(strokeColor);
-    }
+        }
 
-    public void setStrokeWidth(float strokeWidth) {
+        /**
+        * Sets the width of the stroke that outlines the popup and key shapes.
+        * A stroke width of 0 will result in no outline being drawn.
+        * 
+        * @param strokeWidth The width of the stroke in pixels
+        */
+        public void setStrokeWidth(float strokeWidth) {
         mStrokeWidth = strokeWidth;
         mStrokePaint.setStrokeWidth(mStrokeWidth);
-    }
+        }
 
-    public void setCornerRadius(float cornerRadius) {
+        /**
+        * Sets the corner radius for the popup shape. This radius is used for the four corners
+        * of the popup rectangle and influences the S-curve connections to the key.
+        * 
+        * @param cornerRadius The radius of the corners in pixels
+        */
+        public void setCornerRadius(float cornerRadius) {
         mCornerRadius = cornerRadius;
-    }
+        }
 
-    public void setKeyCornerRadius(float keyCornerRadius) {
+        /**
+        * Sets the corner radius for the key shape. This radius is used for the bottom-left
+        * and bottom-right corners of the key rectangle that is part of the drawn path.
+        * 
+        * @param keyCornerRadius The radius of the key corners in pixels
+        */
+        public void setKeyCornerRadius(float keyCornerRadius) {
         mKeyCornerRadius = keyCornerRadius;
-    }
+        }
 
-    // This method needs to be called by LatinKeyboardBaseView whenever geometry changes
-    public void setGeometry(Rect keyRect, Rect popupRect, float keyHeight, float popupHeight, float neckHeight, float keyTopY, float popupTopY) {
+        /**
+        * Sets the geometric parameters that define the position and size of the key and popup.
+        * This method must be called by LatinKeyboardBaseView whenever the popup geometry changes
+        * (e.g., when the user presses a key or the keyboard layout changes).
+        * 
+        * The geometry parameters define the bounding rectangles and vertical positions that are
+        * used by the updatePath() method to construct the smooth connecting path.
+        * 
+        * @param keyRect The bounding rectangle of the trigger key
+        * @param popupRect The bounding rectangle of the popup content
+        * @param keyHeight The height of the key
+        * @param popupHeight The height of the popup
+        * @param neckHeight The height of the connecting "neck" region between key and popup
+        * @param keyTopY The Y coordinate of the top of the key
+        * @param popupTopY The Y coordinate of the top of the popup
+        */
+        public void setGeometry(Rect keyRect, Rect popupRect, float keyHeight, float popupHeight, float neckHeight, float keyTopY, float popupTopY) {
         mKeyRect.set(keyRect);
         mPopupRect.set(popupRect);
         mKeyHeight = keyHeight;
@@ -74,9 +141,26 @@ public class SeamlessPopupDrawable extends Drawable {
 
         updatePath();
         invalidateSelf(); // Request redraw
-    }
+        }
 
-    private void updatePath() {
+        /**
+        * Internal method that reconstructs the path connecting the key and popup shapes.
+        * 
+        * This method implements the core path rendering algorithm:
+        * - Applies snap logic to align edges when they're within corner radius distance
+        * - Constructs smooth S-curves on left and right sides using arc operations
+        * - Dynamically scales curve radii when space is tight to maintain smooth transitions
+        * - Traces the popup outline with rounded corners
+        * - Traces the key outline with rounded corners
+        * - Closes the path to create a complete shape
+        * 
+        * The algorithm handles several geometric cases:
+        * - Standard S-curves when there's sufficient space
+        * - Dynamic radius scaling for tight spaces
+        * - Straight transitions when edges are aligned or hanging out
+        * - Snap tolerance to ensure crisp vertical lines when virtually aligned
+        */
+        private void updatePath() {
         mPath.reset();
 
         // Inset by half the stroke width to avoid clipping, as STROKE draws centered on the path.
@@ -201,10 +285,19 @@ public class SeamlessPopupDrawable extends Drawable {
         mPath.arcTo(new RectF(keyLeft, keyBottom - 2 * mKeyCornerRadius, keyLeft + 2 * mKeyCornerRadius, keyBottom), 90f, 90f);
 
         mPath.close();
-    }
+        }
 
-    @Override
-    public void draw(Canvas canvas) {
+        /**
+        * Renders the popup drawable onto the provided canvas.
+        * 
+        * This method draws both the background fill and the stroke outline of the connected
+        * key-popup shape. The stroke is only drawn if the stroke width has been set to a
+        * value greater than 0.
+        * 
+        * @param canvas The canvas on which to draw the popup drawable
+        */
+        @Override
+        public void draw(Canvas canvas) {
         // Draw the background
         canvas.drawPath(mPath, mBackgroundPaint);
 
@@ -228,10 +321,17 @@ public class SeamlessPopupDrawable extends Drawable {
     public int getOpacity() {
         // OPAQUE is generally safe if the drawable always fills its bounds
         return android.graphics.PixelFormat.OPAQUE;
-    }
+        }
 
-    // Helper method to get current bounds for invalidation
-    public Rect getCombinedBounds() {
+        /**
+        * Returns the combined bounding rectangle of both the key and popup shapes.
+        * 
+        * This method calculates the union of the key and popup rectangles, which represents
+        * the full bounds of the drawable. This is useful for invalidation and layout calculations.
+        * 
+        * @return A rectangle that encompasses both the key and popup shapes
+        */
+        public Rect getCombinedBounds() {
         // This method should return the bounds of the drawable.
         // For a popup, this would be the combined bounds of the key replica and the popup content.
         // For simplicity, we'll use the popup rect as a base and expand if needed.

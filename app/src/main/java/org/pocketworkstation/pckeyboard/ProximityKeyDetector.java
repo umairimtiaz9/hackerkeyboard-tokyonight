@@ -20,17 +20,71 @@ import org.pocketworkstation.pckeyboard.Keyboard.Key;
 
 import java.util.Arrays;
 
+/**
+ * Key detector implementation for the main keyboard with proximity detection capability.
+ *
+ * <p>This detector identifies the key pressed based on touch coordinates and detects nearby keys
+ * within a configurable proximity threshold. It can detect up to 12 nearby keys and ranks them
+ * by distance from the touch point.
+ *
+ * <p>The proximity detection is useful for correcting common touch inaccuracies on touchscreen
+ * keyboards, allowing the IME to suggest alternative keys when the user may have slightly missed
+ * their intended target. Keys are ranked by their squared distance from the touch point, with
+ * the closest key returned as the primary result and others available as alternatives.
+ *
+ * <p>Proximity detection workflow:
+ * <ul>
+ *   <li>Obtains the set of nearest keys to the touch point from the keyboard layout</li>
+ *   <li>Checks each nearby key to determine if it's directly touched or within proximity threshold</li>
+ *   <li>Calculates squared distance for performance optimization</li>
+ *   <li>Maintains a distance-ranked array of nearby key codes for autocorrection engine</li>
+ *   <li>Returns the primary key index and populates alternative nearby codes if requested</li>
+ * </ul>
+ *
+ * @see KeyDetector
+ * @see Keyboard.Key
+ */
 class ProximityKeyDetector extends KeyDetector {
     private static final int MAX_NEARBY_KEYS = 12;
 
     // working area
     private int[] mDistances = new int[MAX_NEARBY_KEYS];
 
+    /**
+     * Provides the maximum number of nearby keys that can be detected by this proximity detector.
+     *
+     * @return The maximum number of nearby keys (12)
+     */
     @Override
     protected int getMaxNearbyKeys() {
         return MAX_NEARBY_KEYS;
     }
 
+    /**
+     * Detects the primary key at the given touch coordinates and identifies nearby keys.
+     *
+     * <p>This method implements the core proximity detection logic:
+     * <ul>
+     *   <li>Identifies the key directly under the touch point (if any)</li>
+     *   <li>Scans all nearby keys within the proximity threshold distance</li>
+     *   <li>Ranks nearby keys by squared distance from the touch point</li>
+     *   <li>Stores proximity-ranked key codes in the allKeys array for autocorrection</li>
+     * </ul>
+     *
+     * <p>The detection uses squared distance calculations for performance and compares against
+     * {@code mProximityThresholdSquare}. Only keys with character codes > 32 (printable characters)
+     * are considered for proximity detection. The method handles multiple keys at the same distance
+     * by inserting all their codes in order.
+     *
+     * @param x The x-coordinate of the touch point
+     * @param y The y-coordinate of the touch point
+     * @param allKeys An array to store the codes of nearby keys ranked by distance, or null if
+     *                nearby codes are not needed. The array is populated in order of increasing
+     *                distance from the touch point.
+     * @return The index of the primary key (the key directly under the touch point, or the closest
+     *         key within proximity threshold if no key is directly touched). Returns
+     *         {@code LatinKeyboardBaseView.NOT_A_KEY} if no valid key is detected.
+     */
     @Override
     public int getKeyIndexAndNearbyCodes(int x, int y, int[] allKeys) {
         final Key[] keys = getKeys();

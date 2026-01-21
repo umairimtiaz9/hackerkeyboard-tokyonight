@@ -1,5 +1,10 @@
 plugins {
     id 'com.android.application'
+    id 'kotlin-android'
+}
+
+ext {
+    kotlin_version = '1.9.24'
 }
 
 android {
@@ -20,12 +25,16 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-    }
+        }
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 
     lint {
